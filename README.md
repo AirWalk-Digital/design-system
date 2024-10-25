@@ -17,7 +17,7 @@ npm install --no-save '@awesome.me/kit-ff3b5aaa16@latest'
 
 ## Using the Pro icons.
 
-We need to wrap the application in the provider in a higher level component (such as _app.tsx in Next.js)..
+We need to wrap the application in the provider in a higher level component (such as _app.tsx or a layout in Next.js)..
 
 ```jsx
 import { IconProvider } from './IconProvider';
