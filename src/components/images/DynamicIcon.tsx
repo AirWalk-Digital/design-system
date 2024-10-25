@@ -3,14 +3,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library, findIconDefinition, IconLookup, IconName, IconPrefix, IconProp, SizeProp } from '@fortawesome/fontawesome-svg-core';
 import { IconContext } from './IconProvider'; // Import the IconProvider context
 
+export type IconType = 'solid' | 'regular' | 'light' | 'duotone' | 'kit';
+
+
 export interface DynamicIconProps {
-  style?: 'solid' | 'regular' | 'light' | 'duotone' | 'kit';
+  type?: IconType;
   iconName: string;
   size?: '2xs' | 'xs' | 'sm' | 'lg' | 'xl' | '2xl' | '1x' | '2x' | '3x' | '4x' | '5x' | '6x' | '7x' | '8x' | '9x' | '10x';
   className?: string; 
 }
 
-const DynamicIcon: React.FC<DynamicIconProps> = ({ style = 'solid', iconName = 'cloud', size = 'lg', className }) => {
+const DynamicIcon: React.FC<DynamicIconProps> = ({ type = 'solid', iconName = 'cloud', size = 'lg', className }) => {
   const [icon, setIcon] = useState<[string, string] | null>(null);
   const [error, setError] = useState(false);
 
@@ -28,8 +31,8 @@ const DynamicIcon: React.FC<DynamicIconProps> = ({ style = 'solid', iconName = '
     if (!loaded) return;
 
     // Function to return the correct prefix based on the style
-    const getIconPrefix = (style: 'solid' | 'regular' | 'light' | 'duotone' | 'kit'): string => {
-      switch (style) {
+    const getIconPrefix = (type: IconType): string => {
+      switch (type) {
         case 'solid':
           return 'fas'; // Free solid icons
         case 'regular':
@@ -55,7 +58,7 @@ const DynamicIcon: React.FC<DynamicIconProps> = ({ style = 'solid', iconName = '
       return foundIcon ? true : false;
     };
 
-    const iconPrefix = getIconPrefix(style);
+    const iconPrefix = getIconPrefix(type);
     const name = iconName as IconName;
 
     if (isIconInLibrary(iconPrefix as IconPrefix, name)) {
@@ -65,7 +68,7 @@ const DynamicIcon: React.FC<DynamicIconProps> = ({ style = 'solid', iconName = '
       setIcon(null);
       setError(true);
     }
-  }, [style, iconName, byPrefixAndName, loaded]);
+  }, [type, iconName, byPrefixAndName, loaded]);
 
   // Render a fallback icon in case of an error (invalid icon, etc.)
   if (error && loaded) {

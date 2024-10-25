@@ -1,5 +1,5 @@
 import React from 'react';
-import DynamicIcon from '../images/DynamicIcon';
+import DynamicIcon from '@components/Images/DynamicIcon';
 
 const AppLauncher = ({ apps }) => {
   return (

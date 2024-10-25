@@ -12,43 +12,36 @@ const Template: StoryFn<DynamicIconProps> = (args) => <div className="h-12 w-12 
 
 export const LightCloud = Template.bind({});
 LightCloud.args = {
-  style: 'light',
+  type: 'light',
   iconName: 'cloud',
   size: '10x'
 };
 
 export const SolidUser = Template.bind({});
 SolidUser.args = {
-  style: 'solid',
+  type: 'solid',
   iconName: 'user',
   size: '10x'
 };
 
 export const RegularClock = Template.bind({});
 RegularClock.args = {
-  style: 'regular',
+  type: 'regular',
   iconName: 'clock',
   size: '10x'
 };
 
 export const DuotoneCamera = Template.bind({});
 DuotoneCamera.args = {
-  style: 'duotone',
+  type: 'duotone',
   iconName: 'camera',
   size: '10x'
 };
 
 export const Automation = Template.bind({});
 Automation.args = {
-  style: 'kit',
+  type: 'kit',
   iconName: 'automation',
   size: '10x'
 };
 
-
-// // Dynamically create stories for each icon in the list
-// iconList.forEach((icon) => {
-//   const storyName = `${icon.style.charAt(0).toUpperCase() + icon.style.slice(1)}${icon.name.charAt(0).toUpperCase() + icon.name.slice(1)}`;
-//   export const [storyName] = Template.bind({});
-//   [storyName].args = { style: icon.style, iconName: icon.name };
-// });

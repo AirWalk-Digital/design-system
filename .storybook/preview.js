@@ -1,7 +1,7 @@
 /** @type { import('@storybook/react').Preview } */
 // .storybook/preview.js
 import { withThemeByDataAttribute } from '@storybook/addon-themes';
-import { IconProvider } from '../src/components/images/IconProvider';
+import { IconProvider } from '@components/Images/IconProvider';
 import React from 'react';
 import '../src/index.css';
 
