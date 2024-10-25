@@ -1,5 +1,5 @@
 {
-  "name": "@airwalk-digital/design-system",
+  "name": "airwalk-design-system",
   "version": "0.0.0-semantic-release",
   "description": "Reusable components and styles",
   "main": "dist/index.cjs.js",
