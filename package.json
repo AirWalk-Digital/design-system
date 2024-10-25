@@ -3,6 +3,7 @@
   "version": "0.0.0-semantic-release",
   "description": "Reusable components and styles",
   "main": "dist/index.cjs.js",
+  "private": false,
   "module": "dist/index.esm.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
