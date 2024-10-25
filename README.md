@@ -12,7 +12,7 @@ create an `.npmrc` file with our credentials in.
 then run
 
 ```bash
-npm install --save '@awesome.me/kit-ff3b5aaa16@latest'
+npm install --no-save '@awesome.me/kit-ff3b5aaa16@latest'
 ```
 
 ## Using the Pro icons.
