@@ -1,4 +1,4 @@
-import './index.css';
+// import './index.css';
 
-export { FeatureCard }  from '@/components/Cards/index.js';
+export { FeatureCard }  from '@/components/Cards/index';
 

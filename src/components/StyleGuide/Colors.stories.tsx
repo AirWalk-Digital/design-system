@@ -1,5 +1,5 @@
 import React from 'react';
-import Colors from './Colors.js';
+import Colors from './Colors';
 
 export default {
   title: 'Style Guide/Colors2',

@@ -1,7 +1,7 @@
 import { Copy, Check } from "lucide-react"
 import { useState } from "react"
-import { Button } from "@/components/ui/button.js"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip.js"
+import { Button } from "@/components/ui/button"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import React from "react"
 const colorGroups = [
   {

@@ -3,12 +3,13 @@
     /* Base Options: */
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "target": "es2022",
+    "target": "es5",
     "allowJs": true,
-    "resolveJsonModule": true,
+    // "resolveJsonModule": true,
     "moduleDetection": "force",
     "isolatedModules": true,
     "verbatimModuleSyntax": true,
+    "moduleResolution": "bundler" ,
 
     /* Strictness */
     "strict": true,
@@ -16,7 +17,7 @@
     "noImplicitOverride": true,
 
     /* If transpiling with TypeScript: */
-    "module": "NodeNext",
+    "module": "ES2022",
     "outDir": "dist",
     "rootDir": "src",
     "sourceMap": true,
@@ -28,13 +29,14 @@
     },
     "jsx": "react-jsx", // or "react" if using React 16 or below
     "declaration": true, // Ensure declaration files are generated
-    "declarationDir": "dist/types" // Optional: specify a directory for declaration files
+    "declarationDir": "dist" // Optional: specify a directory for declaration files
   },
   "exclude": [
     "./out/**/*",
     "./node_modules/**/*",
     "./jest.config.ts",
-    "./.next/**/*"
+    "./.next/**/*",
+    "./dist/**/*",
   ],
   "include": [
     "next-env.d.ts",

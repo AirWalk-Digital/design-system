@@ -50,7 +50,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
   SidebarSeparator,
-} from "@/components/ui/sidebar.js";
+} from "@/components/ui/sidebar";
 
 export type TableOfContentsItem = {
   title: string;

@@ -27,7 +27,7 @@ import {
   SquareTerminal,
   Trash2,
 } from "lucide-react"
-import Documentation from './Documentation.js';
+import Documentation from './Documentation';
 import { fn } from '@storybook/test';
 
 export default {

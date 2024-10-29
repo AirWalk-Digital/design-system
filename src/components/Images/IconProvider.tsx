@@ -34,7 +34,6 @@ const IconProvider: React.FC<IconProviderProps> = ({ children }) => {
       try {
         // Add free icons globally
         library.add(fas, far);
-
         // Load kit icons dynamically if needed
         const { all, byPrefixAndName } = await import('@awesome.me/kit-ff3b5aaa16/icons');
         library.add(...all);

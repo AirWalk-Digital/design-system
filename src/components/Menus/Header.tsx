@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Bell, Settings, HelpCircle, ChevronDown, X } from 'lucide-react';
-import { Button } from '@/components/ui/button.js';
-import { Input } from '@/components/ui/input.js';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import LayoutGrid from './grid-thin.svg'; // Import the SVG file
 import { HeightIcon } from '@radix-ui/react-icons';
 

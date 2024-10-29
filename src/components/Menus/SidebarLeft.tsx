@@ -41,7 +41,7 @@ import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/components/ui/collapsible.js";
+} from "@/components/ui/collapsible";
 
 import {
   Sidebar,
@@ -62,7 +62,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
   SidebarSeparator,
-} from "@/components/ui/sidebar.js";
+} from "@/components/ui/sidebar";
 
 export type NavigationItem = {
   title: string;

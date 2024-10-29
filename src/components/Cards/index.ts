@@ -1,1 +1,1 @@
-export { FeatureCard } from './FeatureCard.js';
+export { FeatureCard } from './FeatureCard';

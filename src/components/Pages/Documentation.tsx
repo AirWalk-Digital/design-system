@@ -41,9 +41,9 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb.js"
+} from "@/components/ui/breadcrumb"
 
-import { Separator } from "@/components/ui/separator.js"
+import { Separator } from "@/components/ui/separator"
 import {
   Sidebar,
   SidebarContent,
@@ -63,10 +63,10 @@ import {
   SidebarProvider,
   SidebarTrigger,
   SidebarSeparator,
-} from "@/components/ui/sidebar.js"
+} from "@/components/ui/sidebar"
 
-import SidebarRight from "@/components/Menus/SidebarRight.js"
-import SidebarLeft from "@/components/Menus/SidebarLeft.js"
+import SidebarRight from "@/components/Menus/SidebarRight"
+import SidebarLeft from "@/components/Menus/SidebarLeft"
 
 export default function Documentation({ ...args }) {
   return (

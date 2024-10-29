@@ -1,6 +1,7 @@
 import resolve from '@rollup/plugin-node-resolve';
 import babel from '@rollup/plugin-babel';
 import postcss from 'rollup-plugin-postcss';
+import commonjs from '@rollup/plugin-commonjs';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import alias from '@rollup/plugin-alias';
 import path from 'path';
@@ -8,8 +9,7 @@ import { fileURLToPath } from 'url';
 import svgr from '@svgr/rollup';
 import merge from 'deepmerge';
 // import { createBasicConfig } from '@open-wc/building-rollup';
-import typescript from '@rollup/plugin-typescript';
-import dts from "rollup-plugin-dts";
+import typescript from 'rollup-plugin-typescript2';
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -18,7 +18,7 @@ const __dirname = path.dirname(__filename);
 
 // export default merge(baseConfig, {
 export default {
-  input: './out-tsc/src/index.js',
+  input: './src/index.ts',
   output: [
     {
       file: 'dist/index.cjs.js',
@@ -26,13 +26,16 @@ export default {
       sourcemap: true,
     },
     {
-      file: 'dist/index.esm.js',
-      format: 'esm',
+      file: 'dist/index.es.js',
+      format: 'es',
       sourcemap: true,
     },
   ],
   plugins: [
     peerDepsExternal(),
+    commonjs({
+      include: 'node_modules/**', // Ensure that commonjs modules in node_modules are handled
+    }),
     resolve({
       extensions: ['.js', '.jsx', '.ts', '.tsx'],
       preferBuiltins: true,
@@ -43,6 +46,11 @@ export default {
       presets: ['@babel/preset-react'],
     }),
     postcss({
+      // Inline the CSS in JavaScript
+      inject: true,
+      // Minify CSS for production
+      minimize: true,
+      // Process CSS with PostCSS
       extensions: ['.css'],
     }),
     typescript(),

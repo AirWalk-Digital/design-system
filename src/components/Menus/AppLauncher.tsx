@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import DynamicIcon, { type IconType } from "@/components/Images/DynamicIcon.js";
+import DynamicIcon, { type IconType } from "@/components/Images/DynamicIcon";
 
 type Apps = {
   name: string;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { type StoryFn } from '@storybook/react';
-import DynamicIcon, { type DynamicIconProps } from './DynamicIcon.js';
+import DynamicIcon, { type DynamicIconProps } from './DynamicIcon';
 
 export default {
   title: 'Images & Icons/DynamicIcon',

@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryFn } from '@storybook/react';
-import {FeatureCard} from '@/components/Cards/FeatureCard.js';
-import FeatureGrid from '@/components/Layouts/FeatureGrid.js';
+import {FeatureCard} from '@/components/Cards/FeatureCard';
+import FeatureGrid from '@/components/Layouts/FeatureGrid';
 
 export default {
   title: 'Layouts/FeatureGrid',

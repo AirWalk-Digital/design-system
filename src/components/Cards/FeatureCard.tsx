@@ -1,5 +1,5 @@
 
-import DynamicIcon from '@/components/Images/DynamicIcon.js';
+import DynamicIcon from '@/components/Images/DynamicIcon';
 import React from 'react';
 
 export type FeatureCardProps = {

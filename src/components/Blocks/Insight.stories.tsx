@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import { Insight } from './Insight.js';
+import { Insight } from './Insight';
 import type { StoryObj, Meta } from '@storybook/react';
 
 const meta: Meta<typeof Insight> = {
