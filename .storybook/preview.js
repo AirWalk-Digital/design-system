@@ -3,7 +3,6 @@
 // import { withThemeByDataAttribute } from '@storybook/addon-themes';
 import { withThemeByClassName } from '@storybook/addon-themes';
 
-import { IconProvider } from '@/components/Images/IconProvider';
 import React from 'react';
 import '../src/index.css';
 
@@ -36,9 +35,7 @@ export const decorators = [
         defaultTheme: 'light',
       }),
   (Story) => (
-    <IconProvider>
       <Story />
-    </IconProvider>
   ),
 ];
 

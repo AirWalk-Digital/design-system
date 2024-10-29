@@ -1,11 +1,12 @@
 "use client";
-import React, { useContext, useState, useEffect } from 'react';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { library, findIconDefinition, type IconLookup, type IconName, type IconPrefix, type IconProp, type SizeProp } from '@fortawesome/fontawesome-svg-core';
-import { IconContext } from './IconProvider'; // Import the IconProvider context
+import { byPrefixAndName } from '@awesome.me/kit-ff3b5aaa16/icons'
+
+import { findIconDefinition, type IconLookup, type IconName, type IconPrefix, type IconProp, type SizeProp } from '@fortawesome/fontawesome-svg-core';
+
 
 export type IconType = 'solid' | 'regular' | 'light' | 'duotone' | 'kit';
-
 
 export interface DynamicIconProps {
   type?: IconType;
@@ -15,22 +16,6 @@ export interface DynamicIconProps {
 }
 
 const DynamicIcon: React.FC<DynamicIconProps> = ({ type = 'solid', iconName = 'cloud', size = 'lg', className }) => {
-  const [icon, setIcon] = useState<[string, string] | null>(null);
-  const [error, setError] = useState(false);
-
-  // Consume the icon context
-  const iconContext = useContext(IconContext);
-
-  if (!iconContext) {
-    console.error('IconContext is undefined. Make sure you are using DynamicIcon within an IconProvider.');
-    return null;
-  }
-
-  const { loaded, byPrefixAndName } = iconContext;
-
-  useEffect(() => {
-    if (!loaded) return;
-
     // Function to return the correct prefix based on the style
     const getIconPrefix = (type: IconType): string => {
       switch (type) {
@@ -60,23 +45,16 @@ const DynamicIcon: React.FC<DynamicIconProps> = ({ type = 'solid', iconName = 'c
     };
 
     const iconPrefix = getIconPrefix(type);
-    const name = iconName as IconName;
+    const icon = (iconPrefix: IconPrefix, iconName: IconName): IconProp => {
+      if (isIconInLibrary(iconPrefix, iconName)) {
+        return [iconPrefix, iconName] as IconProp;
+      } else {
+        return ['fas', 'exclamation-triangle'] as IconProp;
+      }
+    };
 
-    if (isIconInLibrary(iconPrefix as IconPrefix, name)) {
-      setIcon([iconPrefix, name]);
-      setError(false);
-    } else {
-      setIcon(null);
-      setError(true);
-    }
-  }, [type, iconName, byPrefixAndName, loaded]);
 
-  // Render a fallback icon in case of an error (invalid icon, etc.)
-  if (error && loaded) {
-    return <FontAwesomeIcon icon={['fas', 'exclamation-triangle']} size={size as SizeProp} className={className} style={{height:'100%', width:'100%'}} />;
-  }
-
-  return icon ? <FontAwesomeIcon icon={icon as IconProp} size={size as SizeProp} className={className} style={{height:'100%', width:'100%'}}/> : <FontAwesomeIcon icon={['fas', 'spinner']} spin size={size as SizeProp} className={className} style={{height:'100%', width:'100%'}}/>;
+  return icon ? <FontAwesomeIcon icon={icon(iconPrefix as IconPrefix, iconName as IconName)} size={size as SizeProp} className={className} style={{height:'100%', width:'100%'}}/> : <FontAwesomeIcon icon={['fas', 'spinner']} spin size={size as SizeProp} className={className} style={{height:'100%', width:'100%'}}/>;
 };
 
 export default DynamicIcon;
