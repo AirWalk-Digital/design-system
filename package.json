@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "private": false,
   "module": "dist/index.esm.js",
-  "types": "dist/types/index.d.ts", 
+  "types": "dist/types/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "storybook dev -p 6006 --no-open",
@@ -15,12 +15,11 @@
     "format": "prettier --write .",
     "check-format": "prettier --check .",
     "check-exports": "attw --pack ."
-
-
-
   },
   "keywords": [],
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "type": "module",
   "author": "Rob Ellison",
   "license": "ISC",
@@ -47,13 +46,13 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.16.4",
     "@babel/preset-env": "^7.25.9",
     "@babel/preset-react": "^7.25.9",
     "@chromatic-com/storybook": "^1.9.0",
     "@rollup/plugin-alias": "^5.1.1",
     "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-node-resolve": "^15.3.0",
-    "@rollup/plugin-typescript": "^12.1.1",
     "@storybook/addon-essentials": "^8.3.6",
     "@storybook/addon-interactions": "^8.3.6",
     "@storybook/addon-links": "^8.3.6",
@@ -74,7 +73,6 @@
     "postcss-loader": "^8.1.1",
     "prop-types": "^15.8.1",
     "rimraf": "^6.0.1",
-    "rollup": "^4.24.3",
     "rollup-plugin-dts": "^6.1.1",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",
