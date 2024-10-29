@@ -1,7 +1,7 @@
 import React from 'react';
-import { Meta, StoryFn } from '@storybook/react';
-import { FeatureCard, FeatureCardProps } from './FeatureCard';
-import { IconProvider } from '@components/Images/IconProvider';
+import type { Meta, StoryFn } from '@storybook/react';
+import { FeatureCard, type FeatureCardProps } from './FeatureCard.js';
+import { IconProvider } from '@/components/Images/IconProvider.js';
 
 export default {
   title: 'Cards/FeatureCard',

@@ -1,8 +1,7 @@
 import React from 'react';
-import { Meta, StoryFn } from '@storybook/react';
-import {FeatureCard} from '@components/Cards/FeatureCard';
-import FeatureGrid from '@components/Layouts/FeatureGrid';
-import { FeatureCardProps } from '@components/Cards/FeatureCard';
+import type { Meta, StoryFn } from '@storybook/react';
+import {FeatureCard} from '@/components/Cards/FeatureCard.js';
+import FeatureGrid from '@/components/Layouts/FeatureGrid.js';
 
 export default {
   title: 'Layouts/FeatureGrid',
@@ -10,7 +9,7 @@ export default {
 } as Meta;
 
 // Template for FeatureCardGrid
-const Template: StoryFn = (args) => <FeatureGrid {...args} />;
+const Template: StoryFn = (args) => <FeatureGrid {...args}>{args.children}</FeatureGrid>;
 
 // Default Story
 export const Default = Template.bind({});

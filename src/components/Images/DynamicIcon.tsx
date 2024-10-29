@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { library, findIconDefinition, IconLookup, IconName, IconPrefix, IconProp, SizeProp } from '@fortawesome/fontawesome-svg-core';
-import { IconContext } from './IconProvider'; // Import the IconProvider context
+import { library, findIconDefinition, type IconLookup, type IconName, type IconPrefix, type IconProp, type SizeProp } from '@fortawesome/fontawesome-svg-core';
+import { IconContext } from './IconProvider.js'; // Import the IconProvider context
 
 export type IconType = 'solid' | 'regular' | 'light' | 'duotone' | 'kit';
 

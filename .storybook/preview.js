@@ -1,7 +1,9 @@
 /** @type { import('@storybook/react').Preview } */
 // .storybook/preview.js
-import { withThemeByDataAttribute } from '@storybook/addon-themes';
-import { IconProvider } from '@components/Images/IconProvider';
+// import { withThemeByDataAttribute } from '@storybook/addon-themes';
+import { withThemeByClassName } from '@storybook/addon-themes';
+
+import { IconProvider } from '@/components/Images/IconProvider';
 import React from 'react';
 import '../src/index.css';
 
@@ -17,14 +19,22 @@ const preview = {
   },
 };
 export const decorators = [
-  withThemeByDataAttribute({
-    themes: {
-      light: 'light',
-      dark: 'dark',
-    },
-    defaultTheme: 'light',
-    attributeName: 'data-mode',
-  }),
+  // withThemeByDataAttribute({
+  //   themes: {
+  //     light: 'light',
+  //     dark: 'dark',
+  //   },
+  //   defaultTheme: 'light',
+  //   attributeName: 'data-mode',
+  // }),
+  withThemeByClassName<Renderer>({
+        themes: {
+          light: '',
+          dark: 'dark',
+          green: 'green',
+        },
+        defaultTheme: 'light',
+      }),
   (Story) => (
     <IconProvider>
       <Story />

@@ -132,3 +132,4 @@ dist
 *storybook.log
 .npmrc
 storybook-static/
+core
