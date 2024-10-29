@@ -1,3 +1,4 @@
+"use client";
 import React, { useContext, useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library, findIconDefinition, type IconLookup, type IconName, type IconPrefix, type IconProp, type SizeProp } from '@fortawesome/fontawesome-svg-core';
