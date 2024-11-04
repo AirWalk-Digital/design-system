@@ -154,3 +154,11 @@ Default.args = {
   onEditDocument: fn(),
   onPrintDocument: fn(),
 };
+
+
+export const NoTableOfContents = Template.bind({});
+NoTableOfContents.args = {
+  onAddDocument: fn(),
+  onEditDocument: fn(),
+  onPrintDocument: fn(),
+};

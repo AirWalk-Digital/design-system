@@ -8,6 +8,7 @@ import {
   Check,
   PencilLine,
   ChevronRight,
+  ChevronDown,
   ChevronsUpDown,
   Command,
   CreditCard,
@@ -51,7 +52,11 @@ import {
   SidebarTrigger,
   SidebarSeparator,
 } from "@/components/ui/sidebar";
-
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 export type TableOfContentsItem = {
   title: string;
   url: string;
@@ -61,7 +66,7 @@ export type TableOfContentsItem = {
 };
 
 interface SidebarRightProps extends React.ComponentProps<typeof Sidebar> {
-  tableOfContents: TableOfContentsItem[];
+  tableOfContents?: TableOfContentsItem[];
   onAddDocument: () => void;
   onEditDocument: () => void;
   onPrintDocument: () => void;
@@ -108,9 +113,20 @@ export default function SidebarRight({
         <SidebarSeparator className="mx-0" />
       </SidebarContent> */}
       <SidebarContent className="overflow-auto">
+
+      { tableOfContents && 
+      <Collapsible defaultOpen className="group/collapsible">
+
         <SidebarGroup>
-          <SidebarGroupLabel>Table of Contents</SidebarGroupLabel>
-          <SidebarGroupContent>
+        <SidebarGroupLabel asChild>
+          <CollapsibleTrigger>
+          Table of Contents
+            <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
+          </CollapsibleTrigger>
+          </SidebarGroupLabel>
+                    <SidebarGroupContent>
+                    <CollapsibleContent>
+
             <SidebarMenu>
               {tableOfContents.map((item) => (
                 <SidebarMenuItem key={item.title}>
@@ -149,8 +165,11 @@ export default function SidebarRight({
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>
+            </CollapsibleContent>
           </SidebarGroupContent>
         </SidebarGroup>
+        </Collapsible>
+}
       </SidebarContent>
       <SidebarFooter>
         {/* <SidebarMenu>

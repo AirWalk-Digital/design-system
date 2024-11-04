@@ -78,6 +78,7 @@ interface SidebarLeftProps extends React.ComponentProps<typeof Sidebar> {
   secondaryNav: NavigationItem[];
   title: string;
   subTitle?: string;
+  menuHeading?: string;
   onSidebarMenu?: () => void;
 
 }
@@ -87,6 +88,7 @@ export default function SidebarLeft({
   secondaryNav,
   title,
   subTitle,
+  menuHeading,
   onSidebarMenu,
   ...props
 }: SidebarLeftProps) {
@@ -97,9 +99,9 @@ export default function SidebarLeft({
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" onClick={onSidebarMenu}>
               
-                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+                {/* <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                   <LayoutGrid className="size-6" />
-                </div>
+                </div> */}
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">{title}</span>
                  {subTitle && <span className="truncate text-xs">{subTitle}</span> }
@@ -115,7 +117,7 @@ export default function SidebarLeft({
         <SidebarGroup>
           <SidebarGroupLabel asChild>
           <CollapsibleTrigger>
-          Platform
+          { menuHeading && menuHeading}
             <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
           </CollapsibleTrigger>
           </SidebarGroupLabel>
@@ -164,7 +166,7 @@ export default function SidebarLeft({
         <SidebarGroup className="mt-auto">
           <SidebarGroupContent>
             <SidebarMenu>
-              {secondaryNav.map((item) => (
+              {secondaryNav && secondaryNav.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild size="sm">
                     <a href={item.url}>
