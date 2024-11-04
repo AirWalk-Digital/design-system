@@ -8,6 +8,7 @@ import {
   FingerPrintIcon,
 } from '@heroicons/react/24/outline';
 import { PhoneIcon, PlayCircleIcon, RectangleGroupIcon } from '@heroicons/react/20/solid'
+import { DynamicIcon } from '../Images';
 
 export default {
   title: 'Header/SimpleHeader',
@@ -16,6 +17,13 @@ export default {
 
 type Story = StoryObj<typeof SimpleHeader>;
 
+const GithubIcon = () => (
+<DynamicIcon
+    iconName="github"
+    size="10x"
+    type="brands"
+  />
+);
 export const Primary: Story = {
   args: {
     menuItems: [
@@ -47,6 +55,7 @@ export const Primary: Story = {
         items: [
           { name: 'Documentation', href: '#', icon: ChartPieIcon },
           { name: 'API Reference', href: '#', icon: CursorArrowRaysIcon },
+          { name: 'Github', href: '#', icon: GithubIcon },
         ],
         actions: [
           { name: 'Watch demo', href: '#', icon: PlayCircleIcon },

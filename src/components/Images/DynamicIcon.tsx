@@ -15,7 +15,7 @@ import {
   type SizeProp,
 } from '@fortawesome/fontawesome-svg-core';
 
-export type IconType = 'solid' | 'regular' | 'light' | 'duotone' | 'kit';
+export type IconType = 'solid' | 'regular' | 'light' | 'duotone' | 'kit' | 'brands';
 
 export interface DynamicIconProps {
   type?: IconType;
@@ -59,6 +59,8 @@ const DynamicIcon: React.FC<DynamicIconProps> = ({
         return 'fad'; // Pro duotone if available
       case 'kit':
         return 'fak'; // Assuming 'fak' is the prefix for kit icons
+      case 'brands':
+        return 'fab'; // Assuming 'fak' is the prefix for kit icons
       default:
         return 'fas';
     }
