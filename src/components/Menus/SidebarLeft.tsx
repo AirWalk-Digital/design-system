@@ -42,6 +42,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+import clsx from 'clsx'
 
 import {
   Sidebar,
@@ -64,8 +65,10 @@ import {
   SidebarSeparator,
 } from "@/components/ui/sidebar";
 
+import type { LinkItem, MenuStructure, MultiMenuStructure } from "@/lib/Types";
+
 export type NavigationItem = {
-  title: string;
+  label: string;
   url: string;
   isActive?: boolean; // Optional property for active items
   isDraft?: boolean; // Optional property for draft items
@@ -74,10 +77,11 @@ export type NavigationItem = {
 };
 
 interface SidebarLeftProps extends React.ComponentProps<typeof Sidebar> {
-  mainNav: NavigationItem[];
-  secondaryNav: NavigationItem[];
+  mainNav: MultiMenuStructure[];
+  secondaryNav: MenuStructure[];
   title: string;
   subTitle?: string;
+  pathName?: string;
   menuHeading?: string;
   onSidebarMenu?: () => void;
 
@@ -88,6 +92,7 @@ export default function SidebarLeft({
   secondaryNav,
   title,
   subTitle,
+  pathName,
   menuHeading,
   onSidebarMenu,
   ...props
@@ -112,66 +117,18 @@ export default function SidebarLeft({
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-      <Collapsible defaultOpen className="group/collapsible">
-
-        <SidebarGroup>
-          <SidebarGroupLabel asChild>
-          <CollapsibleTrigger>
-          { menuHeading && menuHeading}
-            <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
-          </CollapsibleTrigger>
-          </SidebarGroupLabel>
-          <CollapsibleContent>
-
-          <SidebarMenu>
-            {mainNav.map((item) => (
-              <Collapsible key={item.title} asChild defaultOpen={item.isActive}>
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild tooltip={item.title}>
-                    <a href={item.url}>
-                      {item.icon && <item.icon />}
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                  {item.items?.length ? (
-                    <>
-                      <CollapsibleTrigger asChild>
-                        <SidebarMenuAction className="data-[state=open]:rotate-90">
-                          <ChevronRight />
-                          <span className="sr-only">Toggle</span>
-                        </SidebarMenuAction>
-                      </CollapsibleTrigger>
-                      <CollapsibleContent>
-                        <SidebarMenuSub>
-                          {item.items?.map((subItem) => (
-                            <SidebarMenuSubItem key={subItem.title}>
-                              <SidebarMenuSubButton asChild>
-                                <a href={subItem.url}>
-                                  <span>{subItem.title}</span>
-                                </a>
-                              </SidebarMenuSubButton>
-                            </SidebarMenuSubItem>
-                          ))}
-                        </SidebarMenuSub>
-                      </CollapsibleContent>
-                    </>
-                  ) : null}
-                </SidebarMenuItem>
-              </Collapsible>
-            ))}
-          </SidebarMenu>
-          </CollapsibleContent>
-        </SidebarGroup>
-</Collapsible>
+        { mainNav && mainNav.map((item, index) => ( 
+          <Menu key={index} subNav={item} pathName={pathName} />
+        ))}
         <SidebarGroup className="mt-auto">
           <SidebarGroupContent>
             <SidebarMenu>
               {secondaryNav && secondaryNav.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild size="sm">
+                <SidebarMenuItem key={item.label}>
+                  <SidebarMenuButton asChild size="sm" >
                     <a href={item.url}>
                       {item.icon && <item.icon />}
-                      <span>{item.title}</span>
+                      <span>{item.label}</span>
                     </a>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -182,5 +139,60 @@ export default function SidebarLeft({
       </SidebarContent>
       <SidebarFooter></SidebarFooter>
     </Sidebar>
+  );
+}
+
+
+function Menu({ subNav, pathName }: { menuHeading?: string; subNav: MenuStructure, pathName?: string }) {
+  const item = subNav;
+  let isActive = false;
+  // if a link within subNav.links equals the current pathName, set isActive to true ( this will open the collapsible )
+  if (item.links) {
+    item.links.map((link) => {
+      if (link.url === pathName) {
+        isActive = true;
+      }
+    });
+  }
+  return (
+    <Collapsible defaultOpen className="group/collapsible">
+    <SidebarGroup className="py-0">
+      <SidebarMenu>
+          <Collapsible key={item.label} asChild defaultOpen={item.isActive}>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild tooltip={item.label} className={clsx(isActive ? 'font-bold' : 'text-slate-500 before:hidden before:bg-slate-300 hover:text-slate-600 hover:before:block dark:text-slate-400 dark:before:bg-slate-700 dark:hover:text-slate-300',)}>
+                <a href={item.url}>
+                  {item.icon && <item.icon />}
+                  <span>{item.label}</span>
+                </a>
+              </SidebarMenuButton>
+              {item.links?.length ? (
+                <>
+                  <CollapsibleTrigger asChild>
+                    <SidebarMenuAction className="data-[state=open]:rotate-90">
+                      <ChevronRight />
+                      <span className="sr-only">Toggle</span>
+                    </SidebarMenuAction>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <SidebarMenuSub >
+                      {item.links?.map((subItem) => (
+                        <SidebarMenuSubItem key={subItem.label}>
+                          <SidebarMenuSubButton asChild className={clsx(subItem.url === pathName ? 'font-bold text-sky-500' : 'text-slate-500 before:hidden before:bg-slate-300 hover:text-slate-600 hover:before:block dark:text-slate-400 dark:before:bg-slate-700 dark:hover:text-slate-300',)}>
+                            <a href={subItem.url}>
+                              <span>{subItem.label}</span>
+                            </a>
+                          </SidebarMenuSubButton>
+                        </SidebarMenuSubItem>
+                      ))}
+                    </SidebarMenuSub>
+                  </CollapsibleContent>
+                </>
+              ) : null}
+            </SidebarMenuItem>
+          </Collapsible>
+      </SidebarMenu>
+    </SidebarGroup>
+</Collapsible>
   );
 }
