@@ -142,7 +142,7 @@ export const Default = {
         ]
       },
       {
-        name : 'Company',
+        name : 'Intranet',
         href: '#',
       }
     ],
