@@ -28,24 +28,28 @@ import {
 } from '@heroicons/react/20/solid';
 import HeaderMenu, { type HeaderMenuProps } from './HeaderMenu';
 export default function SimpleHeader({
+  title,
+  logo,
   menuItems,
 }: {
+  title?: string;
+  logo?: string;
   menuItems: HeaderMenuProps[];
 }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="relative isolate z-10 bg-white">
+    <header className="relative isolate z-10 bg-white h-14">
       <nav
         aria-label="Global"
-        className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
+        className="relative mx-auto flex items-center justify-between p-3 lg:px-8"
       >
         <div className="flex lg:flex-1">
           <a href="#" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
             <img
-              alt=""
-              src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
+              alt={title}
+              src={logo}
               className="h-8 w-auto"
             />
           </a>
@@ -82,8 +86,8 @@ export default function SimpleHeader({
             <a href="#" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
               <img
-                alt=""
-                src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
+                alt={title}
+                src={logo}
                 className="h-8 w-auto"
               />
             </a>

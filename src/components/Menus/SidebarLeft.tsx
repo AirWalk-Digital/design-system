@@ -98,7 +98,7 @@ export default function SidebarLeft({
   ...props
 }: SidebarLeftProps) {
   return (
-    <Sidebar variant="inset" {...props}>
+    <Sidebar {...props} variant="inset">
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>

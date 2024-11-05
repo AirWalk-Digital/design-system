@@ -97,7 +97,7 @@ const DynamicIcon: React.FC<DynamicIconProps> = ({
       icon={faIcon}
       size={size as SizeProp}
       className={className}
-      style={{ height: '100%', width: '100%' }}
+      style={{ height: '1rem', width: '1rem' }}
     />
   ) : (
     <FontAwesomeIcon
@@ -105,7 +105,7 @@ const DynamicIcon: React.FC<DynamicIconProps> = ({
       spin
       size={size as SizeProp}
       className={className}
-      style={{ height: '100%', width: '100%' }}
+      style={{ height: '1rem', width: '1rem' }}
     />
   );
 };

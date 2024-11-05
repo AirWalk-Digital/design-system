@@ -92,6 +92,6 @@
     "webpack-cli": "^5.1.4"
   },
   "optionalDependencies": {
-    "@awesome.me/kit-ff3b5aaa16": "^1.0.4"
+    "@awesome.me/kit-ff3b5aaa16": "^1.0.15"
   }
 }
