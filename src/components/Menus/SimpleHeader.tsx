@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Dialog,
   DialogPanel,
@@ -8,25 +8,15 @@ import {
   DisclosureButton,
   DisclosurePanel,
   Popover,
-  PopoverButton,
   PopoverGroup,
-  PopoverPanel,
 } from '@headlessui/react';
 import {
   Bars3Icon,
-  ChartPieIcon,
-  CursorArrowRaysIcon,
-  FingerPrintIcon,
-  SquaresPlusIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline';
-import {
-  ChevronDownIcon,
-  PhoneIcon,
-  PlayCircleIcon,
-  RectangleGroupIcon,
-} from '@heroicons/react/20/solid';
+import { SunIcon, MoonIcon } from '@heroicons/react/20/solid';
 import HeaderMenu, { type HeaderMenuProps } from './HeaderMenu';
+
 export default function SimpleHeader({
   title,
   logo,
@@ -37,6 +27,18 @@ export default function SimpleHeader({
   menuItems: HeaderMenuProps[];
 }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+    // Set initial theme based on the presence of the 'data-mode' attribute on the root
+    const currentTheme = document.documentElement.getAttribute('class');
+    setIsDarkMode(currentTheme === 'dark');
+  }, []);
+
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
+    document.documentElement.setAttribute('class', !isDarkMode ? 'dark' : 'light');
+  };
 
   return (
     <header className="relative isolate z-10 bg-white h-14">
@@ -47,11 +49,7 @@ export default function SimpleHeader({
         <div className="flex lg:flex-1">
           <a href="#" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
-            <img
-              alt={title}
-              src={logo}
-              className="h-8 w-auto"
-            />
+            <img alt={title} src={logo} className="h-8 w-auto" />
           </a>
         </div>
         <div className="flex lg:hidden">
@@ -70,9 +68,18 @@ export default function SimpleHeader({
           ))}
         </PopoverGroup>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          {/* <a href="#" className="text-sm/6 font-semibold text-gray-900">
-            Log in <span aria-hidden="true">&rarr;</span>
-          </a> */}
+          {/* Theme Toggle Button */}
+          <button
+            onClick={toggleTheme}
+            className="p-2 text-gray-500 hover:text-gray-900 transition-colors duration-200"
+            aria-label="Toggle theme"
+          >
+            {isDarkMode ? (
+              <SunIcon className="h-5 w-5" />
+            ) : (
+              <MoonIcon className="h-5 w-5" />
+            )}
+          </button>
         </div>
       </nav>
       <Dialog
@@ -85,11 +92,7 @@ export default function SimpleHeader({
           <div className="flex items-center justify-between">
             <a href="#" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
-              <img
-                alt={title}
-                src={logo}
-                className="h-8 w-auto"
-              />
+              <img alt={title} src={logo} className="h-8 w-auto" />
             </a>
             <button
               type="button"
@@ -106,51 +109,7 @@ export default function SimpleHeader({
                 {menuItems.map((menu) => (
                   <DisclosureItem key={menu.name} {...menu} />
                 ))}
-                {/* <Disclosure as="div" className="-mx-3">
-                  <DisclosureButton className="group flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">
-                    Product
-                    <ChevronDownIcon aria-hidden="true" className="h-5 w-5 flex-none group-data-[open]:rotate-180" />
-                  </DisclosureButton>
-                  <DisclosurePanel className="mt-2 space-y-2">
-                    {[...products, ...callsToAction].map((item) => (
-                      <DisclosureButton
-                        key={item.name}
-                        as="a"
-                        href={item.href}
-                        className="block rounded-lg py-2 pl-6 pr-3 text-sm/7 font-semibold text-gray-900 hover:bg-gray-50"
-                      >
-                        {item.name}
-                      </DisclosureButton>
-                    ))}
-                  </DisclosurePanel>
-                </Disclosure> */}
-                {/* <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                >
-                  Features
-                </a>
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                >
-                  Marketplace
-                </a>
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                >
-                  Company
-                </a> */}
               </div>
-              {/* <div className="py-6">
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                >
-                  Log in
-                </a>
-              </div> */}
             </div>
           </div>
         </DialogPanel>
@@ -164,7 +123,7 @@ function DisclosureItem({ name, items, actions, href }: HeaderMenuProps) {
     return (
       <a
         href={href}
-        className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+        className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50"
       >
         {name}
       </a>
@@ -172,12 +131,8 @@ function DisclosureItem({ name, items, actions, href }: HeaderMenuProps) {
   }
   return (
     <Disclosure as="div" className="-mx-3">
-      <DisclosureButton className="group flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">
+      <DisclosureButton className="group flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold text-gray-900 hover:bg-gray-50">
         {name}
-        <ChevronDownIcon
-          aria-hidden="true"
-          className="h-5 w-5 flex-none group-data-[open]:rotate-180"
-        />
       </DisclosureButton>
       <DisclosurePanel className="mt-2 space-y-2">
         {items &&
@@ -186,18 +141,7 @@ function DisclosureItem({ name, items, actions, href }: HeaderMenuProps) {
               key={item.name}
               as="a"
               href={item.href}
-              className="block rounded-lg py-2 pl-6 pr-3 text-sm/7 font-semibold text-gray-900 hover:bg-gray-50"
-            >
-              {item.name}
-            </DisclosureButton>
-          ))}
-        {actions &&
-          actions.map((item) => (
-            <DisclosureButton
-              key={item.name}
-              as="a"
-              href={item.href}
-              className="block rounded-lg py-2 pl-6 pr-3 text-sm/7 font-semibold text-gray-900 hover:bg-gray-50"
+              className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold text-gray-900 hover:bg-gray-50"
             >
               {item.name}
             </DisclosureButton>

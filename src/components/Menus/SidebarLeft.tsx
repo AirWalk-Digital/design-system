@@ -102,17 +102,17 @@ export default function SidebarLeft({
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" onClick={onSidebarMenu}>
+            {/* <SidebarMenuButton size="lg" onClick={onSidebarMenu}> */}
               
                 {/* <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                   <LayoutGrid className="size-6" />
                 </div> */}
-                <div className="grid flex-1 text-left text-sm leading-tight">
+                <div className="grid flex-1 p-2 text-left text-m leading-tight">
                   <span className="truncate font-semibold">{title}</span>
-                 {subTitle && <span className="truncate text-xs">{subTitle}</span> }
+                 {subTitle && <span className="truncate text-sm">{subTitle}</span> }
                 </div>
               
-            </SidebarMenuButton>
+            {/* </SidebarMenuButton> */}
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
@@ -160,7 +160,7 @@ function Menu({ subNav, pathName }: { menuHeading?: string; subNav: MenuStructur
       <SidebarMenu>
           <Collapsible key={item.label} asChild defaultOpen={item.isActive}>
             <SidebarMenuItem>
-              <SidebarMenuButton asChild tooltip={item.label} className={clsx(isActive ? 'font-bold' : 'text-slate-500 before:hidden before:bg-slate-300 hover:text-accent hover:before:block dark:text-slate-400 dark:before:bg-slate-700 dark:hover:text-slate-300',)}>
+              <SidebarMenuButton asChild tooltip={item.label} className={clsx(isActive && 'font-bold text-accent' )}>
                 <a href={item.url}>
                   {item.icon && <item.icon />}
                   <span>{item.label}</span>
@@ -178,7 +178,7 @@ function Menu({ subNav, pathName }: { menuHeading?: string; subNav: MenuStructur
                     <SidebarMenuSub >
                       {item.links?.map((subItem) => (
                         <SidebarMenuSubItem key={subItem.label}>
-                          <SidebarMenuSubButton asChild className={clsx(subItem.url === pathName ? 'font-bold text-accent' : 'text-slate-500 before:hidden before:bg-slate-300 hover:text-slate-600 hover:before:block dark:text-slate-400 dark:before:bg-slate-700 dark:hover:text-slate-300',)}>
+                          <SidebarMenuSubButton asChild className={clsx(subItem.url === pathName && 'font-bold text-accent',)}>
                             <a href={subItem.url}>
                               <span>{subItem.label}</span>
                             </a>
