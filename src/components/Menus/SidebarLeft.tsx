@@ -77,7 +77,7 @@ export type NavigationItem = {
 };
 
 interface SidebarLeftProps extends React.ComponentProps<typeof Sidebar> {
-  mainNav: MultiMenuStructure[];
+  mainNav: MenuStructure[];
   secondaryNav: MenuStructure[];
   title: string;
   subTitle?: string;
@@ -160,7 +160,7 @@ function Menu({ subNav, pathName }: { menuHeading?: string; subNav: MenuStructur
       <SidebarMenu>
           <Collapsible key={item.label} asChild defaultOpen={item.isActive}>
             <SidebarMenuItem>
-              <SidebarMenuButton asChild tooltip={item.label} className={clsx(isActive ? 'font-bold' : 'text-slate-500 before:hidden before:bg-slate-300 hover:text-slate-600 hover:before:block dark:text-slate-400 dark:before:bg-slate-700 dark:hover:text-slate-300',)}>
+              <SidebarMenuButton asChild tooltip={item.label} className={clsx(isActive ? 'font-bold' : 'text-slate-500 before:hidden before:bg-slate-300 hover:text-accent hover:before:block dark:text-slate-400 dark:before:bg-slate-700 dark:hover:text-slate-300',)}>
                 <a href={item.url}>
                   {item.icon && <item.icon />}
                   <span>{item.label}</span>
@@ -178,7 +178,7 @@ function Menu({ subNav, pathName }: { menuHeading?: string; subNav: MenuStructur
                     <SidebarMenuSub >
                       {item.links?.map((subItem) => (
                         <SidebarMenuSubItem key={subItem.label}>
-                          <SidebarMenuSubButton asChild className={clsx(subItem.url === pathName ? 'font-bold text-sky-500' : 'text-slate-500 before:hidden before:bg-slate-300 hover:text-slate-600 hover:before:block dark:text-slate-400 dark:before:bg-slate-700 dark:hover:text-slate-300',)}>
+                          <SidebarMenuSubButton asChild className={clsx(subItem.url === pathName ? 'font-bold text-accent' : 'text-slate-500 before:hidden before:bg-slate-300 hover:text-slate-600 hover:before:block dark:text-slate-400 dark:before:bg-slate-700 dark:hover:text-slate-300',)}>
                             <a href={subItem.url}>
                               <span>{subItem.label}</span>
                             </a>

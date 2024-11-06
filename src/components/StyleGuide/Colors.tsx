@@ -69,7 +69,10 @@ export default function ThemeColors() {
   }
 
   return (
+    /* Usage in HTML or React component */
+
     <div className="w-full max-w-6xl mx-auto space-y-2 bg-white">
+      <div className="variable-safelist" style={{display: "none"}}></div>
       {colorGroups.map((group) => (
         <div key={group.name} className="space-y-4 bg-grey-500">
           <h2 className="text-2xl font-semibold">{group.name}</h2>
