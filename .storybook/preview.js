@@ -2,10 +2,18 @@
 // .storybook/preview.js
 // import { withThemeByDataAttribute } from '@storybook/addon-themes';
 import { withThemeByClassName } from '@storybook/addon-themes';
+import { initialize, mswLoader } from 'msw-storybook-addon';
 
 import React from 'react';
 import '../src/index.css';
-
+initialize({
+  serviceWorker: {
+    url: '/apiMockServiceWorker.js',
+    options: {
+      updateViaCache: 'none'
+    }
+  }
+})
 const preview = {
   parameters: {
     tags: ['autodocs'],
@@ -16,17 +24,8 @@ const preview = {
       },
     },
   },
-};
-export const decorators = [
-  // withThemeByDataAttribute({
-  //   themes: {
-  //     light: 'light',
-  //     dark: 'dark',
-  //   },
-  //   defaultTheme: 'light',
-  //   attributeName: 'data-mode',
-  // }),
-  withThemeByClassName<Renderer>({
+  loaders: [mswLoader], // 👈 Add the MSW loader to all stories
+  decorators: [ withThemeByClassName<Renderer>({
         themes: {
           light: '',
           dark: 'dark',
@@ -37,6 +36,7 @@ export const decorators = [
   (Story) => (
       <Story />
   ),
-];
+]
+};
 
 export default preview;
