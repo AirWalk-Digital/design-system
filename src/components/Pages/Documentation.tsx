@@ -68,6 +68,9 @@ import {
 import SidebarRight from "@/components/Menus/SidebarRight"
 import SidebarLeft from "@/components/Menus/SidebarLeft"
 import { SimpleHeader } from "../Menus"
+import GithubControl from '@/components/Editor/GithubControl';
+import { Toaster } from '@/components/ui/toaster';
+
 export default function Documentation({ ...args }) {
   return (
     <div className="flex fixed flex-col w-screen h-screen max-h-screen overflow-auto overscroll-contain">
@@ -103,9 +106,10 @@ export default function Documentation({ ...args }) {
           <div className="flex-1 rounded-xl bg-muted/50 md:min-h-min" />
         </div>
       </SidebarInset>
-      <SidebarRight {...args.sidebarRight} className="flex-none"/>
+      <SidebarRight {...args.sidebarRight} editorComponent={<GithubControl {...args.github} />} className="flex-none"/>
 
     </SidebarProvider>
+    <Toaster/>
     </div>
   )
 }

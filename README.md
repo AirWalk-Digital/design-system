@@ -1,9 +1,19 @@
-# design-system
-Reusable components and styles
+# Design System
+Reusable components and styles used to build internal web applications.
 
+View the available components and pages via [Storybook](https://airwalk-digital.github.io/design-system/).
 
+## Usage
 
-# FontAwesome
+Use this package through npm
+
+```bash
+npm i airwalk-design-system
+```
+
+## Development
+
+### FontAwesome
 
 To use the pro fonts or kits, you need to install `@awesome.me/kit-ff3b5aaa16`. This is our specific "kit" with our optional icons as well as the pro icons in.
 
@@ -13,22 +23,4 @@ then run
 
 ```bash
 npm install --no-save '@awesome.me/kit-ff3b5aaa16@latest'
-```
-
-## Using the Pro icons.
-
-We need to wrap the application in the provider in a higher level component (such as _app.tsx or a layout in Next.js)..
-
-```jsx
-import { IconProvider } from './IconProvider';
-
-const App = ({ Component, pageProps }) => {
-  return (
-    <IconProvider>
-      <Component {...pageProps} />
-    </IconProvider>
-  );
-};
-
-export default App;
 ```
