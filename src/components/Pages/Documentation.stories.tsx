@@ -391,9 +391,53 @@ export const Default = {
           ],
         },
       ],
+      relatedContent: {
+        "knowledge": [
+          {
+            "label": "AWS Risk Assessment Terraform Module",
+            "url": "/knowledge/terraform_risk_assessment_AWS/_index.md",
+            "type": "published"
+          },
+          {
+            "label": "AWS Airview CCF Terraform Module",
+            "url": "/knowledge/terraform_aws_airview_ccf/_index.md",
+            "type": "note"
+          }
+        ],
+        "services": [
+          {
+            "label": "AWS Account Vending Machine",
+            "url": "/services/aws_account_vending_machine/_index.md",
+            "type": "published"
+          },
+          {
+            "label": "AWS Beanstalk",
+            "url": "/services/aws_beanstalk/_index.md",
+            "type": "draft"
+          },
+          {
+            "label": "AWS Airwalk Network Firewall Terraform Module",
+            "url": "/services/aws_vpc/terraform-aws-airwalk-module-networkfirewall.md",
+            "type": "published"
+          },
+          {
+            "label": "AWS WAF and Shield",
+            "url": "/services/aws_waf_and_shield/_index.md",
+            "type": "published"
+          }
+        ]
+      },  
       onAddDocument: fn(),
       onEditDocument: fn(),
       onPrintDocument: fn(),
+    },
+    github: {
+      onPublishDraft: fn(),
+      // fetchBranches?: (collection: any) => void;
+      handleNewBranch: fn(),
+      handlePR: fn(),
+      onSave: fn(),
+
     },
   },
 };

@@ -1,5 +1,5 @@
-"use client";
-import React from "react";
+'use client';
+import React from 'react';
 import {
   BadgeCheck,
   Bell,
@@ -29,8 +29,7 @@ import {
   Sparkles,
   SquareTerminal,
   Trash2,
-} from "lucide-react";
-
+} from 'lucide-react';
 
 import {
   Sidebar,
@@ -51,12 +50,17 @@ import {
   SidebarProvider,
   SidebarTrigger,
   SidebarSeparator,
-} from "@/components/ui/sidebar";
+} from '@/components/ui/sidebar';
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+} from '@/components/ui/collapsible';
+import { faCodePullRequestDraft } from '@awesome.me/kit-ff3b5aaa16/icons/classic/light';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import clsx from 'clsx'
+
+import type { RelatedContent } from '@/lib/Types';
 export type TableOfContentsItem = {
   title: string;
   url: string;
@@ -67,18 +71,43 @@ export type TableOfContentsItem = {
 
 interface SidebarRightProps extends React.ComponentProps<typeof Sidebar> {
   tableOfContents?: TableOfContentsItem[];
+  relatedContent?: RelatedContent;
+  editorComponent?: React.ReactNode;
   onAddDocument: () => void;
   onEditDocument: () => void;
   onPrintDocument: () => void;
+  onNavClick?: (callback: any) => void;
 }
 
 export default function SidebarRight({
+  relatedContent,
   tableOfContents,
+  editorComponent,
   onAddDocument,
   onEditDocument,
   onPrintDocument,
+  onNavClick,
   ...props
 }: SidebarRightProps) {
+  const isActive = false; // Todo: work out how to determine if a link is active
+  interface ButtonProps {
+    href: string;
+    children: React.ReactNode;
+  }
+  const Button: React.FC<ButtonProps> = ({ href, children, ...props }) => {
+    return (
+      <button
+        onClick={() => onNavClick && onNavClick(href)}
+        className="flex items-center justify-start w-full text-sm text-left px-4 py-2"
+        {...props}
+      >
+        {children}
+      </button>
+    );
+  };
+  // if onNavClick is provided, pass the callback to the buttons. else, render an anchor tag
+  const LinkComponent = onNavClick ? Button : 'a';
+  const [editMode, setEditMode] = React.useState(false);
   return (
     <Sidebar
       side="right"
@@ -98,7 +127,7 @@ export default function SidebarRight({
         </SidebarMenu>
         <SidebarMenu className="flex-row space-x-1">
           <SidebarMenuItem className="w-5/12">
-            <SidebarMenuButton onClick={onEditDocument}>
+            <SidebarMenuButton onClick={() => setEditMode(!editMode)} disabled={!editorComponent} variant={editMode ? 'outline' : 'default'} className={clsx(editMode && 'bg-accent text-accent-foreground' )}>
               <Edit /> <span>Edit</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -109,67 +138,143 @@ export default function SidebarRight({
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
+
+      {editMode && editorComponent && (
+        <>
+          <Collapsible defaultOpen className="group/collapsible">
+            <SidebarGroup>
+              <SidebarGroupLabel asChild>
+                <CollapsibleTrigger>
+                  Editor Controls
+                  <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
+                </CollapsibleTrigger>
+              </SidebarGroupLabel>
+              <SidebarGroupContent>
+                <CollapsibleContent>{editorComponent}</CollapsibleContent>
+              </SidebarGroupContent>
+            </SidebarGroup>
+          </Collapsible>
+          <SidebarSeparator className="mx-0" />
+        </>
+      )}
       {/* <SidebarContent>
         <SidebarSeparator className="mx-0" />
       </SidebarContent> */}
       <SidebarContent className="overflow-auto">
-
-      { tableOfContents && 
-      <Collapsible defaultOpen className="group/collapsible">
-
-        <SidebarGroup>
-        <SidebarGroupLabel asChild>
-          <CollapsibleTrigger>
-          Table of Contents
-            <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
-          </CollapsibleTrigger>
-          </SidebarGroupLabel>
-                    <SidebarGroupContent>
-                    <CollapsibleContent>
-
-            <SidebarMenu>
-              {tableOfContents.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url} className="text-xs">
-                      {item.title}
-                    </a>
-                  </SidebarMenuButton>
-                  {item.items?.length ? (
-                    <SidebarMenuSub>
-                      {item.items.map((item) => (
-                        <SidebarMenuSubItem key={item.title}>
-                          <SidebarMenuSubButton
-                            asChild
-                            isActive={item.isActive}
-                            size="sm"
-                          >
-                            <a
-                              href={item.url}
-                              className="flex justify-between items-center w-full text-xs"
-                            >
-                              <span>{item.title}</span>
-                              {item.isDraft && (
-                                <PencilLine
-                                  className="ml-2 text-gray-400 !important"
-                                  size={16}
-                                />
-                              )}{" "}
-                              {/* Conditionally render the draft icon */}
-                            </a>
-                          </SidebarMenuSubButton>
-                        </SidebarMenuSubItem>
+        {relatedContent && (
+          <Collapsible defaultOpen className="group/collapsible">
+            <SidebarGroup>
+              <SidebarGroupLabel asChild>
+                <CollapsibleTrigger>
+                  Table of Contents
+                  <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
+                </CollapsibleTrigger>
+              </SidebarGroupLabel>
+              <SidebarGroupContent>
+                <CollapsibleContent>
+                  <SidebarMenu>
+                    {relatedContent &&
+                      Object.keys(relatedContent).map((item) => (
+                        <SidebarMenuItem key={item}>
+                          <span className="p-2 text-xs text-sidebar-foreground">
+                            {' '}
+                            {item.charAt(0).toUpperCase() + item.slice(1)}
+                          </span>
+                          {item && relatedContent[item] && (
+                            <SidebarMenuSub>
+                              {relatedContent[item].map((item) => (
+                                <SidebarMenuSubItem key={item.label}>
+                                  <SidebarMenuSubButton
+                                    asChild
+                                    isActive={isActive}
+                                    size="sm"
+                                  >
+                                    <LinkComponent
+                                      href={item.url}
+                                      className="flex justify-between items-center w-full text-xs"
+                                    >
+                                      <span>{item.label}</span>
+                                      {item.type === 'note' && (
+                                        <PencilLine
+                                          className="ml-2 text-gray-400 !important"
+                                          size={16}
+                                        />
+                                      )}
+                                      {item.type === 'draft' && (
+                                        <FontAwesomeIcon
+                                          icon={faCodePullRequestDraft}
+                                          className="ml-2 text-gray-400 !important"
+                                        />
+                                      )}
+                                      {/* Conditionally render the draft icon */}
+                                    </LinkComponent>
+                                  </SidebarMenuSubButton>
+                                </SidebarMenuSubItem>
+                              ))}
+                            </SidebarMenuSub>
+                          )}
+                        </SidebarMenuItem>
                       ))}
-                    </SidebarMenuSub>
-                  ) : null}
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-            </CollapsibleContent>
-          </SidebarGroupContent>
-        </SidebarGroup>
-        </Collapsible>
-}
+                  </SidebarMenu>
+                </CollapsibleContent>
+              </SidebarGroupContent>
+            </SidebarGroup>
+          </Collapsible>
+        )}
+        {tableOfContents && (
+          <Collapsible defaultOpen className="group/collapsible">
+            <SidebarGroup>
+              <SidebarGroupLabel asChild>
+                <CollapsibleTrigger>
+                  Table of Contents
+                  <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
+                </CollapsibleTrigger>
+              </SidebarGroupLabel>
+              <SidebarGroupContent>
+                <CollapsibleContent>
+                  <SidebarMenu>
+                    {tableOfContents.map((item) => (
+                      <SidebarMenuItem key={item.title}>
+                        <SidebarMenuButton asChild>
+                          <a href={item.url} className="text-xs">
+                            {item.title}
+                          </a>
+                        </SidebarMenuButton>
+                        {item.items?.length ? (
+                          <SidebarMenuSub>
+                            {item.items.map((item) => (
+                              <SidebarMenuSubItem key={item.title}>
+                                <SidebarMenuSubButton
+                                  asChild
+                                  isActive={item.isActive}
+                                  size="sm"
+                                >
+                                  <a
+                                    href={item.url}
+                                    className="flex justify-between items-center w-full text-xs"
+                                  >
+                                    <span>{item.title}</span>
+                                    {item.isDraft && (
+                                      <PencilLine
+                                        className="ml-2 text-gray-400 !important"
+                                        size={16}
+                                      />
+                                    )}{' '}
+                                    {/* Conditionally render the draft icon */}
+                                  </a>
+                                </SidebarMenuSubButton>
+                              </SidebarMenuSubItem>
+                            ))}
+                          </SidebarMenuSub>
+                        ) : null}
+                      </SidebarMenuItem>
+                    ))}
+                  </SidebarMenu>
+                </CollapsibleContent>
+              </SidebarGroupContent>
+            </SidebarGroup>
+          </Collapsible>
+        )}
       </SidebarContent>
       <SidebarFooter>
         {/* <SidebarMenu>
