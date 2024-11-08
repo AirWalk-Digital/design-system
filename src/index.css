@@ -16,7 +16,7 @@
     --secondary-foreground: 240 5.9% 10%;
     --muted: 240 4.8% 95.9%;
     --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
+    --accent:  142.1 76.2% 36.3%;
     --accent-foreground: 240 5.9% 10%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
@@ -31,9 +31,9 @@
     --chart-5: 27 87% 67%;
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary:  142.1 76.2% 36.3%;
     --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent:  142.1 76.2% 36.3%;
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
@@ -52,7 +52,7 @@
     --secondary-foreground: 0 0% 98%;
     --muted: 0 0% 15%;
     --muted-foreground: 240 5% 64.9%;
-    --accent: 12 6.5% 15.1%;
+    --accent: 224.3 76.3% 48%;
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 85.7% 97.3%;
@@ -68,7 +68,7 @@
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent: 224.3 76.3% 48%;
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
@@ -86,7 +86,7 @@
     --secondary-foreground: 0 0% 98%;
     --muted: 0 0% 15%;
     --muted-foreground: 240 5% 64.9%;
-    --accent: 12 6.5% 15.1%;
+    --accent: 142.1 70.6% 45.3%;
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 85.7% 97.3%;
@@ -102,7 +102,7 @@
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 142.1 70.6% 45.3%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent: 142.1 70.6% 45.3%;
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
@@ -113,3 +113,41 @@
 .sb-main-padded {
   padding: 0 !important; /* Override the default Storybook padding */
 }
+
+.variable-safelist {
+  /* Light mode variables */
+  color: var(--background);
+  color: var(--foreground);
+  color: var(--card);
+  color: var(--card-foreground);
+  color: var(--popover);
+  color: var(--popover-foreground);
+  color: var(--primary);
+  color: var(--primary-foreground);
+  color: var(--secondary);
+  color: var(--secondary-foreground);
+  color: var(--muted);
+  color: var(--muted-foreground);
+  color: var(--accent);
+  color: var(--accent-foreground);
+  color: var(--destructive);
+  color: var(--destructive-foreground);
+  color: var(--border);
+  color: var(--input);
+  color: var(--ring);
+  color: var(--radius);
+  color: var(--chart-1);
+  color: var(--chart-2);
+  color: var(--chart-3);
+  color: var(--chart-4);
+  color: var(--chart-5);
+  color: var(--sidebar-background);
+  color: var(--sidebar-foreground);
+  color: var(--sidebar-primary);
+  color: var(--sidebar-primary-foreground);
+  color: var(--sidebar-accent);
+  color: var(--sidebar-accent-foreground);
+  color: var(--sidebar-border);
+  color: var(--sidebar-ring);
+}
+

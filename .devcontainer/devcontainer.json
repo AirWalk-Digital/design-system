@@ -1,7 +1,7 @@
 // See https://aka.ms/vscode-remote/devcontainer.json for format details or
 // https://aka.ms/vscode-dev-containers/definitions for sample configurations.
 {
-  "name": "Airview Next",
+  "name": "Design System",
   "dockerFile": "Dockerfile.vscode",
   "remoteUser": "vscode",
   //"mounts": [

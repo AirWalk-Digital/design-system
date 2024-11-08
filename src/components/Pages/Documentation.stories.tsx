@@ -29,7 +29,61 @@ import {
 } from "lucide-react"
 import Documentation from './Documentation';
 import { fn } from '@storybook/test';
+import { PhoneIcon, PlayCircleIcon, RectangleGroupIcon } from '@heroicons/react/20/solid'
+import {
+  ChartPieIcon,
+  CursorArrowRaysIcon,
+  FingerPrintIcon,
+} from '@heroicons/react/24/outline';
+import { DynamicIcon } from '@/components/Images';
 
+
+
+const GithubIcon = () => (
+  <DynamicIcon
+      iconName="github"
+      size="10x"
+      type="brands"
+    />
+  );
+  const AWSIcon = () => (
+    <DynamicIcon
+        iconName="aws"
+        size="10x"
+        type="brands"
+      />
+    );
+    const AzureIcon = () => (
+      <DynamicIcon
+          iconName="azure"
+          size="10x"
+          type="kit"
+        />
+      );
+      const SolutionIcon = () => (
+        <DynamicIcon
+            iconName="people-sharing"
+            size="10x"
+            type="kit"
+          />
+        );
+
+        const ServiceIcon = () => (
+          <DynamicIcon
+              iconName="cloud-network-sharing"
+              size="10x"
+              type="kit"
+            />
+          );
+
+          const ProductIcon = () => (
+            <DynamicIcon
+                iconName="development"
+                size="10x"
+                type="kit"
+              />
+            );
+      
 export default {
   title: 'Pages/Documentation',
   component: Documentation,
@@ -47,92 +101,138 @@ const Template = (args: any) => <Documentation {...args} />;
 export const Default = {
   render: Template,
   args: {
+    header: {
+    title: 'Your Company',
+    logo: '/logos/reply.jpg',
+    menuItems: [
+      {
+        name: 'Documentation',
+        items: [
+          {
+            name: 'Platforms & Services',
+            description: 'Cloud services',
+            href: '#',
+            icon: ServiceIcon, // Pass the component, not <ChartPieIcon />
+          },
+          {
+            name: 'Solutions & Propositions',
+            description: 'Solutions that we have built',
+            href: '#',
+            icon: SolutionIcon,
+          },
+          {
+            name: 'Products',
+            description: 'Products that we sell',
+            href: '#',
+            icon: ProductIcon,
+          },
+        ],
+      },
+      {
+        name: 'Resources',
+        items: [
+          { name: 'Documentation', href: '#', icon: ChartPieIcon },
+          { name: 'API Reference', href: '#', icon: CursorArrowRaysIcon },
+          { name: 'Github', href: '#', icon: GithubIcon },
+        ],
+        actions: [
+          { name: 'Watch demo', href: '#', icon: PlayCircleIcon },
+          { name: 'Contact sales', href: '#', icon: PhoneIcon },
+          { name: 'View all products', href: '#', icon: RectangleGroupIcon },
+        ]
+      },
+      {
+        name : 'Intranet',
+        href: '#',
+      }
+    ],
+  },
     onToggleAppGrid: () => { fn() },
     sidebarLeft: {
       title: "Playground",
       subTitle: "Airview",
       mainNav: [
         {
-          title: "Playground",
+          label: "AWS",
           url: "#",
-          icon: SquareTerminal,
+          icon: AWSIcon,
           isActive: true,
-          items: [
+         links: [
             {
-              title: "History",
+              label: "EC2",
               url: "#",
             },
             {
-              title: "Starred",
+              label: "IAM",
               url: "#",
             },
             {
-              title: "Settings",
+              label: "S3",
               url: "#",
             },
           ],
         },
         {
-          title: "Models",
+          label: "Microsoft Azure",
           url: "#",
-          icon: Bot,
-          items: [
+          icon: AzureIcon,
+         links: [
             {
-              title: "Genesis",
+              label: "Virtual Machines",
               url: "#",
             },
             {
-              title: "Explorer",
+              label: "Storage",
               url: "#",
             },
             {
-              title: "Quantum",
+              label: "Azure SQL",
               url: "#",
             },
           ],
         },
         {
-          title: "Documentation",
+          label: "Documentation",
           url: "#",
           icon: BookOpen,
-          items: [
+         links: [
             {
-              title: "Introduction",
+              label: "Introduction",
               url: "#",
             },
             {
-              title: "Get Started",
+              label: "Get Started",
               url: "#",
             },
             {
-              title: "Tutorials",
+              label: "Tutorials",
               url: "#",
             },
             {
-              title: "Changelog",
+              label: "Changelog",
               url: "#",
             },
           ],
         },
         {
-          title: "Settings",
+          label: "Settings",
           url: "#",
           icon: Settings2,
-          items: [
+         links: [
             {
-              title: "General",
+              label: "General",
               url: "#",
             },
             {
-              title: "Team",
+              label: "Team",
               url: "#",
             },
             {
-              title: "Billing",
+              label: "Billing",
               url: "#",
             },
             {
-              title: "Limits",
+              label: "Limits",
               url: "#",
             },
           ],
@@ -140,12 +240,12 @@ export const Default = {
       ],
       secondaryNav: [
         {
-          title: "Support",
+          label: "Support",
           url: "#",
           icon: LifeBuoy,
         },
         {
-          title: "Feedback",
+          label: "Feedback",
           url: "#",
           icon: Send,
         },
@@ -157,7 +257,7 @@ export const Default = {
         {
           title: "Getting Started",
           url: "#",
-          items: [
+         links: [
             {
               title: "Installation",
               url: "#",
@@ -172,7 +272,7 @@ export const Default = {
         {
           title: "Building Your Application",
           url: "#",
-          items: [
+         links: [
             {
               title: "Routing",
               url: "#",
@@ -227,7 +327,7 @@ export const Default = {
         {
           title: "API Reference",
           url: "#",
-          items: [
+         links: [
             {
               title: "Components",
               url: "#",
@@ -257,7 +357,7 @@ export const Default = {
         {
           title: "Architecture",
           url: "#",
-          items: [
+         links: [
             {
               title: "Accessibility",
               url: "#",
@@ -283,7 +383,7 @@ export const Default = {
         {
           title: "Community",
           url: "#",
-          items: [
+         links: [
             {
               title: "Contribution Guide",
               url: "#",
