@@ -105,7 +105,9 @@ function NewContentDialog({
     }
     setIsLoading(true);
     try {
-      await onSubmit({ frontmatter });
+      const data = { frontmatter, docType };
+      console.log(data);
+      await onSubmit(data);
       setTitle('');
       setDocType('');
       setParent('None');
