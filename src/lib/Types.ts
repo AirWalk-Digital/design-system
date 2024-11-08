@@ -1,3 +1,5 @@
+import type React from "react";
+
 type FileType = 'published' | 'draft' | 'note';
 
 interface LinkItem {
@@ -42,6 +44,7 @@ interface MultiMenuStructure {
     branch: string;
     path: string;
     reference: string;
+    icon?: React.ComponentType<React.ComponentProps<"svg">> | JSX.Element;
     collections?: string[];
     menu?: Menu;
     file?: string;
@@ -49,5 +52,23 @@ interface MultiMenuStructure {
   }
   
 
+  interface SiteConfig {
+    title: string;
+    company: string;
+    tagline: string;
+    content: {
+      services?: ContentItem;
+      providers?: ContentItem;
+      solutions?: ContentItem;
+      knowledge?: ContentItem;
+      designs?: ContentItem;
+      customers?: ContentItem;
+      projects?: ContentItem;
+      products?: ContentItem;
+      applications?: ContentItem;
+      frameworks?: ContentItem;
+      notes?: ContentItem;
+  }
+};
 
-export type { FileType, LinkItem, MenuStructure, MultiMenuStructure, RelatedContent, ContentItem, LinkedItem, Menu };
+export type { FileType, LinkItem, MenuStructure, MultiMenuStructure, RelatedContent, ContentItem, LinkedItem, Menu, SiteConfig };
