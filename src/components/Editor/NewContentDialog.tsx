@@ -75,7 +75,7 @@ function NewContentDialog({
   const [parent, setParent] = useState('None');
   const [selectedItem, setSelectedItem] = useState('');
   const [openCombobox, setOpenCombobox] = useState(false);
-  const [availableParents, setAvailableParents] = useState<{ label: 'None', reference: '', icon: null }[]>([]);
+  const [availableParents, setAvailableParents] = useState<{ label: string; reference: string; icon?: React.ComponentType<React.ComponentProps<'svg'>> | JSX.Element | null }[]>([]);
   const [items, setItems] = useState<{ label: string; value: string }[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
@@ -222,9 +222,9 @@ function NewContentDialog({
                 {availableParents.map((option) => (
                   <Button
                     key={option.label}
-                    variant={parent === option ? 'default' : 'outline'}
+                    variant={parent === option.reference ? 'default' : 'outline'}
                     className="flex items-center gap-2 w-full"
-                    onClick={() => handleParentChange(option.label)}
+                    onClick={() => handleParentChange(option.reference)}
                   >
                     {option.label.charAt(0).toUpperCase() +
                       option.label.slice(1)}
