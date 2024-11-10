@@ -75,8 +75,8 @@ export default function Documentation({ ...args }) {
   return (
     <div className="flex fixed flex-col w-screen h-screen max-h-screen overflow-auto overscroll-contain">
     <SimpleHeader {...args.header}/>
-    <SidebarProvider className="flex-1 flex-row overflow-y-auto">
-      <SidebarLeft {...args.sidebarLeft} className="flex-none"/>
+    <SidebarProvider className='top-14 mb-4 h-full max-h-[calc(100vh-3.5rem)] flex-1 flex-row overflow-y-clip'>
+    <SidebarLeft {...args.sidebarLeft} className="flex-none"/>
       <SidebarInset className="grow overflow-hidden">
       <header className="flex h-16 shrink-0 items-center gap-2">
           <div className="flex items-center gap-2 px-4">
