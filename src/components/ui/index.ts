@@ -130,3 +130,4 @@ export {
 } from './command';
 
 export { Button, buttonVariants } from './button';
+export { Alert, AlertTitle, AlertDescription } from './alert';

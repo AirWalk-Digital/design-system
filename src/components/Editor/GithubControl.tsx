@@ -2,13 +2,18 @@
 
 import * as React from 'react';
 import {
+  AlertCircle,
   Check,
   GitBranch,
   HelpCircle,
   Plus,
   GitPullRequest,
 } from 'lucide-react';
-
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "@/components/ui/alert";
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -40,8 +45,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type { ContentItem } from '@/lib/Types';
 import { GithubBranchDialog } from '@/components/Editor/GithubBranchDialog';
 
+interface CollectionItem extends ContentItem {
+  base_branch: string;
+}
+
 interface GithubControlProps {
-  collection?: ContentItem;
+  collection?: CollectionItem;
   context?: ContentItem;
   branches: string[];
   onPublishDraft?: (context: ContentItem | undefined) => void;
@@ -52,6 +61,7 @@ interface GithubControlProps {
 }
 
 export default function GithubControl({
+  collection,
   context,
   handleNewBranchDialog,
   handlePR,
@@ -207,6 +217,16 @@ export default function GithubControl({
         <FontAwesomeIcon icon={faCloudArrowUp} /><span className='text-xs'>Save</span>
         </Button>
       </div>
+      { context?.branch === collection?.base_branch && (
+      <div className="flex w-full items-center gap-2 py-1 pr-3 text-xs">
+      <Alert variant="destructive">
+      <AlertCircle className="h-4 w-4" />
+      <AlertTitle>Warning</AlertTitle>
+      <AlertDescription>
+        Change branch before editing. You cant edit the default branch ({collection?.base_branch}).
+      </AlertDescription>
+    </Alert>
+      </div>) }
     </TooltipProvider>
   );
 }
