@@ -203,7 +203,6 @@ export const FullDemo: StoryFn<typeof GithubControl> = Template.bind({});
 FullDemo.args = {
   collection: dummyCollection,
   context: { ...dummyCollection, branch: 'branch-1' },
-  branches: branches.map((branch) => branch.name),
   handlePR: async () => await dummyFn(true)
 };
 
@@ -211,7 +210,6 @@ export const APISuccess: StoryFn<typeof GithubControl> = Template.bind({});
 APISuccess.args = {
   collection: dummyCollection,
   context: { ...dummyCollection, branch: 'branch-1' },
-  branches: branches.map((branch) => branch.name),
   handlePR: async () => await dummyFn(true)
 };
 
@@ -219,7 +217,6 @@ export const APIError: StoryFn<typeof GithubControl> = Template.bind({});
 APIError.args = {
   collection: dummyCollection,
   context: { ...dummyCollection, branch: 'branch-1' },
-  branches: branches.map((branch) => branch.name),
   handlePR: async () => await dummyFn(true)
 };
 
