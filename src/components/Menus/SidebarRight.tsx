@@ -74,6 +74,7 @@ interface SidebarRightProps extends React.ComponentProps<typeof Sidebar> {
   tableOfContents?: TableOfContentsItem[];
   relatedContent?: RelatedContent;
   editorComponent?: React.ReactNode;
+  isEditMode: boolean;
   onAddDocument: () => void;
   onEditDocument: () => void;
   onPrintDocument: () => void;
@@ -94,6 +95,7 @@ export default function SidebarRight({
   relatedContent,
   tableOfContents,
   editorComponent,
+  isEditMode = false,
   onAddDocument,
   onEditDocument,
   onPrintDocument,
@@ -119,7 +121,6 @@ export default function SidebarRight({
   };
   // if onNavClick is provided, pass the callback to the buttons. else, render an anchor tag
   const LinkComponent = onNavClick ? Button : 'a';
-  const [editMode, setEditMode] = React.useState(false);
   return (
     <Sidebar
       side="right"
@@ -145,7 +146,7 @@ export default function SidebarRight({
         </SidebarMenu>
         <SidebarMenu className="flex-row space-x-1">
           <SidebarMenuItem className="w-5/12">
-            <SidebarMenuButton onClick={() => setEditMode(!editMode)} disabled={!editorComponent} variant={editMode ? 'outline' : 'default'} className={clsx(editMode && 'bg-accent text-accent-foreground' )}>
+            <SidebarMenuButton onClick={() => onEditDocument()} disabled={!editorComponent} variant={isEditMode ? 'outline' : 'default'} className={clsx(isEditMode && 'bg-accent text-accent-foreground' )}>
               <Edit /> <span>Edit</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -157,7 +158,7 @@ export default function SidebarRight({
         </SidebarMenu>
       </SidebarHeader>
 
-      {editMode && editorComponent && (
+      {isEditMode && editorComponent && (
         <>
           <Collapsible defaultOpen className="group/collapsible">
             <SidebarGroup>
