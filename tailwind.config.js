@@ -85,8 +85,10 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [],
-  safelist: [
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
+    safelist: [
     {
       pattern: /^(bg|text|border|ring)-(primary|secondary|destructive|muted|accent|popover|card|sidebar)(-foreground)?$/,
       variants: ['hover', 'focus', 'dark'], // Ensure different states and dark mode are preserved

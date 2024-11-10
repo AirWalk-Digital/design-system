@@ -161,12 +161,12 @@ export default function SidebarRight({
         <SidebarSeparator className="mx-0" />
       </SidebarContent> */}
       <SidebarContent className="overflow-auto">
-        {relatedContent && (
+      {relatedContent && Object.keys(relatedContent).length > 0 && (
           <Collapsible defaultOpen className="group/collapsible">
             <SidebarGroup>
               <SidebarGroupLabel asChild>
                 <CollapsibleTrigger>
-                  Table of Contents
+                  Related Content
                   <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
                 </CollapsibleTrigger>
               </SidebarGroupLabel>
