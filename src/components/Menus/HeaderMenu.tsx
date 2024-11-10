@@ -27,28 +27,30 @@ const HeaderMenu = ({ name, items, actions = [], href }: HeaderMenuProps) => {
 };
    return (
   <Popover>
-    <PopoverButton className="flex items-center gap-x-1 text-sm/6 font-semibold text-gray-900">
+    <PopoverButton className="flex items-center gap-x-1 text-sm/6 font-semibold text-gray-900 outline-none">
       {name}
       <ChevronDownIcon
         aria-hidden="true"
         className="h-5 w-5 flex-none text-gray-400"
       />
     </PopoverButton>
+    
 
     <PopoverPanel
       transition
       className="absolute inset-x-0 top-0 -z-10 bg-white pt-14 shadow-lg ring-1 ring-gray-900/5 transition data-[closed]:-translate-y-1 data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in"
     >
-      <div className="mx-auto grid max-w-7xl grid-cols-4 gap-x-4 px-6 py-10 lg:px-8 xl:gap-x-8">
+      {/* <div className="fixed top-14 inset-0 bg-black bg-opacity-50 -z-20" aria-hidden="true" /> */}
+      <div className="mx-auto grid max-w-7xl grid-cols-4 gap-x-4 px-6 py-10 lg:px-8 xl:gap-x-8 z-50">
         {items && items.map((item) => (
           <div
             key={item.name}
             className="group relative rounded-lg p-6 text-sm/6 hover:bg-gray-50"
           >
-            <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+            <div className="flex h-16 w-16 items-center justify-center rounded-lg bg-white group-hover:bg-gray-50">
               <item.icon
                 aria-hidden="true"
-                className="h-6 w-6 text-gray-600 group-hover:text-indigo-600"
+                className="h-12 w-12 text-gray-600 group-hover:text-accent"
               />
             </div>
             <a

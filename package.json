@@ -79,6 +79,7 @@
     "@storybook/test": "^8.3.6",
     "@svgr/rollup": "^8.1.0",
     "@svgr/webpack": "^8.1.0",
+    "@tailwindcss/typography": "^0.5.15",
     "autoprefixer": "^10.4.20",
     "css-loader": "^7.1.2",
     "deepmerge": "^4.3.1",

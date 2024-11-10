@@ -17,15 +17,13 @@ import {
 import { SunIcon, MoonIcon } from '@heroicons/react/20/solid';
 import HeaderMenu, { type HeaderMenuProps } from './HeaderMenu';
 
-export default function SimpleHeader({
-  title,
-  logo,
-  menuItems,
-}: {
-  title?: string;
+interface SimpleHeaderProps {
+  title: string;
   logo?: string;
   menuItems: HeaderMenuProps[];
-}) {
+}
+
+export default function SimpleHeader({ title, logo, menuItems }: SimpleHeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
@@ -47,8 +45,8 @@ export default function SimpleHeader({
         className="relative mx-auto flex items-center justify-between p-3 lg:px-8"
       >
         <div className="flex lg:flex-1">
-          <a href="#" className="-m-1.5 p-1.5">
-            <span className="sr-only">Your Company</span>
+          <a href="#" className="-m-1.5 p-1.5 outline-none">
+            <span className="sr-only">{title}</span>
             <img alt={title} src={logo} className="h-8 w-auto" />
           </a>
         </div>
@@ -56,7 +54,7 @@ export default function SimpleHeader({
           <button
             type="button"
             onClick={() => setMobileMenuOpen(true)}
-            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700 outline-none"
           >
             <span className="sr-only">Open main menu</span>
             <Bars3Icon aria-hidden="true" className="h-6 w-6" />
@@ -71,7 +69,7 @@ export default function SimpleHeader({
           {/* Theme Toggle Button */}
           <button
             onClick={toggleTheme}
-            className="p-2 text-gray-500 hover:text-gray-900 transition-colors duration-200"
+            className="p-2 text-gray-500 hover:text-gray-900 transition-colors duration-200 outline-none"
             aria-label="Toggle theme"
           >
             {isDarkMode ? (
@@ -87,17 +85,17 @@ export default function SimpleHeader({
         onClose={setMobileMenuOpen}
         className="lg:hidden"
       >
-        <div className="fixed inset-0 z-10" />
-        <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+        <div className="fixed inset-0 z-10 bg-black bg-opacity-50" aria-hidden="true" />
+        <DialogPanel className="fixed inset-y-0 right-0 z-20 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
-            <a href="#" className="-m-1.5 p-1.5">
+            <a href="#" className="-m-1.5 p-1.5 outline-none">
               <span className="sr-only">Your Company</span>
               <img alt={title} src={logo} className="h-8 w-auto" />
             </a>
             <button
               type="button"
               onClick={() => setMobileMenuOpen(false)}
-              className="-m-2.5 rounded-md p-2.5 text-gray-700"
+              className="-m-2.5 rounded-md p-2.5 text-gray-700 outline-none"
             >
               <span className="sr-only">Close menu</span>
               <XMarkIcon aria-hidden="true" className="h-6 w-6" />

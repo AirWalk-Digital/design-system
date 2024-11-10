@@ -212,9 +212,11 @@ Default.args = {
       }
     ]
   },  
+  isEditMode: true,
   onAddDocument: fn(),
   onEditDocument: fn(),
   onPrintDocument: fn(),
+  onGithubClick: fn(),
 };
 
 
@@ -225,7 +227,14 @@ NoTableOfContents.args = {
   onPrintDocument: fn(),
 };
 
-
+export const NoGithubLink = Template.bind({});
+NoGithubLink.args = {
+  editorComponent: <GithubControl onPublishDraft={fn()} handleNewBranch={fn()} handlePR={fn()} />,
+  onAddDocument: fn(),
+  onEditDocument: fn(),
+  onPrintDocument: fn(),
+  onGithubClick: null,
+};
 
 export const OnlyRelatedDocuments = Template.bind({});
 OnlyRelatedDocuments.args = {

@@ -59,6 +59,7 @@ import {
 import { faCodePullRequestDraft } from '@awesome.me/kit-ff3b5aaa16/icons/classic/light';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import clsx from 'clsx'
+import { DynamicIcon } from '../Images';
 
 import type { RelatedContent } from '@/lib/Types';
 export type TableOfContentsItem = {
@@ -73,19 +74,32 @@ interface SidebarRightProps extends React.ComponentProps<typeof Sidebar> {
   tableOfContents?: TableOfContentsItem[];
   relatedContent?: RelatedContent;
   editorComponent?: React.ReactNode;
+  isEditMode: boolean;
   onAddDocument: () => void;
   onEditDocument: () => void;
   onPrintDocument: () => void;
+  onGithubClick?: () => void;
   onNavClick?: (callback: any) => void;
 }
+
+
+const GithubIcon = () => (
+  <DynamicIcon
+      iconName="github"
+      size="10x"
+      type="brands"
+    />
+  );
 
 export default function SidebarRight({
   relatedContent,
   tableOfContents,
   editorComponent,
+  isEditMode = false,
   onAddDocument,
   onEditDocument,
   onPrintDocument,
+  onGithubClick,
   onNavClick,
   ...props
 }: SidebarRightProps) {
@@ -107,7 +121,6 @@ export default function SidebarRight({
   };
   // if onNavClick is provided, pass the callback to the buttons. else, render an anchor tag
   const LinkComponent = onNavClick ? Button : 'a';
-  const [editMode, setEditMode] = React.useState(false);
   return (
     <Sidebar
       side="right"
@@ -118,16 +131,22 @@ export default function SidebarRight({
       {...props}
     >
       <SidebarHeader className="border-b border-sidebar-border">
-        <SidebarMenu>
-          <SidebarMenuItem>
+      <SidebarMenu className="flex-row space-x-1">
+      <SidebarMenuItem>
             <SidebarMenuButton onClick={onAddDocument}>
               <FilePlus /> <span>Add Document</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
+         {onGithubClick && <SidebarMenuItem>
+            <SidebarMenuButton onClick={onGithubClick} tooltip='Open in GitHub'>
+              <GithubIcon />
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+}
         </SidebarMenu>
         <SidebarMenu className="flex-row space-x-1">
           <SidebarMenuItem className="w-5/12">
-            <SidebarMenuButton onClick={() => setEditMode(!editMode)} disabled={!editorComponent} variant={editMode ? 'outline' : 'default'} className={clsx(editMode && 'bg-accent text-accent-foreground' )}>
+            <SidebarMenuButton onClick={() => onEditDocument()} disabled={!editorComponent} variant={isEditMode ? 'outline' : 'default'} className={clsx(isEditMode && 'bg-accent text-accent-foreground' )}>
               <Edit /> <span>Edit</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -139,7 +158,7 @@ export default function SidebarRight({
         </SidebarMenu>
       </SidebarHeader>
 
-      {editMode && editorComponent && (
+      {isEditMode && editorComponent && (
         <>
           <Collapsible defaultOpen className="group/collapsible">
             <SidebarGroup>
@@ -161,12 +180,12 @@ export default function SidebarRight({
         <SidebarSeparator className="mx-0" />
       </SidebarContent> */}
       <SidebarContent className="overflow-auto">
-        {relatedContent && (
+      {relatedContent && Object.keys(relatedContent).length > 0 && (
           <Collapsible defaultOpen className="group/collapsible">
             <SidebarGroup>
               <SidebarGroupLabel asChild>
                 <CollapsibleTrigger>
-                  Table of Contents
+                  Related Content
                   <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
                 </CollapsibleTrigger>
               </SidebarGroupLabel>
