@@ -117,7 +117,7 @@ export const Simple = {
   args: {
     open: true,
     collection: dummyCollection,
-    context: dummyCollection,
+    context: { ...dummyCollection, branch: 'branch-1' },
     branches,
     // editMode: false,
     fetchBranches: fn(),

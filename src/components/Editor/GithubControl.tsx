@@ -2,13 +2,18 @@
 
 import * as React from 'react';
 import {
+  AlertCircle,
   Check,
   GitBranch,
   HelpCircle,
   Plus,
   GitPullRequest,
 } from 'lucide-react';
-
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "@/components/ui/alert";
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -40,10 +45,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type { ContentItem } from '@/lib/Types';
 import { GithubBranchDialog } from '@/components/Editor/GithubBranchDialog';
 
+interface CollectionItem extends ContentItem {
+  base_branch: string;
+}
+
 interface GithubControlProps {
-  collection?: ContentItem;
+  collection?: CollectionItem;
   context?: ContentItem;
-  branches: string[];
+  branches: {
+    name: string;
+    commit: {
+      sha: string;
+    };
+    protected: boolean;
+  }[]
   onPublishDraft?: (context: ContentItem | undefined) => void;
   handleNewBranchDialog?: () => void;
   onSubmitNewBranch: (value: { name?: string } | null) => Promise<void>;
@@ -52,15 +67,16 @@ interface GithubControlProps {
 }
 
 export default function GithubControl({
+  collection,
   context,
+  branches,
   handleNewBranchDialog,
   handlePR,
   onPublishDraft,
   onSubmitNewBranch,
   onSave,
 }: GithubControlProps) {
-  const [selectedBranch, setSelectedBranch] = React.useState('main');
-  const branches = ['main', 'develop', 'feature/auth', 'feature/ui'];
+  const [selectedBranch, setSelectedBranch] = React.useState('');
   const [open, setOpen] = React.useState(false);
   return (
     <TooltipProvider>
@@ -80,16 +96,16 @@ export default function GithubControl({
               {/* className="w-[--radix-dropdown-menu-trigger-width]"> */}
               {branches.map((branch) => (
                 <DropdownMenuItem
-                  key={branch}
-                  onSelect={() => setSelectedBranch(branch)}
+                  key={branch.name}
+                  onSelect={() => setSelectedBranch(branch.name)}
                 >
-                  {branch === 'main' && (
+                  {branch.name === collection?.base_branch && (
                     <span className="mr-2 rounded bg-primary/20 px-1 py-0.5 text-xs">
                       default
                     </span>
                   )}
-                  {branch}
-                  {branch === selectedBranch && (
+                  {branch.name}
+                  {branch.name === selectedBranch && (
                     <Check className="ml-auto size-4" />
                   )}
                 </DropdownMenuItem>
@@ -207,6 +223,16 @@ export default function GithubControl({
         <FontAwesomeIcon icon={faCloudArrowUp} /><span className='text-xs'>Save</span>
         </Button>
       </div>
+      { context?.branch === collection?.base_branch && (
+      <div className="flex w-full items-center gap-2 py-1 pr-3 text-xs">
+      <Alert variant="destructive">
+      <AlertCircle className="h-4 w-4" />
+      <AlertTitle>Warning</AlertTitle>
+      <AlertDescription>
+        Change branch before editing.
+      </AlertDescription>
+    </Alert>
+      </div>) }
     </TooltipProvider>
   );
 }
