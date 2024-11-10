@@ -59,6 +59,7 @@ import {
 import { faCodePullRequestDraft } from '@awesome.me/kit-ff3b5aaa16/icons/classic/light';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import clsx from 'clsx'
+import { DynamicIcon } from '../Images';
 
 import type { RelatedContent } from '@/lib/Types';
 export type TableOfContentsItem = {
@@ -76,8 +77,18 @@ interface SidebarRightProps extends React.ComponentProps<typeof Sidebar> {
   onAddDocument: () => void;
   onEditDocument: () => void;
   onPrintDocument: () => void;
+  onGithubClick?: () => void;
   onNavClick?: (callback: any) => void;
 }
+
+
+const GithubIcon = () => (
+  <DynamicIcon
+      iconName="github"
+      size="10x"
+      type="brands"
+    />
+  );
 
 export default function SidebarRight({
   relatedContent,
@@ -86,6 +97,7 @@ export default function SidebarRight({
   onAddDocument,
   onEditDocument,
   onPrintDocument,
+  onGithubClick,
   onNavClick,
   ...props
 }: SidebarRightProps) {
@@ -118,12 +130,18 @@ export default function SidebarRight({
       {...props}
     >
       <SidebarHeader className="border-b border-sidebar-border">
-        <SidebarMenu>
-          <SidebarMenuItem>
+      <SidebarMenu className="flex-row space-x-1">
+      <SidebarMenuItem>
             <SidebarMenuButton onClick={onAddDocument}>
               <FilePlus /> <span>Add Document</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
+         {onGithubClick && <SidebarMenuItem>
+            <SidebarMenuButton onClick={onGithubClick} tooltip='Open in GitHub'>
+              <GithubIcon />
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+}
         </SidebarMenu>
         <SidebarMenu className="flex-row space-x-1">
           <SidebarMenuItem className="w-5/12">

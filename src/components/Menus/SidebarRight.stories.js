@@ -215,6 +215,7 @@ Default.args = {
   onAddDocument: fn(),
   onEditDocument: fn(),
   onPrintDocument: fn(),
+  onGithubClick: fn(),
 };
 
 
@@ -225,7 +226,13 @@ NoTableOfContents.args = {
   onPrintDocument: fn(),
 };
 
-
+export const NoGithubLink = Template.bind({});
+NoGithubLink.args = {
+  onAddDocument: fn(),
+  onEditDocument: fn(),
+  onPrintDocument: fn(),
+  onGithubClick: null,
+};
 
 export const OnlyRelatedDocuments = Template.bind({});
 OnlyRelatedDocuments.args = {
