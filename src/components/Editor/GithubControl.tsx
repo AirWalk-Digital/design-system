@@ -52,7 +52,13 @@ interface CollectionItem extends ContentItem {
 interface GithubControlProps {
   collection?: CollectionItem;
   context?: ContentItem;
-  branches: string[];
+  branches: {
+    name: string;
+    commit: {
+      sha: string;
+    };
+    protected: boolean;
+  }[]
   onPublishDraft?: (context: ContentItem | undefined) => void;
   handleNewBranchDialog?: () => void;
   onSubmitNewBranch: (value: { name?: string } | null) => Promise<void>;
@@ -63,14 +69,14 @@ interface GithubControlProps {
 export default function GithubControl({
   collection,
   context,
+  branches,
   handleNewBranchDialog,
   handlePR,
   onPublishDraft,
   onSubmitNewBranch,
   onSave,
 }: GithubControlProps) {
-  const [selectedBranch, setSelectedBranch] = React.useState('main');
-  const branches = ['main', 'develop', 'feature/auth', 'feature/ui'];
+  const [selectedBranch, setSelectedBranch] = React.useState('');
   const [open, setOpen] = React.useState(false);
   return (
     <TooltipProvider>
@@ -90,16 +96,16 @@ export default function GithubControl({
               {/* className="w-[--radix-dropdown-menu-trigger-width]"> */}
               {branches.map((branch) => (
                 <DropdownMenuItem
-                  key={branch}
-                  onSelect={() => setSelectedBranch(branch)}
+                  key={branch.name}
+                  onSelect={() => setSelectedBranch(branch.name)}
                 >
-                  {branch === 'main' && (
+                  {branch.name === collection?.base_branch && (
                     <span className="mr-2 rounded bg-primary/20 px-1 py-0.5 text-xs">
                       default
                     </span>
                   )}
-                  {branch}
-                  {branch === selectedBranch && (
+                  {branch.name}
+                  {branch.name === selectedBranch && (
                     <Check className="ml-auto size-4" />
                   )}
                 </DropdownMenuItem>
@@ -223,7 +229,7 @@ export default function GithubControl({
       <AlertCircle className="h-4 w-4" />
       <AlertTitle>Warning</AlertTitle>
       <AlertDescription>
-        Change branch before editing. You cant edit the default branch ({collection?.base_branch}).
+        Change branch before editing.
       </AlertDescription>
     </Alert>
       </div>) }
