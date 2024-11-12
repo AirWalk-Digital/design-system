@@ -35,8 +35,8 @@ export default {
   
   decorators: [
     (Story) => (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <div className="w-[--sidebar-width]">
+      <div style={{ '--sidebar-width': '16rem', display: 'flex', justifyContent: 'center', alignItems: 'center' } as React.CSSProperties}>
+        <div className="--sidebar-width:16rem w-[--sidebar-width]">
           <Story/>
           <Toaster />
         </div>
@@ -125,6 +125,24 @@ export const Simple = {
   },
 };
 
+
+export const ReallyLongBranchName = {
+  args: {
+    open: true,
+    collection: dummyCollection,
+    context: { ...dummyCollection, branch: 'branch-with-a-very-long-name-even-longer-than-this' },
+    branches: [{
+      name: 'branch-with-a-very-long-name-even-longer-than-this',
+      commit: {
+        sha: '7080423b89568b0427cb781f8b753f52fbc394e0',
+        url: 'https://api.github.com/repos/AirWalk-Digital/airwalk_patterns/commits/7080423b89568b0427cb781f8b753f52fbc394e0',
+      },
+      protected: false,
+    },...branches],
+    // editMode: false,
+    fetchBranches: fn(),
+  },
+};
 
 export const LotsOfBranches = {
   args: {

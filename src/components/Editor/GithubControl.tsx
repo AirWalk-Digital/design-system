@@ -110,12 +110,10 @@ export default function GithubControl({
     return 0;
   });
 
-
-
   return (
     <TooltipProvider>
       <div className="flex w-full items-center gap-2 py-1">
-        <div className="flex-1">
+        <div className="flex-1 w-full truncate">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
@@ -123,10 +121,10 @@ export default function GithubControl({
                 className="w-full justify-start gap-2 truncate font-normal"
               >
                 <GitBranch className="size-4" />
-                {selectedBranch}
+                <span className="truncate">{selectedBranch}</span>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="max-h-60 overflow-y-auto">
+            <DropdownMenuContent align="start" className="max-h-60 overflow-y-auto w-full">
               {sortedBranches.map((branch) => (
                 <DropdownMenuItem
                   key={branch.name}
@@ -142,7 +140,7 @@ export default function GithubControl({
                           default
                         </span>
                       )}
-                      {branch.name}
+                      <span className="truncate">{branch.name}</span>
                       {branch.name === selectedBranch && (
                         <Check className="ml-2 size-4" />
                       )}
