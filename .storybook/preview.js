@@ -3,12 +3,14 @@
 // import { withThemeByDataAttribute } from '@storybook/addon-themes';
 import { withThemeByClassName } from '@storybook/addon-themes';
 import { initialize, mswLoader } from 'msw-storybook-addon';
+const basePath = location.pathname.split('/').slice(0, -1).join('/');
+const apiMockServiceWorkerUrl = `${basePath}/apiMockServiceWorker.js`;
 
 import React from 'react';
 import '../src/index.css';
 initialize({
   serviceWorker: {
-    url: '/apiMockServiceWorker.js',
+    url: apiMockServiceWorkerUrl,
     options: {
       updateViaCache: 'none'
     }

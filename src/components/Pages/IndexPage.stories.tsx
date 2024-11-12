@@ -103,7 +103,7 @@ export const Default = {
   args: {
     header: {
     title: 'Your Company',
-    logo: '/logos/reply.jpg',
+    logo: 'logos/reply.jpg',
     menuItems: [
       {
         name: 'Documentation',
