@@ -27,7 +27,7 @@ const GithubIcon = () => (
 export const Primary: Story = {
   args: {
     title: 'Your Company',
-    logo: '/logos/reply.jpg',
+    logo: 'logos/reply.jpg',
     menuItems: [
       {
         name: 'Product',
