@@ -62,6 +62,7 @@ interface GithubControlProps {
   }[]
   onPublishDraft?: (context: ContentItem | undefined) => void;
   handleNewBranchDialog?: () => void;
+  onBranchChange?: (selectedValue: string) => void;
   onSubmitNewBranch: (value: { name?: string } | null) => Promise<void>;
   handlePR?: () => void;
   onSave?: () => void;
@@ -72,6 +73,7 @@ export default function GithubControl({
   context,
   branches,
   handleNewBranchDialog,
+  onBranchChange,
   handlePR,
   onPublishDraft,
   onSubmitNewBranch,
@@ -108,6 +110,8 @@ export default function GithubControl({
     return 0;
   });
 
+
+
   return (
     <TooltipProvider>
       <div className="flex w-full items-center gap-2 py-1">
@@ -126,7 +130,10 @@ export default function GithubControl({
               {sortedBranches.map((branch) => (
                 <DropdownMenuItem
                   key={branch.name}
-                  onSelect={() => setSelectedBranch(branch.name)}
+                  onSelect={() => {
+                    setSelectedBranch(branch.name)
+                    onBranchChange && onBranchChange(branch.name);
+                  }}
                 >
                   <div className="flex w-full justify-between items-center">
                     <div className="flex items-center">

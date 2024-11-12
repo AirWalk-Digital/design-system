@@ -27,6 +27,7 @@ export default {
 
   args: {
     handlePublishDraft: fn(),
+    onBranchChange: fn(),
     // fetchBranches?: (collection: any) => void;
     handleNewBranch: fn(),
     handlePR: fn(),
