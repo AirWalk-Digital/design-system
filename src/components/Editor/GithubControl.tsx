@@ -40,7 +40,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { faCodePullRequestDraft, faCloudArrowUp } from '@awesome.me/kit-ff3b5aaa16/icons/classic/light';
+import { faCodePullRequestDraft, faCloudArrowUp, faStar as faStarBorder } from '@awesome.me/kit-ff3b5aaa16/icons/classic/light';
+import { faStar } from '@awesome.me/kit-ff3b5aaa16/icons/classic/solid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type { ContentItem } from '@/lib/Types';
 import { GithubBranchDialog } from '@/components/Editor/GithubBranchDialog';
@@ -61,6 +62,7 @@ interface GithubControlProps {
   }[]
   onPublishDraft?: (context: ContentItem | undefined) => void;
   handleNewBranchDialog?: () => void;
+  onBranchChange?: (selectedValue: string) => void;
   onSubmitNewBranch: (value: { name?: string } | null) => Promise<void>;
   handlePR?: () => void;
   onSave?: () => void;
@@ -71,13 +73,45 @@ export default function GithubControl({
   context,
   branches,
   handleNewBranchDialog,
+  onBranchChange,
   handlePR,
   onPublishDraft,
   onSubmitNewBranch,
   onSave,
 }: GithubControlProps) {
-  const [selectedBranch, setSelectedBranch] = React.useState('');
+  const [selectedBranch, setSelectedBranch] = React.useState(context?.branch);
   const [open, setOpen] = React.useState(false);
+  const [favorites, setFavorites] = React.useState<string[]>(() => {
+    // Load favorites from localStorage
+    const savedFavorites = localStorage.getItem('branchFavorites');
+    return savedFavorites ? JSON.parse(savedFavorites) : [];
+  });
+
+  const handleFavoriteToggle = (branchName: string) => {
+    const updatedFavorites = favorites.includes(branchName)
+      ? favorites.filter((branch) => branch !== branchName)
+      : [...favorites, branchName];
+
+    setFavorites(updatedFavorites);
+    localStorage.setItem('branchFavorites', JSON.stringify(updatedFavorites)); // Store favorites in localStorage
+  };
+
+  // Sort branches so that favorites are at the top
+  const sortedBranches = [...branches].sort((a, b) => {
+    const aIsFavorite = favorites.includes(a.name);
+    const bIsFavorite = favorites.includes(b.name);
+
+    if (aIsFavorite && !bIsFavorite) {
+      return -1;
+    }
+    if (!aIsFavorite && bIsFavorite) {
+      return 1;
+    }
+    return 0;
+  });
+
+
+
   return (
     <TooltipProvider>
       <div className="flex w-full items-center gap-2 py-1">
@@ -92,22 +126,43 @@ export default function GithubControl({
                 {selectedBranch}
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="start">
-              {/* className="w-[--radix-dropdown-menu-trigger-width]"> */}
-              {branches.map((branch) => (
+            <DropdownMenuContent align="start" className="max-h-60 overflow-y-auto">
+              {sortedBranches.map((branch) => (
                 <DropdownMenuItem
                   key={branch.name}
-                  onSelect={() => setSelectedBranch(branch.name)}
+                  onSelect={() => {
+                    setSelectedBranch(branch.name)
+                    onBranchChange && onBranchChange(branch.name);
+                  }}
                 >
-                  {branch.name === collection?.base_branch && (
-                    <span className="mr-2 rounded bg-primary/20 px-1 py-0.5 text-xs">
-                      default
-                    </span>
-                  )}
-                  {branch.name}
-                  {branch.name === selectedBranch && (
-                    <Check className="ml-auto size-4" />
-                  )}
+                  <div className="flex w-full justify-between items-center">
+                    <div className="flex items-center">
+                      {branch.name === collection?.base_branch && (
+                        <span className="mr-2 rounded bg-primary/20 px-1 py-0.5 text-xs">
+                          default
+                        </span>
+                      )}
+                      {branch.name}
+                      {branch.name === selectedBranch && (
+                        <Check className="ml-2 size-4" />
+                      )}
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="p-0"
+                      onClick={(e) => {
+                        e.stopPropagation(); // Prevent the dropdown from closing
+                        handleFavoriteToggle(branch.name);
+                      }}
+                    >
+                      {favorites.includes(branch.name) ? (
+                        <FontAwesomeIcon icon={faStar} />
+                      ) : (
+                        <FontAwesomeIcon icon={faStarBorder} />
+                      )}
+                    </Button>
+                  </div>
                 </DropdownMenuItem>
               ))}
             </DropdownMenuContent>

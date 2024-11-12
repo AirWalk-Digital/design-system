@@ -27,6 +27,7 @@ export default {
 
   args: {
     handlePublishDraft: fn(),
+    onBranchChange: fn(),
     // fetchBranches?: (collection: any) => void;
     handleNewBranch: fn(),
     handlePR: fn(),
@@ -94,7 +95,7 @@ const branches = [
     protected: false,
   },
   {
-    name: 'branch-2',
+    name: 'branch-2-and-a-very-long-name-even-longer-than-this',
     commit: {
       sha: '09a01dc4e148c35412d3a6a00a384930a41b813b',
       url: 'https://api.github.com/repos/AirWalk-Digital/airwalk_patterns/commits/09a01dc4e148c35412d3a6a00a384930a41b813b',
@@ -119,6 +120,18 @@ export const Simple = {
     collection: dummyCollection,
     context: { ...dummyCollection, branch: 'branch-1' },
     branches,
+    // editMode: false,
+    fetchBranches: fn(),
+  },
+};
+
+
+export const LotsOfBranches = {
+  args: {
+    open: true,
+    collection: dummyCollection,
+    context: { ...dummyCollection, branch: 'branch-1' },
+    branches: [ ...branches, ...branches, ...branches, ...branches, ...branches, ...branches ],
     // editMode: false,
     fetchBranches: fn(),
   },
