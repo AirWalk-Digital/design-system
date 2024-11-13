@@ -93,19 +93,21 @@ const DynamicIcon: React.FC<DynamicIconProps> = ({
   // };
 
   return faIcon ? (
+    <div className={className}>
     <FontAwesomeIcon
       icon={faIcon}
       size={size as SizeProp}
       className={className}
-      style={{ height: '1rem', width: '1rem' }}
+      style={{ height: '100%', width: '100%', padding: '0.5rem' }}
     />
+    </div>
   ) : (
     <FontAwesomeIcon
       icon={['fas', 'spinner']}
       spin
       size={size as SizeProp}
       className={className}
-      style={{ height: '1rem', width: '1rem' }}
+      style={{ height: '100%', width: '100%' }}
     />
   );
 };
