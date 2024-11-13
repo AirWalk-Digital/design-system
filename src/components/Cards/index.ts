@@ -1,1 +1,1 @@
-export { FeatureCard } from './FeatureCard';
+export { FeatureCard } from '@/components/Cards/FeatureCard';
