@@ -241,3 +241,10 @@ MultipleMenus.args = {
   pathName: '//#',
   onSidebarMenu: fn(),
 };
+
+
+
+export const NoArgs = Template.bind({});
+NoArgs.args = {
+  
+};

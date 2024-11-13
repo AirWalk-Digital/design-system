@@ -77,9 +77,9 @@ export type NavigationItem = {
 };
 
 interface SidebarLeftProps extends React.ComponentProps<typeof Sidebar> {
-  mainNav: MenuStructure[];
-  secondaryNav: MenuStructure[];
-  title: string;
+  mainNav?: MenuStructure[];
+  secondaryNav?: MenuStructure[];
+  title?: string;
   subTitle?: string;
   pathName?: string;
   menuHeading?: string;
