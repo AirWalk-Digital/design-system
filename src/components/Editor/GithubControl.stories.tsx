@@ -9,6 +9,23 @@ import GithubControl from './GithubControl';
 import { GithubBranchDialog } from './GithubBranchDialog';
 import { Toaster } from "@/components/ui/toaster"
 
+async function dummyDelay(result: string) {
+  fn();
+  const delay = (ms: number | undefined) => new Promise((resolve) => setTimeout(resolve, ms));
+  await delay(2000);
+  switch (result) {
+    case 'success':
+      return 'success';
+    case 'other':
+        return 'other';
+    case 'error':
+      throw new Error('An error occurred');
+    default:
+      throw new Error('An error occurred');
+  }
+}
+
+
 export default {
   title: 'Editor/GithubControl',
   component: GithubControl,
@@ -26,11 +43,12 @@ export default {
   },
 
   args: {
-    handlePublishDraft: fn(),
-    onBranchChange: fn(),
-    // fetchBranches?: (collection: any) => void;
-    handleNewBranch: fn(),
-    handlePR: fn(),
+    onBranchChange: () => dummyDelay('success'),
+    onPR: () => dummyDelay('success'),
+    onPublishDraft: () => dummyDelay('success'),
+    onSubmitNewBranch: () => dummyDelay('success'),
+    onSave: () => dummyDelay('success'),
+    onNewBranch: () => dummyDelay('success'),
   },
   
   decorators: [
@@ -126,6 +144,29 @@ export const Simple = {
 };
 
 
+export const Fail = {
+  args: {
+    open: true,
+    collection: dummyCollection,
+    context: { ...dummyCollection, branch: 'branch-1' },
+    branches,
+    onSubmitNewBranch: () => dummyDelay('error'),
+    fetchBranches: fn(),
+  },
+};
+
+
+export const BadResponse = {
+  args: {
+    open: true,
+    collection: dummyCollection,
+    context: { ...dummyCollection, branch: 'branch-1' },
+    branches,
+    onSubmitNewBranch: () => dummyDelay('other'),
+    fetchBranches: fn(),
+  },
+};
+
 export const ReallyLongBranchName = {
   args: {
     open: true,
@@ -192,72 +233,3 @@ export const DefaultBranch = {
     fetchBranches: fn(),
   },
 };
-
-const Template: StoryFn<typeof GithubControl> = (args: any) => {
-  // const [collection, setCollection] = useState(dummyCollection);
-  const context: ContentItem = {
-    branch: 'main',
-    collections: [''],
-    source: '',
-    repo: '',
-    owner: '',
-    path: '',
-    reference: '',
-  };
-
-  async function dummyDelay() {
-    fn();
-    // const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-    // await delay(2000);
-    switch (args.result) {
-      case 'success':
-        return 'success';
-      case 'error':
-        throw new Error('An error occurred');
-      default:
-        throw new Error('An error occurred');
-    }
-  }
-
-  return (
-    <GithubControl
-      {...args}
-      collection={args.collection}
-      context={context}
-      branches={args.branches}
-      handlePR={() => dummyDelay()}
-    />
-  );
-};
-
-export const FullDemo: StoryFn<typeof GithubControl> = Template.bind({});
-FullDemo.args = {
-  collection: dummyCollection,
-  context: { ...dummyCollection, branch: 'branch-1' },
-  handlePR: async () => await dummyFn(true)
-};
-
-export const APISuccess: StoryFn<typeof GithubControl> = Template.bind({});
-APISuccess.args = {
-  collection: dummyCollection,
-  context: { ...dummyCollection, branch: 'branch-1' },
-  handlePR: async () => await dummyFn(true)
-};
-
-export const APIError: StoryFn<typeof GithubControl> = Template.bind({});
-APIError.args = {
-  collection: dummyCollection,
-  context: { ...dummyCollection, branch: 'branch-1' },
-  handlePR: async () => await dummyFn(true)
-};
-
-
-async function dummyFn(state: boolean) {
-  // const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-  // await delay(2000);
-  if (state) {
-    return 'success';
-  } else {
-    throw new Error('An error occurred');
-  }
-}
