@@ -1,60 +1,75 @@
-import path from 'path';
-import { defineConfig } from 'rollup';
-import typescript from '@rollup/plugin-typescript';
-import postcss from 'rollup-plugin-postcss';
-import { nodeResolve } from '@rollup/plugin-node-resolve';
-import commonjs from '@rollup/plugin-commonjs';
-import json from '@rollup/plugin-json';
+import resolve from '@rollup/plugin-node-resolve';
 import babel from '@rollup/plugin-babel';
-import url from '@rollup/plugin-url';
+import postcss from 'rollup-plugin-postcss';
+import commonjs from '@rollup/plugin-commonjs';
+import peerDepsExternal from 'rollup-plugin-peer-deps-external';
+import alias from '@rollup/plugin-alias';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import svgr from '@svgr/rollup';
+import typescript from 'rollup-plugin-typescript2';
 
-// Paths for input and output directories
-const inputPath = 'src/index.ts'; // Entry point for the library
-const outputDir = 'dist';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-export default defineConfig([
-  {
-    input: inputPath,
-    output: [
-      {
-        file: path.join(outputDir, 'index.cjs.js'),
-        format: 'cjs', // CommonJS format
-        sourcemap: true,
-      },
-      {
-        file: path.join(outputDir, 'index.esm.js'),
-        format: 'esm', // ES Module format
-        sourcemap: true,
-      },
-    ],
-    plugins: [
-      nodeResolve({ extensions: ['.js', '.jsx', '.ts', '.tsx'] }), // Resolve imports
-      commonjs(), // Convert CommonJS modules to ES6
-      postcss({
-        extract: true,
-        minimize: true,
-      }),
-      json(), // Handle JSON imports
-      url({
-        include: ['**/*.svg'], // Handle SVG imports
-        limit: 0, // Always inline the files
-      }),
-      typescript({
-        tsconfig: './tsconfig.json',
-        declaration: true,
-        rootDir: 'src',
-      }),
-      babel({
-        exclude: 'node_modules/**',
-        presets: ['@babel/preset-react'],
-        babelHelpers: 'bundled', // Explicitly set babelHelpers option
-      }),
-    ],
-    external: ['react', 'react-dom'],
-    onwarn: (warning, warn) => {
-      // Suppress specific warning
-      if (warning.code === 'MODULE_LEVEL_DIRECTIVE') return;
-      warn(warning);
+export default {
+  input: './src/index.ts',
+  output: [
+    {
+      file: 'dist/index.cjs.js',
+      format: 'cjs',
+      sourcemap: true,
     },
+    {
+      file: 'dist/index.es.js',
+      format: 'es',
+      sourcemap: true,
+    },
+  ],
+  plugins: [
+    peerDepsExternal(),
+    commonjs({
+      include: 'node_modules/**', // Ensure that commonjs modules in node_modules are handled
+    }),
+    resolve({
+      extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      preferBuiltins: true,
+      dedupe: ['react', 'react-dom', 'react-is'],
+    }),
+    babel({
+      exclude: 'node_modules/**',
+      presets: ['@babel/preset-react'],
+      babelHelpers: 'bundled', // Explicitly set babelHelpers option
+    }),
+    postcss({
+      // Inline the CSS in JavaScript
+      inject: true,
+      // Minify CSS for production
+      minimize: true,
+      // Process CSS with PostCSS
+      extensions: ['.css'],
+    }),
+    typescript(),
+    alias({
+      resolve: ['.jsx', '.js', '.ts', '.tsx'], //optional, by default this will just look for .js files or folders
+      entries: [
+        {
+          find: '@/components',
+          replacement: path.resolve(__dirname, 'src/components'),
+        },
+        {
+          find: '@/styles',
+          replacement: path.resolve(__dirname, 'src/styles'),
+        },
+        { find: '@/lib', replacement: path.resolve(__dirname, 'src/lib') },
+      ],
+    }),
+    svgr(), // load .svg files as React components
+  ],
+  external: ['react', 'react-dom'],
+  onwarn: (warning, warn) => {
+    // Suppress specific warning
+    if (warning.code === 'MODULE_LEVEL_DIRECTIVE') return;
+    warn(warning);
   },
-]);
+};
