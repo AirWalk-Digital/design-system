@@ -1,4 +1,6 @@
 // import './index.css';
 
-export { FeatureCard }  from '@/components/Cards/index';
-
+export * from '@/components/Cards/FeatureCard';
+export * from '@/components/Layouts/FeatureGrid';
+export * from '@/components/Images/DynamicIcon';
+export * from '@/components/Menus/Header';
