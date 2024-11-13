@@ -14,14 +14,14 @@ import {
   ToggleGroup,
   ToggleGroupItem,
 } from "@/components/ui/toggle-group"
-import { Loader2 } from "lucide-react"
+import { Loader2, LucideToggleLeft } from "lucide-react"
 import { useToast } from "@/components/hooks/use-toast"
 import { ToastAction } from "@/components/ui/toast"
 
 interface GithubBranchDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void
-  onSubmit: (value: { name?: string } | null) => Promise<void>;
+  onSubmit: (value: { name?: string } | null) => Promise<string>;
 }
 
 const GithubBranchDialog: React.FC<GithubBranchDialogProps> = ({ open, onSubmit, onOpenChange }) => {
@@ -40,14 +40,26 @@ const GithubBranchDialog: React.FC<GithubBranchDialogProps> = ({ open, onSubmit,
           .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
           .join('-')}`;
         setIsSubmitting(true);
-        await onSubmit({ name: prName });
-        setTitle(''); // Reset title
-        setChangeType("FEATURE")
-        toast({
-          title: "New branch created",
-          description: `Branch ${prName} created successfully`,
-        })
-        onOpenChange(false);
+
+        const apiResponse = await onSubmit({ name: prName });
+        if (apiResponse === 'success') {
+          setTitle(''); // Reset title
+          setChangeType("FEATURE")
+          toast({
+            title: "New branch created",
+            description: `Branch ${prName} created successfully`,
+          })
+          onOpenChange(false);
+        } else {
+          console.error('An error occurred while creating the branch. response: ', apiResponse);
+          toast({
+            variant: "destructive",
+            title: "Something went wrong.",
+            description: "An error occurred while creating the branch",
+            action: <ToastAction altText="Try again" onClick={handleSubmit}>Try again</ToastAction>,
+          })
+        }
+    
       } else {
         toast({
           variant: "destructive",

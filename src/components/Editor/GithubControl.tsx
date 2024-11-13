@@ -7,13 +7,11 @@ import {
   GitBranch,
   HelpCircle,
   Plus,
+  Loader2,
   GitPullRequest,
 } from 'lucide-react';
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from "@/components/ui/alert";
+
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -40,11 +38,17 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { faCodePullRequestDraft, faCloudArrowUp, faStar as faStarBorder } from '@awesome.me/kit-ff3b5aaa16/icons/classic/light';
+import {
+  faCodePullRequestDraft,
+  faCloudArrowUp,
+  faStar as faStarBorder,
+} from '@awesome.me/kit-ff3b5aaa16/icons/classic/light';
 import { faStar } from '@awesome.me/kit-ff3b5aaa16/icons/classic/solid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type { ContentItem } from '@/lib/Types';
 import { GithubBranchDialog } from '@/components/Editor/GithubBranchDialog';
+import { useToast } from '@/components/hooks/use-toast';
+import { ToastAction } from '@/components/ui/toast';
 
 interface CollectionItem extends ContentItem {
   base_branch: string;
@@ -59,28 +63,31 @@ interface GithubControlProps {
       sha: string;
     };
     protected: boolean;
-  }[]
-  onPublishDraft?: (context: ContentItem | undefined) => void;
-  handleNewBranchDialog?: () => void;
+  }[];
+  onPublishDraft?: (context: ContentItem | undefined) => Promise<string>;
   onBranchChange?: (selectedValue: string) => void;
-  onSubmitNewBranch: (value: { name?: string } | null) => Promise<void>;
-  handlePR?: () => void;
-  onSave?: () => void;
+  onNewBranch: (value: { name?: string } | null) => Promise<string>;
+  onPR?: () => Promise<string>;
+  onSave?: () => Promise<string>;
 }
 
 export default function GithubControl({
   collection,
   context,
   branches,
-  handleNewBranchDialog,
   onBranchChange,
-  handlePR,
+  onPR,
   onPublishDraft,
-  onSubmitNewBranch,
+  onNewBranch,
   onSave,
 }: GithubControlProps) {
   const [selectedBranch, setSelectedBranch] = React.useState(context?.branch);
   const [open, setOpen] = React.useState(false);
+  const [isPublishingDraft, setIsPublishingDraft] = React.useState(false);
+  const [isSaving, setIsSaving] = React.useState(false);
+  const [isCreatingPR, setIsCreatingPR] = React.useState(false);
+  const { toast } = useToast();
+
   const [favorites, setFavorites] = React.useState<string[]>(() => {
     // Load favorites from localStorage
     const savedFavorites = localStorage.getItem('branchFavorites');
@@ -94,6 +101,96 @@ export default function GithubControl({
 
     setFavorites(updatedFavorites);
     localStorage.setItem('branchFavorites', JSON.stringify(updatedFavorites)); // Store favorites in localStorage
+  };
+
+  const handlePublishDraft = async (context: ContentItem | undefined) => {
+    setIsPublishingDraft(true);
+    if (onPublishDraft) {
+      const apiResult = await onPublishDraft(context);
+      if (apiResult === 'success') {
+        toast({
+          title: 'Draft published',
+          description: 'Your draft has been published successfully',
+        });
+      } else {
+        toast({
+          variant: 'destructive',
+          title: 'Something went wrong.',
+          description: 'An error occurred while publishing the draft',
+          action: (
+            <ToastAction
+              altText="Try again"
+              onClick={() => handlePublishDraft(context)}
+            >
+              Try again
+            </ToastAction>
+          ),
+        });
+        console.error(
+          'An error occurred while publishing the draft. response: ',
+          apiResult,
+        );
+      }
+    }
+    setIsPublishingDraft(false);
+  };
+
+  const handleSave = async () => {
+    if (onSave) {
+      setIsSaving(true);
+      const apiResult = await onSave();
+      if (apiResult === 'success') {
+        toast({
+          title: 'Changes saved',
+          description: 'Your changes have been saved successfully',
+        });
+      } else {
+        toast({
+          variant: 'destructive',
+          title: 'Something went wrong.',
+          description: 'An error occurred while saving the changes',
+          action: (
+            <ToastAction altText="Try again" onClick={handleSave}>
+              Try again
+            </ToastAction>
+          ),
+        });
+        console.error(
+          'An error occurred while saving the changes. response: ',
+          apiResult,
+        );
+      }
+    }
+    setIsSaving(false);
+  };
+
+  const handlePR = async () => {
+    setIsCreatingPR(true);
+    if (onPR) {
+      const apiResult = await onPR();
+      if (apiResult === 'success') {
+        toast({
+          title: 'Pull request created',
+          description: 'Your pull request has been created successfully',
+        });
+      } else {
+        toast({
+          variant: 'destructive',
+          title: 'Something went wrong.',
+          description: 'An error occurred while creating the pull request',
+          action: (
+            <ToastAction altText="Try again" onClick={handlePR}>
+              Try again
+            </ToastAction>
+          ),
+        });
+        console.error(
+          'An error occurred while creating the pull request. response: ',
+          apiResult,
+        );
+      }
+    }
+    setIsCreatingPR(false);
   };
 
   // Sort branches so that favorites are at the top
@@ -124,12 +221,15 @@ export default function GithubControl({
                 <span className="truncate">{selectedBranch}</span>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="max-h-60 overflow-y-auto w-full">
+            <DropdownMenuContent
+              align="start"
+              className="max-h-60 overflow-y-auto w-full"
+            >
               {sortedBranches.map((branch) => (
                 <DropdownMenuItem
                   key={branch.name}
                   onSelect={() => {
-                    setSelectedBranch(branch.name)
+                    setSelectedBranch(branch.name);
                     onBranchChange && onBranchChange(branch.name);
                   }}
                 >
@@ -170,14 +270,7 @@ export default function GithubControl({
           <Tooltip>
             <TooltipTrigger asChild>
               <DialogTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="shrink-0"
-                  onClick={() =>
-                    handleNewBranchDialog && handleNewBranchDialog()
-                  }
-                >
+                <Button variant="ghost" size="icon" className="shrink-0">
                   <Plus className="size-4" />
                   <span className="sr-only">Create new branch</span>
                 </Button>
@@ -188,7 +281,7 @@ export default function GithubControl({
           <GithubBranchDialog
             open={open}
             onOpenChange={setOpen}
-            onSubmit={onSubmitNewBranch}
+            onSubmit={onNewBranch}
           />
         </Dialog>
         <Tooltip>
@@ -199,7 +292,12 @@ export default function GithubControl({
               className="shrink-0"
               onClick={() => handlePR && handlePR()}
             >
-              <GitPullRequest className="size-4" />
+              {isCreatingPR ? (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              ) : (
+                <GitPullRequest className="size-4" />
+              )}
+
               <span className="sr-only">Create pull request</span>
             </Button>
           </TooltipTrigger>
@@ -267,25 +365,40 @@ export default function GithubControl({
           </TooltipTrigger>
           <TooltipContent>Branch management help</TooltipContent>
         </Tooltip>
-        </div>
-        <div className="flex w-full items-center gap-2 py-1 pr-3 text-xs">
-        <Button onClick={() => onPublishDraft && onPublishDraft(context)} className='bg-accent text-accent-foreground'>
-          <FontAwesomeIcon icon={faCodePullRequestDraft} /><span className='text-xs'>Publish Draft</span>
+      </div>
+      <div className="flex w-full items-center gap-2 py-1 pr-3 text-xs">
+        <Button
+          onClick={() => onPublishDraft && handlePublishDraft(context)}
+          className="bg-accent text-accent-foreground"
+        >
+          {isPublishingDraft ? (
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          ) : (
+            <FontAwesomeIcon icon={faCodePullRequestDraft} />
+          )}
+          <span className="text-xs">Publish Draft</span>
         </Button>
-        <Button onClick={() => onSave && onSave()} className='bg-accent text-accent-foreground'>
-        <FontAwesomeIcon icon={faCloudArrowUp} /><span className='text-xs'>Save</span>
+        <Button
+          onClick={() => onSave && handleSave()}
+          className="bg-accent text-accent-foreground"
+        >
+          {isSaving ? (
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          ) : (
+            <FontAwesomeIcon icon={faCloudArrowUp} />
+          )}
+          <span className="text-xs">Save</span>
         </Button>
       </div>
-      { context?.branch === collection?.base_branch && (
-      <div className="flex w-full items-center gap-2 py-1 pr-3 text-xs">
-      <Alert variant="destructive">
-      <AlertCircle className="h-4 w-4" />
-      <AlertTitle>Warning</AlertTitle>
-      <AlertDescription>
-        Change branch before editing.
-      </AlertDescription>
-    </Alert>
-      </div>) }
+      {context?.branch === collection?.base_branch && (
+        <div className="flex w-full items-center gap-2 py-1 pr-3 text-xs">
+          <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Warning</AlertTitle>
+            <AlertDescription>Change branch before editing.</AlertDescription>
+          </Alert>
+        </div>
+      )}
     </TooltipProvider>
   );
 }
