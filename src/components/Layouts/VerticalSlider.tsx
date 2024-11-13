@@ -1,10 +1,9 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react'
+import { CircleChevronDown } from 'lucide-react';
 
-
-
-export function VerticalSlider(sections: any) {
+export function VerticalSlider({ sections }: { sections: any }) {
   const [activeSection, setActiveSection] = useState(sections[0]?.id)
   const observerRefs = useRef<IntersectionObserver[]>([])
 
@@ -34,12 +33,21 @@ export function VerticalSlider(sections: any) {
   const handleSliderClick = (sectionId: string) => {
     const element = document.getElementById(sectionId)
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      })
     }
   }
 
+  const handleScrollDown = () => {
+    const currentIndex = sections.findIndex((section: any) => section.id === activeSection)
+    const nextSection = sections[currentIndex + 1] || sections[0] // loop back to first section
+    handleSliderClick(nextSection.id)
+  }
+
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen relative">
       {/* Vertical Slider */}
       <div className="fixed left-0 top-0 flex h-screen w-12 flex-col items-center justify-center bg-gray-100">
         {sections.map((section: any) => (
@@ -58,17 +66,25 @@ export function VerticalSlider(sections: any) {
       </div>
 
       {/* Main Content */}
-      <div className="ml-12 flex-1 overflow-y-auto">
+      <div className="ml-12 flex-1 overflow-y-auto snap-y snap-mandatory">
         {sections.map((section: any) => (
           <div
             key={section.id}
             id={section.id}
-            className={`flex h-screen items-center justify-center text-4xl text-white ${section.color}`}
+            className={`flex h-screen items-center justify-center snap-always snap-start text-4xl text-white ${section.color}`}
           >
             {section.title}
           </div>
         ))}
       </div>
+
+      {/* Down Arrow */}
+      <button
+        className="absolute bottom-4 left-4 text-3xl text-primary transition-all duration-300 hover:scale-110"
+        onClick={handleScrollDown}
+      >
+       <CircleChevronDown/>
+      </button>
     </div>
   )
 }

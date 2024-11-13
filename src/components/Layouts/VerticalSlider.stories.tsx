@@ -8,10 +8,10 @@ const meta: Meta<typeof VerticalSlider> = {
   component: VerticalSlider,
   tags: ['autodocs'],
   argTypes: {
-    color: {
-      options: ['primary', 'secondary', 'tertiary', 'quaternary', 'highlight', 'accent', 'muted', 'paper'],
-      control: { type: 'select' },
-    }
+    // color: {
+    //   options: ['primary', 'secondary', 'tertiary', 'quaternary', 'highlight', 'accent', 'muted', 'paper'],
+    //   control: { type: 'select' },
+    // }
   },
   
 };
