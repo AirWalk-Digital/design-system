@@ -67,14 +67,18 @@ import {
 
 import SidebarRight from "@/components/Menus/SidebarRight"
 import SidebarLeft from "@/components/Menus/SidebarLeft"
+import { SimpleHeader } from "../Menus"
+import GithubControl from '@/components/Editor/GithubControl';
+import { Toaster } from '@/components/ui/toaster';
 
 export default function Documentation({ ...args }) {
   return (
-    <SidebarProvider className="h-screen">
-      {/* <div className=" h-dvh"> */}
-      <SidebarLeft {...args.sidebarLeft}/>
-      <SidebarInset className="overflow-hidden">
-        <header className="flex h-16 shrink-0 items-center gap-2">
+    <div className="flex fixed flex-col w-screen h-screen max-h-screen overflow-auto overscroll-contain">
+    <SimpleHeader {...args.header}/>
+    <SidebarProvider className='top-14 mb-4 h-full max-h-[calc(100vh-3.5rem)] flex-1 flex-row overflow-y-clip'>
+    <SidebarLeft {...args.sidebarLeft} className="flex-none"/>
+      <SidebarInset className="grow overflow-hidden">
+      <header className="flex h-16 shrink-0 items-center gap-2">
           <div className="flex items-center gap-2 px-4">
             <SidebarTrigger className="-ml-1" />
             <Separator orientation="vertical" className="mr-2 h-4" />
@@ -99,12 +103,14 @@ export default function Documentation({ ...args }) {
             <div className="aspect-video rounded-xl bg-muted/50" />
             <div className="aspect-video rounded-xl bg-muted/50" />
           </div>
-          <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
+          <div className="flex-1 rounded-xl bg-muted/50 md:min-h-min" />
         </div>
       </SidebarInset>
-      <SidebarRight {...args.sidebarRight}/>
-      {/* </div> */}
+      <SidebarRight {...args.sidebarRight} editorComponent={<GithubControl {...args.github} />} className="flex-none"/>
+
     </SidebarProvider>
+    <Toaster/>
+    </div>
   )
 }
 

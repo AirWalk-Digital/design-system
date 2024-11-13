@@ -2,7 +2,7 @@ import React from 'react';
 import Colors from './Colors';
 
 export default {
-  title: 'Style Guide/Colors2',
+  title: 'Style Guide/Colors',
   component: Colors,
 };
 

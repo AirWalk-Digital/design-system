@@ -26,9 +26,37 @@ import {
   Sparkles,
   SquareTerminal,
   Trash2,
-} from "lucide-react"
+} from 'lucide-react';
 import Documentation from './Documentation';
 import { fn } from '@storybook/test';
+import {
+  PhoneIcon,
+  PlayCircleIcon,
+  RectangleGroupIcon,
+} from '@heroicons/react/20/solid';
+import {
+  ChartPieIcon,
+  CursorArrowRaysIcon,
+  FingerPrintIcon,
+} from '@heroicons/react/24/outline';
+import { DynamicIcon } from '@/components/Images';
+
+const GithubIcon = () => (
+  <DynamicIcon iconName="github" size="10x" type="brands" />
+);
+const AWSIcon = () => <DynamicIcon iconName="aws" size="10x" type="brands" />;
+const AzureIcon = () => <DynamicIcon iconName="azure" size="10x" type="kit" />;
+const SolutionIcon = () => (
+  <DynamicIcon iconName="people-sharing" size="10x" type="kit" />
+);
+
+const ServiceIcon = () => (
+  <DynamicIcon iconName="cloud-network-sharing" size="10x" type="kit" />
+);
+
+const ProductIcon = () => (
+  <DynamicIcon iconName="development" size="10x" type="kit" />
+);
 
 export default {
   title: 'Pages/Documentation',
@@ -47,253 +75,344 @@ const Template = (args: any) => <Documentation {...args} />;
 export const Default = {
   render: Template,
   args: {
-    onToggleAppGrid: () => { fn() },
+    header: {
+      title: 'Your Company',
+      logo: 'logos/reply.jpg',
+      menuItems: [
+        {
+          name: 'Documentation',
+          items: [
+            {
+              name: 'Platforms & Services',
+              description: 'Cloud services',
+              href: '#',
+              icon: ServiceIcon, // Pass the component, not <ChartPieIcon />
+            },
+            {
+              name: 'Solutions & Propositions',
+              description: 'Solutions that we have built',
+              href: '#',
+              icon: SolutionIcon,
+            },
+            {
+              name: 'Products',
+              description: 'Products that we sell',
+              href: '#',
+              icon: ProductIcon,
+            },
+          ],
+        },
+        {
+          name: 'Resources',
+          items: [
+            { name: 'Documentation', href: '#', icon: ChartPieIcon },
+            { name: 'API Reference', href: '#', icon: CursorArrowRaysIcon },
+            { name: 'Github', href: '#', icon: GithubIcon },
+          ],
+          actions: [
+            { name: 'Watch demo', href: '#', icon: PlayCircleIcon },
+            { name: 'Contact sales', href: '#', icon: PhoneIcon },
+            { name: 'View all products', href: '#', icon: RectangleGroupIcon },
+          ],
+        },
+        {
+          name: 'Intranet',
+          href: '#',
+        },
+      ],
+    },
+    onToggleAppGrid: () => {
+      fn();
+    },
     sidebarLeft: {
-      title: "Playground",
-      subTitle: "Airview",
+      title: 'Playground',
+      subTitle: 'Airview',
       mainNav: [
         {
-          title: "Playground",
-          url: "#",
-          icon: SquareTerminal,
+          label: 'AWS',
+          url: '#',
+          icon: AWSIcon,
           isActive: true,
-          items: [
+          links: [
             {
-              title: "History",
-              url: "#",
+              label: 'EC2',
+              url: '#',
             },
             {
-              title: "Starred",
-              url: "#",
+              label: 'IAM',
+              url: '#',
             },
             {
-              title: "Settings",
-              url: "#",
-            },
-          ],
-        },
-        {
-          title: "Models",
-          url: "#",
-          icon: Bot,
-          items: [
-            {
-              title: "Genesis",
-              url: "#",
-            },
-            {
-              title: "Explorer",
-              url: "#",
-            },
-            {
-              title: "Quantum",
-              url: "#",
+              label: 'S3',
+              url: '#',
             },
           ],
         },
         {
-          title: "Documentation",
-          url: "#",
+          label: 'Microsoft Azure',
+          url: '#',
+          icon: AzureIcon,
+          links: [
+            {
+              label: 'Virtual Machines',
+              url: '#',
+            },
+            {
+              label: 'Storage',
+              url: '#',
+            },
+            {
+              label: 'Azure SQL',
+              url: '#',
+            },
+          ],
+        },
+        {
+          label: 'Documentation',
+          url: '#',
           icon: BookOpen,
-          items: [
+          links: [
             {
-              title: "Introduction",
-              url: "#",
+              label: 'Introduction',
+              url: '#',
             },
             {
-              title: "Get Started",
-              url: "#",
+              label: 'Get Started',
+              url: '#',
             },
             {
-              title: "Tutorials",
-              url: "#",
+              label: 'Tutorials',
+              url: '#',
             },
             {
-              title: "Changelog",
-              url: "#",
+              label: 'Changelog',
+              url: '#',
             },
           ],
         },
         {
-          title: "Settings",
-          url: "#",
+          label: 'Settings',
+          url: '#',
           icon: Settings2,
-          items: [
+          links: [
             {
-              title: "General",
-              url: "#",
+              label: 'General',
+              url: '#',
             },
             {
-              title: "Team",
-              url: "#",
+              label: 'Team',
+              url: '#',
             },
             {
-              title: "Billing",
-              url: "#",
+              label: 'Billing',
+              url: '#',
             },
             {
-              title: "Limits",
-              url: "#",
+              label: 'Limits',
+              url: '#',
             },
           ],
         },
       ],
       secondaryNav: [
         {
-          title: "Support",
-          url: "#",
+          label: 'Support',
+          url: '#',
           icon: LifeBuoy,
         },
         {
-          title: "Feedback",
-          url: "#",
+          label: 'Feedback',
+          url: '#',
           icon: Send,
         },
       ],
-      onSidebarMenu : fn()
+      onSidebarMenu: fn(),
     },
     sidebarRight: {
       tableOfContents: [
         {
-          title: "Getting Started",
-          url: "#",
-          items: [
+          title: 'Getting Started',
+          url: '#',
+          links: [
             {
-              title: "Installation",
-              url: "#",
+              title: 'Installation',
+              url: '#',
               isActive: true,
             },
             {
-              title: "Project Structure",
-              url: "#",
+              title: 'Project Structure',
+              url: '#',
             },
           ],
         },
         {
-          title: "Building Your Application",
-          url: "#",
-          items: [
+          title: 'Building Your Application',
+          url: '#',
+          links: [
             {
-              title: "Routing",
-              url: "#",
+              title: 'Routing',
+              url: '#',
               isDraft: true,
             },
             {
-              title: "Data Fetching",
-              url: "#",
+              title: 'Data Fetching',
+              url: '#',
             },
             {
-              title: "Rendering",
-              url: "#",
+              title: 'Rendering',
+              url: '#',
             },
             {
-              title: "Caching",
-              url: "#",
+              title: 'Caching',
+              url: '#',
             },
             {
-              title: "Styling",
-              url: "#",
+              title: 'Styling',
+              url: '#',
             },
             {
-              title: "Optimizing",
-              url: "#",
+              title: 'Optimizing',
+              url: '#',
             },
             {
-              title: "Configuring",
-              url: "#",
+              title: 'Configuring',
+              url: '#',
             },
             {
-              title: "Testing",
-              url: "#",
+              title: 'Testing',
+              url: '#',
             },
             {
-              title: "Authentication",
-              url: "#",
+              title: 'Authentication',
+              url: '#',
             },
             {
-              title: "Deploying",
-              url: "#",
+              title: 'Deploying',
+              url: '#',
             },
             {
-              title: "Upgrading",
-              url: "#",
+              title: 'Upgrading',
+              url: '#',
             },
             {
-              title: "Examples",
-              url: "#",
-            },
-          ],
-        },
-        {
-          title: "API Reference",
-          url: "#",
-          items: [
-            {
-              title: "Components",
-              url: "#",
-            },
-            {
-              title: "File Conventions",
-              url: "#",
-            },
-            {
-              title: "Functions",
-              url: "#",
-            },
-            {
-              title: "next.config.js Options",
-              url: "#",
-            },
-            {
-              title: "CLI",
-              url: "#",
-            },
-            {
-              title: "Edge Runtime",
-              url: "#",
+              title: 'Examples',
+              url: '#',
             },
           ],
         },
         {
-          title: "Architecture",
-          url: "#",
-          items: [
+          title: 'API Reference',
+          url: '#',
+          links: [
             {
-              title: "Accessibility",
-              url: "#",
+              title: 'Components',
+              url: '#',
             },
             {
-              title: "Fast Refresh",
-              url: "#",
+              title: 'File Conventions',
+              url: '#',
             },
             {
-              title: "Next.js Compiler",
-              url: "#",
+              title: 'Functions',
+              url: '#',
             },
             {
-              title: "Supported Browsers",
-              url: "#",
+              title: 'next.config.js Options',
+              url: '#',
             },
             {
-              title: "Turbopack",
-              url: "#",
+              title: 'CLI',
+              url: '#',
+            },
+            {
+              title: 'Edge Runtime',
+              url: '#',
             },
           ],
         },
         {
-          title: "Community",
-          url: "#",
-          items: [
+          title: 'Architecture',
+          url: '#',
+          links: [
             {
-              title: "Contribution Guide",
-              url: "#",
+              title: 'Accessibility',
+              url: '#',
+            },
+            {
+              title: 'Fast Refresh',
+              url: '#',
+            },
+            {
+              title: 'Next.js Compiler',
+              url: '#',
+            },
+            {
+              title: 'Supported Browsers',
+              url: '#',
+            },
+            {
+              title: 'Turbopack',
+              url: '#',
+            },
+          ],
+        },
+        {
+          title: 'Community',
+          url: '#',
+          links: [
+            {
+              title: 'Contribution Guide',
+              url: '#',
             },
           ],
         },
       ],
+      relatedContent: {
+        knowledge: [
+          {
+            label: 'AWS Risk Assessment Terraform Module',
+            url: '/knowledge/terraform_risk_assessment_AWS/_index.md',
+            type: 'published',
+          },
+          {
+            label: 'AWS Airview CCF Terraform Module',
+            url: '/knowledge/terraform_aws_airview_ccf/_index.md',
+            type: 'note',
+          },
+        ],
+        services: [
+          {
+            label: 'AWS Account Vending Machine',
+            url: '/services/aws_account_vending_machine/_index.md',
+            type: 'published',
+          },
+          {
+            label: 'AWS Beanstalk',
+            url: '/services/aws_beanstalk/_index.md',
+            type: 'draft',
+          },
+          {
+            label: 'AWS Airwalk Network Firewall Terraform Module',
+            url: '/services/aws_vpc/terraform-aws-airwalk-module-networkfirewall.md',
+            type: 'published',
+          },
+          {
+            label: 'AWS WAF and Shield',
+            url: '/services/aws_waf_and_shield/_index.md',
+            type: 'published',
+          },
+        ],
+      },
       onAddDocument: fn(),
       onEditDocument: fn(),
       onPrintDocument: fn(),
+    },
+    github: {
+      onPublishDraft: fn(),
+      // fetchBranches?: (collection: any) => void;
+      handleNewBranch: fn(),
+      handlePR: fn(),
+      onSave: fn(),
     },
   },
 };

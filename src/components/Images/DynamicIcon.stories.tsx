@@ -45,3 +45,10 @@ Automation.args = {
   size: '10x'
 };
 
+
+export const GitHub = Template.bind({});
+GitHub.args = {
+  type: 'brands',
+  iconName: 'github',
+  size: '10x'
+};

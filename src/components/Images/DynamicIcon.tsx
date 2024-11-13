@@ -1,81 +1,113 @@
-import React, { useContext, useState, useEffect } from 'react';
+'use client';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { library, findIconDefinition, type IconLookup, type IconName, type IconPrefix, type IconProp, type SizeProp } from '@fortawesome/fontawesome-svg-core';
-import { IconContext } from './IconProvider'; // Import the IconProvider context
+import { byPrefixAndName } from '@awesome.me/kit-ff3b5aaa16/icons';
 
-export type IconType = 'solid' | 'regular' | 'light' | 'duotone' | 'kit';
+import { faCircleExclamation } from '@awesome.me/kit-ff3b5aaa16/icons/classic/light';
 
+import {
+  findIconDefinition,
+  type Icon,
+  type IconLookup,
+  type IconName,
+  type IconPrefix,
+  type IconProp,
+  type SizeProp,
+} from '@fortawesome/fontawesome-svg-core';
+
+export type IconType = 'solid' | 'regular' | 'light' | 'duotone' | 'kit' | 'brands';
 
 export interface DynamicIconProps {
   type?: IconType;
   iconName: string;
-  size?: '2xs' | 'xs' | 'sm' | 'lg' | 'xl' | '2xl' | '1x' | '2x' | '3x' | '4x' | '5x' | '6x' | '7x' | '8x' | '9x' | '10x';
-  className?: string; 
+  size?:
+    | '2xs'
+    | 'xs'
+    | 'sm'
+    | 'lg'
+    | 'xl'
+    | '2xl'
+    | '1x'
+    | '2x'
+    | '3x'
+    | '4x'
+    | '5x'
+    | '6x'
+    | '7x'
+    | '8x'
+    | '9x'
+    | '10x';
+  className?: string;
 }
 
-const DynamicIcon: React.FC<DynamicIconProps> = ({ type = 'solid', iconName = 'cloud', size = 'lg', className }) => {
-  const [icon, setIcon] = useState<[string, string] | null>(null);
-  const [error, setError] = useState(false);
-
-  // Consume the icon context
-  const iconContext = useContext(IconContext);
-
-  if (!iconContext) {
-    console.error('IconContext is undefined. Make sure you are using DynamicIcon within an IconProvider.');
-    return null;
-  }
-
-  const { loaded, byPrefixAndName } = iconContext;
-
-  useEffect(() => {
-    if (!loaded) return;
-
-    // Function to return the correct prefix based on the style
-    const getIconPrefix = (type: IconType): string => {
-      switch (type) {
-        case 'solid':
-          return 'fas'; // Free solid icons
-        case 'regular':
-          return 'far'; // Free regular icons
-        case 'light':
-          return 'fal'; // Pro light if available
-        case 'duotone':
-          return 'fad'; // Pro duotone if available
-        case 'kit':
-          return 'fak'; // Assuming 'fak' is the prefix for kit icons
-        default:
-          return 'fas';
-      }
-    };
-
-    // Function to check if the icon exists in the library
-    const isIconInLibrary = (prefix: IconPrefix, name: IconName): boolean => {
-      const iconLookup: IconLookup = { prefix: prefix, iconName: name as IconName };
-      if (byPrefixAndName) {
-        return !!byPrefixAndName[prefix]?.[name];
-      }
-      const foundIcon = findIconDefinition(iconLookup);
-      return foundIcon ? true : false;
-    };
-
-    const iconPrefix = getIconPrefix(type);
-    const name = iconName as IconName;
-
-    if (isIconInLibrary(iconPrefix as IconPrefix, name)) {
-      setIcon([iconPrefix, name]);
-      setError(false);
-    } else {
-      setIcon(null);
-      setError(true);
+const DynamicIcon: React.FC<DynamicIconProps> = ({
+  type = 'solid',
+  iconName = 'cloud',
+  size = 'lg',
+  className,
+}) => {
+  // Function to return the correct prefix based on the style
+  const getIconPrefix = (type: IconType): string => {
+    switch (type) {
+      case 'solid':
+        return 'fas'; // Free solid icons
+      case 'regular':
+        return 'far'; // Free regular icons
+      case 'light':
+        return 'fal'; // Pro light if available
+      case 'duotone':
+        return 'fad'; // Pro duotone if available
+      case 'kit':
+        return 'fak'; // Assuming 'fak' is the prefix for kit icons
+      case 'brands':
+        return 'fab'; // Assuming 'fak' is the prefix for kit icons
+      default:
+        return 'fas';
     }
-  }, [type, iconName, byPrefixAndName, loaded]);
+  };
 
-  // Render a fallback icon in case of an error (invalid icon, etc.)
-  if (error && loaded) {
-    return <FontAwesomeIcon icon={['fas', 'exclamation-triangle']} size={size as SizeProp} className={className} style={{height:'100%', width:'100%'}} />;
-  }
+  // Function to check if the icon exists in the library
+  const getIcon = (prefix: IconPrefix, name: IconName): IconLookup => {
+    const icon = byPrefixAndName[prefix]?.[name];
+    if (icon) {
+      return icon;
+    } else {
+      if (byPrefixAndName.fal) {
+        return byPrefixAndName.fal['circle-exclamation']
+          ? byPrefixAndName.fal['circle-exclamation']
+          : faCircleExclamation;
+      } else {
+        return faCircleExclamation;
+      }
+    }
+  };
 
-  return icon ? <FontAwesomeIcon icon={icon as IconProp} size={size as SizeProp} className={className} style={{height:'100%', width:'100%'}}/> : <FontAwesomeIcon icon={['fas', 'spinner']} spin size={size as SizeProp} className={className} style={{height:'100%', width:'100%'}}/>;
+  const iconPrefix = getIconPrefix(type);
+  const faIcon = getIcon(iconPrefix as IconPrefix, iconName as IconName);
+  // const icon = (iconPrefix: IconPrefix, iconName: IconName): IconProp => {
+  //   if (isIconInLibrary(iconPrefix, iconName)) {
+  //     return [iconPrefix, iconName] as IconProp;
+  //   } else {
+  //     return ['fas', 'exclamation-triangle'] as IconProp;
+  //   }
+  // };
+
+  return faIcon ? (
+    <FontAwesomeIcon
+      icon={faIcon}
+      size={size as SizeProp}
+      className={className}
+      style={{ height: '1rem', width: '1rem' }}
+    />
+  ) : (
+    <FontAwesomeIcon
+      icon={['fas', 'spinner']}
+      spin
+      size={size as SizeProp}
+      className={className}
+      style={{ height: '1rem', width: '1rem' }}
+    />
+  );
 };
 
 export default DynamicIcon;

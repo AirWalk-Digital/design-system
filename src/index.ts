@@ -1,6 +1,9 @@
 // import './index.css';
 
-export * from '@/components/Cards/FeatureCard';
-export * from '@/components/Layouts/FeatureGrid';
-export * from '@/components/Images/DynamicIcon';
-export * from '@/components/Menus/Header';
+export * from '@/components/Cards';
+export * from '@/components/Blocks';
+export * from '@/components/Images';
+export * from '@/components/Editor';
+export * from '@/components/Layouts';
+export * from '@/components/Menus';
+export * from '@/components/ui';

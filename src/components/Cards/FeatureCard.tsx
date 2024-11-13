@@ -1,4 +1,4 @@
-
+"use client";
 import DynamicIcon from '@/components/Images/DynamicIcon';
 import React from 'react';
 
