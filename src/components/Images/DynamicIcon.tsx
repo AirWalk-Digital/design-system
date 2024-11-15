@@ -6,7 +6,6 @@ import { byPrefixAndName } from '@awesome.me/kit-ff3b5aaa16/icons';
 import { faCircleExclamation } from '@awesome.me/kit-ff3b5aaa16/icons/classic/light';
 
 import {
-  findIconDefinition,
   type Icon,
   type IconLookup,
   type IconName,
@@ -15,7 +14,13 @@ import {
   type SizeProp,
 } from '@fortawesome/fontawesome-svg-core';
 
-export type IconType = 'solid' | 'regular' | 'light' | 'duotone' | 'kit' | 'brands';
+export type IconType =
+  | 'solid'
+  | 'regular'
+  | 'light'
+  | 'duotone'
+  | 'kit'
+  | 'brands';
 
 export interface DynamicIconProps {
   type?: IconType;
