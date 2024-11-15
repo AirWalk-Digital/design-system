@@ -7,7 +7,7 @@ export type FeatureCardProps = {
   description: string;
   iconName: string;
   iconStyle: 'solid' | 'regular' | 'light' | 'duotone' | 'kit';
-  color: 'green' | 'blue' | 'navy' | 'red';
+  color: 'green' | 'blue' | 'navy' | 'red' | 'yellow';
 };
 
 export const FeatureCard = ({
@@ -22,6 +22,7 @@ export const FeatureCard = ({
     blue: 'bg-blue-400',
     navy: 'bg-navy-700',
     red: 'bg-red-500',
+    yellow: 'bg-yellow-500',
   };
 
   return (
