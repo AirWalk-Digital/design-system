@@ -6,16 +6,19 @@ import { byPrefixAndName } from '@awesome.me/kit-ff3b5aaa16/icons';
 import { faCircleExclamation } from '@awesome.me/kit-ff3b5aaa16/icons/classic/light';
 
 import {
-  findIconDefinition,
-  type Icon,
   type IconLookup,
   type IconName,
   type IconPrefix,
-  type IconProp,
   type SizeProp,
 } from '@fortawesome/fontawesome-svg-core';
 
-export type IconType = 'solid' | 'regular' | 'light' | 'duotone' | 'kit' | 'brands';
+export type IconType =
+  | 'solid'
+  | 'regular'
+  | 'light'
+  | 'duotone'
+  | 'kit'
+  | 'brands';
 
 export interface DynamicIconProps {
   type?: IconType;
@@ -123,13 +126,6 @@ const DynamicIcon: React.FC<DynamicIconProps> = ({
 
   const iconPrefix = getIconPrefix(type);
   const faIcon = getIcon(iconPrefix as IconPrefix, iconName as IconName);
-  // const icon = (iconPrefix: IconPrefix, iconName: IconName): IconProp => {
-  //   if (isIconInLibrary(iconPrefix, iconName)) {
-  //     return [iconPrefix, iconName] as IconProp;
-  //   } else {
-  //     return ['fas', 'exclamation-triangle'] as IconProp;
-  //   }
-  // };
 
   return faIcon ? (
     // <div className={className} style={{ display:'flex', 'flexGrow': 1}}>

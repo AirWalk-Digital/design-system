@@ -1,4 +1,4 @@
-import type { Meta, StoryFn } from '@storybook/react';
+import type { Meta } from '@storybook/react';
 import { fn } from '@storybook/test';
 import React from 'react';
 
@@ -7,24 +7,24 @@ import type { ContentItem } from '@/lib/Types';
 import GithubControl from './GithubControl';
 
 import { GithubBranchDialog } from './GithubBranchDialog';
-import { Toaster } from "@/components/ui/toaster"
+import { Toaster } from '@/components/ui/toaster';
 
 async function dummyDelay(result: string) {
   fn();
-  const delay = (ms: number | undefined) => new Promise((resolve) => setTimeout(resolve, ms));
+  const delay = (ms: number | undefined) =>
+    new Promise((resolve) => setTimeout(resolve, ms));
   await delay(2000);
   switch (result) {
     case 'success':
       return 'success';
     case 'other':
-        return 'other';
+      return 'other';
     case 'error':
       throw new Error('An error occurred');
     default:
       throw new Error('An error occurred');
   }
 }
-
 
 export default {
   title: 'Editor/GithubControl',
@@ -49,12 +49,21 @@ export default {
     onSave: () => dummyDelay('success'),
     onNewBranch: () => dummyDelay('success'),
   },
-  
+
   decorators: [
     (Story) => (
-      <div style={{ '--sidebar-width': '16rem', display: 'flex', justifyContent: 'center', alignItems: 'center' } as React.CSSProperties}>
+      <div
+        style={
+          {
+            '--sidebar-width': '16rem',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          } as React.CSSProperties
+        }
+      >
         <div className="--sidebar-width:16rem w-[--sidebar-width]">
-          <Story/>
+          <Story />
           <Toaster />
         </div>
       </div>
@@ -63,6 +72,7 @@ export default {
 } as Meta<typeof GithubControl>;
 
 const dummyContext: ContentItem = {
+
   source: 'github',
   repo: 'airwalk_patterns',
   owner: 'airwalk-digital',
@@ -158,7 +168,6 @@ export const LotsOfBranches = {
     defaultContext: dummyContext,
     context: { ...dummyContext, branch: 'branch-1' },
     branches: [ ...branches, ...branches, ...branches, ...branches, ...branches, ...branches ],
-    // editMode: false,
     fetchBranches: fn(),
   },
 };
