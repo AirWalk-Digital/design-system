@@ -1,6 +1,6 @@
 'use client';
-import DynamicIcon from '@/components/Images/DynamicIcon';
 import React from 'react';
+import { DynamicIcon } from '../Images';
 
 export type FeatureCardProps = {
   title: string;
