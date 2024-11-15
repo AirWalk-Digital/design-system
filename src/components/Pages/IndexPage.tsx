@@ -72,6 +72,12 @@ import GithubControl from '@/components/Editor/GithubControl';
 import { Toaster } from '@/components/ui/toaster';
 import { InfoTile } from '@/components/Blocks';
 
+type Tile = {
+  slug: string;
+  title: string;
+  mainImage: string;
+  excerpt: string;
+};
 
 export default function IndexPage({ ...args }) {
   return (
@@ -107,7 +113,7 @@ export default function IndexPage({ ...args }) {
                 <div className="mt-10 flex items-center justify-center gap-x-6">
                 <div className="mt-6 px-10 grid grid-cols-1 gap-8 lg:grid-cols-3">
 
-                  {args.tiles.map((tile) => (
+                  {args.tiles.map((tile: Tile) => (
                     <InfoTile  key={tile.slug} slug={tile.slug} title={tile.title} mainImage={tile.mainImage} excerpt={tile.excerpt}/>
                   )
                 )
