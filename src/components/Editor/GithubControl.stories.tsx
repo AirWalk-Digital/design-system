@@ -1,4 +1,4 @@
-import type { Meta, StoryFn } from '@storybook/react';
+import type { Meta } from '@storybook/react';
 import { fn } from '@storybook/test';
 import React from 'react';
 
@@ -7,24 +7,24 @@ import type { ContentItem } from '@/lib/Types';
 import GithubControl from './GithubControl';
 
 import { GithubBranchDialog } from './GithubBranchDialog';
-import { Toaster } from "@/components/ui/toaster"
+import { Toaster } from '@/components/ui/toaster';
 
 async function dummyDelay(result: string) {
   fn();
-  const delay = (ms: number | undefined) => new Promise((resolve) => setTimeout(resolve, ms));
+  const delay = (ms: number | undefined) =>
+    new Promise((resolve) => setTimeout(resolve, ms));
   await delay(2000);
   switch (result) {
     case 'success':
       return 'success';
     case 'other':
-        return 'other';
+      return 'other';
     case 'error':
       throw new Error('An error occurred');
     default:
       throw new Error('An error occurred');
   }
 }
-
 
 export default {
   title: 'Editor/GithubControl',
@@ -50,35 +50,27 @@ export default {
     onSave: () => dummyDelay('success'),
     onNewBranch: () => dummyDelay('success'),
   },
-  
+
   decorators: [
     (Story) => (
-      <div style={{ '--sidebar-width': '16rem', display: 'flex', justifyContent: 'center', alignItems: 'center' } as React.CSSProperties}>
+      <div
+        style={
+          {
+            '--sidebar-width': '16rem',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          } as React.CSSProperties
+        }
+      >
         <div className="--sidebar-width:16rem w-[--sidebar-width]">
-          <Story/>
+          <Story />
           <Toaster />
         </div>
       </div>
     ),
   ],
 } as Meta<typeof GithubControl>;
-
-// const Template: StoryFn<typeof GithubControl> = (args) => <GithubControl {...args} />;
-
-// export const Default = Template.bind({});
-// Default.args = {
-//   open: true,
-//   height: '64px',
-//   handleEdit: fn(),
-//   handlePrint: () => alert('Print clicked'),
-//   handleAdd: () => alert('Add clicked'),
-//   handlePresentation: () => alert('Presentation clicked'),
-//   collection: { branch: 'main' },
-//   context: { branch: 'main' },
-//   branches: [{ name: 'main' }, { name: 'dev' }],
-//   onContextUpdate: (context) => console.log('Context updated', context),
-//   editMode: false,
-// };
 
 interface ExtendedContentItem extends ContentItem {
   base_branch: string;
@@ -143,7 +135,6 @@ export const Simple = {
   },
 };
 
-
 export const Fail = {
   args: {
     open: true,
@@ -154,7 +145,6 @@ export const Fail = {
     fetchBranches: fn(),
   },
 };
-
 
 export const BadResponse = {
   args: {
@@ -171,15 +161,21 @@ export const ReallyLongBranchName = {
   args: {
     open: true,
     collection: dummyCollection,
-    context: { ...dummyCollection, branch: 'branch-with-a-very-long-name-even-longer-than-this' },
-    branches: [{
-      name: 'branch-with-a-very-long-name-even-longer-than-this',
-      commit: {
-        sha: '7080423b89568b0427cb781f8b753f52fbc394e0',
-        url: 'https://api.github.com/repos/AirWalk-Digital/airwalk_patterns/commits/7080423b89568b0427cb781f8b753f52fbc394e0',
+    context: {
+      ...dummyCollection,
+      branch: 'branch-with-a-very-long-name-even-longer-than-this',
+    },
+    branches: [
+      {
+        name: 'branch-with-a-very-long-name-even-longer-than-this',
+        commit: {
+          sha: '7080423b89568b0427cb781f8b753f52fbc394e0',
+          url: 'https://api.github.com/repos/AirWalk-Digital/airwalk_patterns/commits/7080423b89568b0427cb781f8b753f52fbc394e0',
+        },
+        protected: false,
       },
-      protected: false,
-    },...branches],
+      ...branches,
+    ],
     // editMode: false,
     fetchBranches: fn(),
   },
@@ -190,7 +186,14 @@ export const LotsOfBranches = {
     open: true,
     collection: dummyCollection,
     context: { ...dummyCollection, branch: 'branch-1' },
-    branches: [ ...branches, ...branches, ...branches, ...branches, ...branches, ...branches ],
+    branches: [
+      ...branches,
+      ...branches,
+      ...branches,
+      ...branches,
+      ...branches,
+      ...branches,
+    ],
     // editMode: false,
     fetchBranches: fn(),
   },
