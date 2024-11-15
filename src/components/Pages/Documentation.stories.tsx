@@ -41,21 +41,23 @@ import {
 } from '@heroicons/react/24/outline';
 import { DynamicIcon } from '@/components/Images';
 
+
 const GithubIcon = () => (
-  <DynamicIcon iconName="github" size="10x" type="brands" />
+  // <FontAwesomeIcon icon={faGithub} size="10x" />
+  <DynamicIcon iconName="github" size="4x" type="brands" />
 );
-const AWSIcon = () => <DynamicIcon iconName="aws" size="10x" type="brands" />;
-const AzureIcon = () => <DynamicIcon iconName="azure" size="10x" type="kit" />;
+const AWSIcon = () => <DynamicIcon iconName="aws" type="brands" />;
+const AzureIcon = () => <DynamicIcon iconName="azure" type="kit" />;
 const SolutionIcon = () => (
-  <DynamicIcon iconName="people-sharing" size="10x" type="kit" />
+  <DynamicIcon iconName="people-sharing" size="4x" type="kit" />
 );
 
 const ServiceIcon = () => (
-  <DynamicIcon iconName="cloud-network-sharing" size="10x" type="kit" />
+  <DynamicIcon iconName="cloud-network-sharing" size="4x" type="kit" />
 );
 
 const ProductIcon = () => (
-  <DynamicIcon iconName="development" size="10x" type="kit" />
+  <DynamicIcon iconName="development" size="4x" type="kit" />
 );
 
 export default {

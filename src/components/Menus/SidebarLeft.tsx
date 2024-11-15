@@ -77,9 +77,9 @@ export type NavigationItem = {
 };
 
 interface SidebarLeftProps extends React.ComponentProps<typeof Sidebar> {
-  mainNav: MenuStructure[];
-  secondaryNav: MenuStructure[];
-  title: string;
+  mainNav?: MenuStructure[];
+  secondaryNav?: MenuStructure[];
+  title?: string;
   subTitle?: string;
   pathName?: string;
   menuHeading?: string;
@@ -162,7 +162,7 @@ function Menu({ subNav, pathName }: { menuHeading?: string; subNav: MenuStructur
             <SidebarMenuItem>
               <SidebarMenuButton asChild tooltip={item.label} className={clsx(isActive && 'font-bold text-accent' )}>
                 <a href={item.url}>
-                  {item.icon && <item.icon />}
+                  {item.icon && <item.icon/>}
                   <span>{item.label}</span>
                 </a>
               </SidebarMenuButton>
