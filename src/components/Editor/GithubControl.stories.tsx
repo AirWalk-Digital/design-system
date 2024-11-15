@@ -46,7 +46,6 @@ export default {
     onBranchChange: () => dummyDelay('success'),
     onPR: () => dummyDelay('success'),
     onPublishDraft: () => dummyDelay('success'),
-    onSubmitNewBranch: () => dummyDelay('success'),
     onSave: () => dummyDelay('success'),
     onNewBranch: () => dummyDelay('success'),
   },
@@ -72,16 +71,12 @@ export default {
   ],
 } as Meta<typeof GithubControl>;
 
-interface ExtendedContentItem extends ContentItem {
-  base_branch: string;
-}
+const dummyContext: ContentItem = {
 
-const dummyCollection: ExtendedContentItem = {
   source: 'github',
   repo: 'airwalk_patterns',
   owner: 'airwalk-digital',
   branch: 'main',
-  base_branch: 'main',
   path: 'providers',
   reference: 'provider',
   collections: ['services'],
@@ -122,13 +117,10 @@ const branches = [
   },
 ];
 
-// function fn()() {}
-
 export const Simple = {
   args: {
-    open: true,
-    collection: dummyCollection,
-    context: { ...dummyCollection, branch: 'branch-1' },
+    defaultContext: dummyContext,
+    context: { ...dummyContext, branch: 'branch-1' },
     branches,
     // editMode: false,
     fetchBranches: fn(),
@@ -137,102 +129,55 @@ export const Simple = {
 
 export const Fail = {
   args: {
-    open: true,
-    collection: dummyCollection,
-    context: { ...dummyCollection, branch: 'branch-1' },
+    defaultContext: dummyContext,
+    context: { ...dummyContext, branch: 'branch-1' },
     branches,
-    onSubmitNewBranch: () => dummyDelay('error'),
+    onNewBranch: () => dummyDelay('error'),
     fetchBranches: fn(),
   },
 };
 
 export const BadResponse = {
   args: {
-    open: true,
-    collection: dummyCollection,
-    context: { ...dummyCollection, branch: 'branch-1' },
+    defaultContext: dummyContext,
+    context: { ...dummyContext, branch: 'branch-1' },
     branches,
-    onSubmitNewBranch: () => dummyDelay('other'),
+    onNewBranch: () => dummyDelay('other'),
     fetchBranches: fn(),
   },
 };
 
 export const ReallyLongBranchName = {
   args: {
-    open: true,
-    collection: dummyCollection,
-    context: {
-      ...dummyCollection,
-      branch: 'branch-with-a-very-long-name-even-longer-than-this',
-    },
-    branches: [
-      {
-        name: 'branch-with-a-very-long-name-even-longer-than-this',
-        commit: {
-          sha: '7080423b89568b0427cb781f8b753f52fbc394e0',
-          url: 'https://api.github.com/repos/AirWalk-Digital/airwalk_patterns/commits/7080423b89568b0427cb781f8b753f52fbc394e0',
-        },
-        protected: false,
+    defaultContext: dummyContext,
+    context: { ...dummyContext, branch: 'branch-with-a-very-long-name-even-longer-than-this' },
+    branches: [{
+      name: 'branch-with-a-very-long-name-even-longer-than-this',
+      commit: {
+        sha: '7080423b89568b0427cb781f8b753f52fbc394e0',
+        url: 'https://api.github.com/repos/AirWalk-Digital/airwalk_patterns/commits/7080423b89568b0427cb781f8b753f52fbc394e0',
       },
-      ...branches,
-    ],
-    // editMode: false,
+      protected: false,
+    },...branches],
     fetchBranches: fn(),
   },
 };
 
 export const LotsOfBranches = {
   args: {
-    open: true,
-    collection: dummyCollection,
-    context: { ...dummyCollection, branch: 'branch-1' },
-    branches: [
-      ...branches,
-      ...branches,
-      ...branches,
-      ...branches,
-      ...branches,
-      ...branches,
-    ],
-    // editMode: false,
+    defaultContext: dummyContext,
+    context: { ...dummyContext, branch: 'branch-1' },
+    branches: [ ...branches, ...branches, ...branches, ...branches, ...branches, ...branches ],
     fetchBranches: fn(),
   },
 };
 
-export const EditMode = {
-  args: {
-    open: true,
-    top: 0,
-    handleEdit: fn(),
-    handleRefresh: fn(),
-    handlePrint: fn(),
-    handleAddContent: fn(),
-    onContextUpdate: fn(),
-    handlePresentation: fn(),
-    handlePublishDraft: fn(),
-    collection: dummyCollection,
-    context: { ...dummyCollection, branch: 'branch-1' },
-    branches,
-    editMode: true,
-    fetchBranches: fn(),
-    handlePR: fn(),
-  },
-};
 
 export const DefaultBranch = {
   args: {
-    open: true,
-    top: 0,
-    handleEdit: fn(),
-    handleRefresh: fn(),
-    handlePrint: fn(),
-    handleAdd: fn(),
-    onContextUpdate: fn(),
-    handlePresentation: fn(),
-    collection: dummyCollection,
-    context: { ...dummyCollection },
+    defaultContext: dummyContext,
+    context: { ...dummyContext },
     branches,
-    editMode: true,
     fetchBranches: fn(),
   },
 };

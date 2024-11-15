@@ -51,11 +51,11 @@ import { useToast } from '@/components/hooks/use-toast';
 import { ToastAction } from '@/components/ui/toast';
 
 interface CollectionItem extends ContentItem {
-  base_branch: string;
+  branch: string;
 }
 
 interface GithubControlProps {
-  collection?: CollectionItem;
+  defaultContext?: ContentItem;
   context?: ContentItem;
   branches?: {
     name: string;
@@ -66,13 +66,13 @@ interface GithubControlProps {
   }[];
   onPublishDraft?: (context: ContentItem | undefined) => Promise<string>;
   onBranchChange?: (selectedValue: string) => void;
-  onNewBranch: (value: { name?: string } | null) => Promise<string>;
+  onNewBranch?: (value: { name?: string } | null) => Promise<string>;
   onPR?: () => Promise<string>;
   onSave?: () => Promise<string>;
 }
 
 export default function GithubControl({
-  collection,
+  defaultContext,
   context,
   branches,
   onBranchChange,
@@ -241,7 +241,7 @@ export default function GithubControl({
                 >
                   <div className="flex w-full justify-between items-center">
                     <div className="flex items-center">
-                      {branch.name === collection?.base_branch && (
+                      {branch.name === defaultContext?.branch && (
                         <span className="mr-2 rounded bg-primary/20 px-1 py-0.5 text-xs">
                           default
                         </span>
@@ -287,7 +287,7 @@ export default function GithubControl({
           <GithubBranchDialog
             open={open}
             onOpenChange={setOpen}
-            onSubmit={onNewBranch}
+            onSubmit={onNewBranch ?? (() => Promise.resolve(''))}
           />
         </Dialog>
         <Tooltip>
@@ -396,7 +396,7 @@ export default function GithubControl({
           <span className="text-xs">Save</span>
         </Button>
       </div>
-      {context?.branch === collection?.base_branch && (
+      {context?.branch === defaultContext?.branch && (
         <div className="flex w-full items-center gap-2 py-1 pr-3 text-xs">
           <Alert variant="destructive">
             <AlertCircle className="h-4 w-4" />
