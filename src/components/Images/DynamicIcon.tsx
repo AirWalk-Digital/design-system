@@ -40,6 +40,45 @@ export interface DynamicIconProps {
   className?: string;
 }
 
+const sizePx = (size: SizeProp): string => {
+  switch (size) {
+    case '2xs':
+      return '6px';
+    case 'xs':
+      return '8px';
+    case 'sm':
+      return '12px';
+    case 'lg':
+      return '24px';
+    case 'xl':
+      return '48px';
+    case '2xl':
+      return '96px';
+    case '1x':
+      return '1rem';
+    case '2x':
+      return '2rem';
+    case '3x':
+      return '3rem';
+    case '4x':
+      return '4rem';
+    case '5x':
+      return '5rem';
+    case '6x':
+      return '6rem';
+    case '7x':
+      return '7rem';
+    case '8x':
+      return '8rem';
+    case '9x':
+      return '9rem';
+    case '10x':
+      return '10rem';
+    default:
+      return '24px';
+  }
+}
+
 const DynamicIcon: React.FC<DynamicIconProps> = ({
   type = 'solid',
   iconName = 'cloud',
@@ -93,21 +132,24 @@ const DynamicIcon: React.FC<DynamicIconProps> = ({
   // };
 
   return faIcon ? (
-    <div className={className}>
+    // <div className={className} style={{ display:'flex', 'flexGrow': 1}}>
     <FontAwesomeIcon
       icon={faIcon}
       size={size as SizeProp}
       className={className}
-      style={{ height: '100%', width: '100%', padding: '0.5rem' }}
+      // fixedWidth
+      
+      // style={{ width: sizePx(size) }}
+      // style={{ height: '100%', width: '100%', padding: '0.5rem' }}
     />
-    </div>
+    // </div>
   ) : (
     <FontAwesomeIcon
       icon={['fas', 'spinner']}
       spin
       size={size as SizeProp}
       className={className}
-      style={{ height: '100%', width: '100%' }}
+      style={{ width: sizePx(size as SizeProp) }}
     />
   );
 };

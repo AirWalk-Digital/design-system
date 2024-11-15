@@ -51,6 +51,7 @@ const HeaderMenu = ({ name, items, actions = [], href }: HeaderMenuProps) => {
               <item.icon
                 aria-hidden="true"
                 className="h-12 w-12 text-gray-600 group-hover:text-accent"
+                size="6x"
               />
             </div>
             <a

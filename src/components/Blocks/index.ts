@@ -1,1 +1,2 @@
-export { Insight } from '@/components/Blocks/Insight';
+export { Insight } from './Insight';
+export { InfoTile } from './InfoTile';

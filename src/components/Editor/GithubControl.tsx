@@ -89,9 +89,12 @@ export default function GithubControl({
   const { toast } = useToast();
 
   const [favorites, setFavorites] = React.useState<string[]>(() => {
-    // Load favorites from localStorage
-    const savedFavorites = localStorage.getItem('branchFavorites');
-    return savedFavorites ? JSON.parse(savedFavorites) : [];
+    if (typeof window !== 'undefined' && window.localStorage) {
+      // Load favorites from localStorage
+      const savedFavorites = localStorage.getItem('branchFavorites');
+      return savedFavorites ? JSON.parse(savedFavorites) : [];
+    }
+    return [];
   });
 
   const handleFavoriteToggle = (branchName: string) => {
@@ -100,8 +103,11 @@ export default function GithubControl({
       : [...favorites, branchName];
 
     setFavorites(updatedFavorites);
-    localStorage.setItem('branchFavorites', JSON.stringify(updatedFavorites)); // Store favorites in localStorage
+    if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.setItem('branchFavorites', JSON.stringify(updatedFavorites)); // Store favorites in localStorage
+    }
   };
+
 
   const handlePublishDraft = async (context: ContentItem | undefined) => {
     setIsPublishingDraft(true);

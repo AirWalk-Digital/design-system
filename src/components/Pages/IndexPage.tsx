@@ -70,14 +70,16 @@ import SidebarLeft from "@/components/Menus/SidebarLeft"
 import { SimpleHeader } from "../Menus"
 import GithubControl from '@/components/Editor/GithubControl';
 import { Toaster } from '@/components/ui/toaster';
+import { InfoTile } from '@/components/Blocks';
+
 
 export default function IndexPage({ ...args }) {
   return (
     <div className="flex fixed flex-col w-screen h-screen max-h-screen overflow-auto overscroll-contain">
     <SimpleHeader {...args.header}/>
-    <SidebarProvider className="flex-1 flex-row overflow-y-auto">
+    <SidebarProvider className='top-14 mb-4 h-full max-h-[calc(100vh-3.5rem)] flex-1 flex-row overflow-y-clip'>
       <SidebarLeft {...args.sidebarLeft} className="flex-none"/>
-      <SidebarInset className="max-w-full max-h-full">
+      <SidebarInset className="grow overflow-hidden">
       {/* Hero section */}
       <div className="max-h-full top-0 absolute max-w-full">
           <div
@@ -103,7 +105,14 @@ export default function IndexPage({ ...args }) {
                   amet fugiat veniam occaecat.
                 </p>
                 <div className="mt-10 flex items-center justify-center gap-x-6">
-                  {/* content here */}
+                <div className="mt-6 px-10 grid grid-cols-1 gap-8 lg:grid-cols-3">
+
+                  {args.tiles.map((tile) => (
+                    <InfoTile  key={tile.slug} slug={tile.slug} title={tile.title} mainImage={tile.mainImage} excerpt={tile.excerpt}/>
+                  )
+                )
+                  }
+</div>
                 </div>
               </div>
               

@@ -26,6 +26,7 @@ import {
   SquareTerminal,
   Trash2,
 } from 'lucide-react';
+import { DynamicIcon } from '../Images';
 
 import React from 'react';
 import SidebarLeft from './SidebarLeft';
@@ -124,30 +125,61 @@ Default.args = {
   onSidebarMenu: fn(),
 };
 
+
+const GithubIcon = () => (
+  <DynamicIcon
+      iconName="github"
+      type="brands"
+    />
+  );
 export const Airview = Template.bind({});
-// menu: [
-//   {
-//     "label": "Kubernetes",
-//     "url": "/collections/solutions/solutions/kubernetes/_index.md",
-//     "type": "published",
-//     "links": [],
-//     "menuItems": [
-//       {
-//         "links": [
-//           {
-//             "label": "High Level Design",
-//             "url": "/solutions/designs/high_level_design_lczbvf99/_index.md",
-//             "type": "published"
-//           },
-//         ]
-//       }
-//     ]
-//   },
 Airview.args = {
+  title: 'Playground',
+  subTitle: 'Airview',
+  menuHeading: 'Main Menu',
   mainNav: [
         {
           label: 'Kubernetes',
           url: '/collections/solutions/solutions/kubernetes/_index.md',
+          type: 'published',
+          links: [
+            {
+              label: 'High Level Design',
+              url: '/solutions/designs/high_level_design_lczbvf99/_index.md',
+              type: 'published',
+            },
+            {
+              label: 'Istio Ambient Mesh',
+              url: '/solutions/designs/istio_ambient_mesh_leemxsdx/_index.md',
+              type: 'published',
+            },
+            {
+              label: 'AWS Landing Zone - Elastic Kubernetes Service (EKS)',
+              url: '/solutions/designs/elastic_kubernetes_service_eks_ljwysr3d/_index.md',
+              type: 'published',
+            },
+          ],
+        },
+        {
+          label: 'AI Contact Centre',
+          url: '/collections/solutions/solutions/contact_centre/_index.md',
+          type: 'published',
+        },
+        // Additional items follow the same structure...
+      ],
+
+};
+
+export const CustomIcons = Template.bind({});
+CustomIcons.args = {
+  title: 'Playground',
+  subTitle: 'Airview',
+  menuHeading: 'Main Menu',
+  mainNav: [
+        {
+          label: 'Kubernetes',
+          url: '/collections/solutions/solutions/kubernetes/_index.md',
+          icon: GithubIcon,
           type: 'published',
           links: [
             {
