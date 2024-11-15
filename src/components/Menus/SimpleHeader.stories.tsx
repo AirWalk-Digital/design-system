@@ -17,11 +17,11 @@ export default {
 
 type Story = StoryObj<typeof SimpleHeader>;
 
-const GithubIcon = () => (
-<DynamicIcon
+const GithubIcon = (props: any) => (
+  <DynamicIcon
     iconName="github"
-    size="10x"
     type="brands"
+    {...props}
   />
 );
 export const Primary: Story = {

@@ -12,11 +12,20 @@ const Template = (args) => <SidebarProvider><SidebarRight {...args} /></SidebarP
 import GithubControl from '@/components/Editor/GithubControl';
 
 
-
+const branches = [
+  {
+    name: 'main',
+    commit: {
+      sha: '53bfd8457509778140caa47b01c6476d661f1b34',
+      url: 'https://api.github.com/repos/AirWalk-Digital/airwalk_patterns/commits/53bfd8457509778140caa47b01c6476d661f1b34',
+    },
+    protected: true,
+  },
+]
 
 export const Default = Template.bind({});
 Default.args = {
-  editorComponent: <GithubControl onPublishDraft={fn()} handleNewBranch={fn()} handlePR={fn()} />,
+  editorComponent: <GithubControl onPublishDraft={fn()} handleNewBranch={fn()} handlePR={fn()} branches={branches} />,
   onNavClick: fn(),
   tableOfContents: [
     {

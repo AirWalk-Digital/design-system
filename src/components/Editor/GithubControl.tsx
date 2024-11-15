@@ -57,7 +57,7 @@ interface CollectionItem extends ContentItem {
 interface GithubControlProps {
   collection?: CollectionItem;
   context?: ContentItem;
-  branches: {
+  branches?: {
     name: string;
     commit: {
       sha: string;
@@ -89,9 +89,12 @@ export default function GithubControl({
   const { toast } = useToast();
 
   const [favorites, setFavorites] = React.useState<string[]>(() => {
-    // Load favorites from localStorage
-    const savedFavorites = localStorage.getItem('branchFavorites');
-    return savedFavorites ? JSON.parse(savedFavorites) : [];
+    if (typeof window !== 'undefined' && window.localStorage) {
+      // Load favorites from localStorage
+      const savedFavorites = localStorage.getItem('branchFavorites');
+      return savedFavorites ? JSON.parse(savedFavorites) : [];
+    }
+    return [];
   });
 
   const handleFavoriteToggle = (branchName: string) => {
@@ -100,8 +103,11 @@ export default function GithubControl({
       : [...favorites, branchName];
 
     setFavorites(updatedFavorites);
-    localStorage.setItem('branchFavorites', JSON.stringify(updatedFavorites)); // Store favorites in localStorage
+    if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.setItem('branchFavorites', JSON.stringify(updatedFavorites)); // Store favorites in localStorage
+    }
   };
+
 
   const handlePublishDraft = async (context: ContentItem | undefined) => {
     setIsPublishingDraft(true);
@@ -194,7 +200,7 @@ export default function GithubControl({
   };
 
   // Sort branches so that favorites are at the top
-  const sortedBranches = [...branches].sort((a, b) => {
+  const sortedBranches = branches ? [...branches].sort((a, b) => {
     const aIsFavorite = favorites.includes(a.name);
     const bIsFavorite = favorites.includes(b.name);
 
@@ -205,14 +211,14 @@ export default function GithubControl({
       return 1;
     }
     return 0;
-  });
+  }) : [];
 
   return (
     <TooltipProvider>
       <div className="flex w-full items-center gap-2 py-1">
         <div className="flex-1 w-full truncate">
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
+            <DropdownMenuTrigger asChild disabled={!branches}>
               <Button
                 variant="outline"
                 className="w-full justify-start gap-2 truncate font-normal"
