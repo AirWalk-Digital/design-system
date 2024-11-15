@@ -27,6 +27,20 @@ export default {
     },
   ],
   plugins: [
+    alias({
+      resolve: ['.jsx', '.js', '.ts', '.tsx'], //optional, by default this will just look for .js files or folders
+      entries: [
+        {
+          find: '@/components',
+          replacement: path.resolve(__dirname, 'src/components'),
+        },
+        {
+          find: '@/styles',
+          replacement: path.resolve(__dirname, 'src/styles'),
+        },
+        { find: '@/lib', replacement: path.resolve(__dirname, 'src/lib') },
+      ],
+    }),
     peerDepsExternal(),
     commonjs({
       include: 'node_modules/**', // Ensure that commonjs modules in node_modules are handled
@@ -50,20 +64,6 @@ export default {
       extensions: ['.css'],
     }),
     typescript(),
-    alias({
-      resolve: ['.jsx', '.js', '.ts', '.tsx'], //optional, by default this will just look for .js files or folders
-      entries: [
-        {
-          find: '@/components',
-          replacement: path.resolve(__dirname, 'src/components'),
-        },
-        {
-          find: '@/styles',
-          replacement: path.resolve(__dirname, 'src/styles'),
-        },
-        { find: '@/lib', replacement: path.resolve(__dirname, 'src/lib') },
-      ],
-    }),
     svgr(), // load .svg files as React components
   ],
   external: ['react', 'react-dom'],
