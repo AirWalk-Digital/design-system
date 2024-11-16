@@ -1,5 +1,5 @@
-"use client";
-import React from "react";
+'use client';
+import React from 'react';
 import {
   BadgeCheck,
   Bell,
@@ -29,7 +29,7 @@ import {
   Sparkles,
   SquareTerminal,
   Trash2,
-} from "lucide-react";
+} from 'lucide-react';
 
 // import {
 //   Avatar,
@@ -41,8 +41,9 @@ import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import clsx from 'clsx'
+} from '@/components/ui/collapsible';
+import clsx from 'clsx';
+import { Skeleton } from '@/components/ui/skeleton';
 
 import {
   Sidebar,
@@ -63,9 +64,9 @@ import {
   SidebarProvider,
   SidebarTrigger,
   SidebarSeparator,
-} from "@/components/ui/sidebar";
+} from '@/components/ui/sidebar';
 
-import type { LinkItem, MenuStructure, MultiMenuStructure } from "@/lib/Types";
+import type { LinkItem, MenuStructure, MultiMenuStructure } from '@/lib/Types';
 
 export type NavigationItem = {
   label: string;
@@ -73,7 +74,7 @@ export type NavigationItem = {
   isActive?: boolean; // Optional property for active items
   isDraft?: boolean; // Optional property for draft items
   items?: NavigationItem[]; // Recursive type for nested items
-  icon?: React.ComponentType<React.ComponentProps<"svg">>;
+  icon?: React.ComponentType<React.ComponentProps<'svg'>>;
 };
 
 interface SidebarLeftProps extends React.ComponentProps<typeof Sidebar> {
@@ -84,7 +85,7 @@ interface SidebarLeftProps extends React.ComponentProps<typeof Sidebar> {
   pathName?: string;
   menuHeading?: string;
   onSidebarMenu?: () => void;
-
+  loading?: boolean;
 }
 
 export default function SidebarLeft({
@@ -95,6 +96,7 @@ export default function SidebarLeft({
   pathName,
   menuHeading,
   onSidebarMenu,
+  loading = false,
   ...props
 }: SidebarLeftProps) {
   return (
@@ -102,37 +104,62 @@ export default function SidebarLeft({
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            {/* <SidebarMenuButton size="lg" onClick={onSidebarMenu}> */}
-              
-                {/* <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                  <LayoutGrid className="size-6" />
-                </div> */}
-                <div className="grid flex-1 p-2 text-left text-m leading-tight">
-                  <span className="truncate font-semibold">{title}</span>
-                 {subTitle && <span className="truncate text-sm">{subTitle}</span> }
-                </div>
-              
-            {/* </SidebarMenuButton> */}
+            {loading ? (
+              <div className="grid flex-1 p-2 text-left text-m leading-tight">
+                <Skeleton className="bg-gray-200 my-2 w-full h-7" />
+                <Skeleton className="bg-gray-200 w-3/4 my-2 h-5" />
+              </div>
+            ) : (
+              <div className="grid flex-1 p-2 text-left text-m leading-tight">
+                <span className="truncate font-semibold">{title}</span>
+                {subTitle && (
+                  <span className="truncate text-sm">{subTitle}</span>
+                )}
+              </div>
+            )}
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
+
+      {loading && (
+        <SidebarContent>
+          <Skeleton className="bg-gray-200 w-3/4 h-5" />
+          <Skeleton className="bg-gray-200 w-3/4 h-5" />
+
+          <Skeleton className="bg-gray-200 w-3/4 h-5" />
+
+          <Skeleton className="bg-gray-200 w-3/4 h-5" />
+
+          <Skeleton className="bg-gray-200 w-3/4 h-5" />
+          <Skeleton className="bg-gray-200 w-3/4 h-5" />
+          <Skeleton className="bg-gray-200 w-3/4 h-5" />
+          <Skeleton className="bg-gray-200 w-3/4 h-5" />
+          <Skeleton className="bg-gray-200 w-3/4 h-5" />
+          <Skeleton className="bg-gray-200 w-3/4 h-5" />
+        </SidebarContent>
+      )}
+
       <SidebarContent>
-        { mainNav && mainNav.map((item, index) => ( 
-          <Menu key={index} subNav={item} pathName={pathName} />
-        ))}
+        {mainNav &&
+          !loading &&
+          mainNav.map((item, index) => (
+            <Menu key={index} subNav={item} pathName={pathName} />
+          ))}
         <SidebarGroup className="mt-auto">
           <SidebarGroupContent>
             <SidebarMenu>
-              {secondaryNav && secondaryNav.map((item) => (
-                <SidebarMenuItem key={item.label}>
-                  <SidebarMenuButton asChild size="sm" >
-                    <a href={item.url}>
-                      {item.icon && <item.icon />}
-                      <span>{item.label}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              {secondaryNav &&
+                !loading &&
+                secondaryNav.map((item) => (
+                  <SidebarMenuItem key={item.label}>
+                    <SidebarMenuButton asChild size="sm">
+                      <a href={item.url}>
+                        {item.icon && <item.icon />}
+                        <span>{item.label}</span>
+                      </a>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
@@ -142,8 +169,14 @@ export default function SidebarLeft({
   );
 }
 
-
-function Menu({ subNav, pathName }: { menuHeading?: string; subNav: MenuStructure, pathName?: string }) {
+function Menu({
+  subNav,
+  pathName,
+}: {
+  menuHeading?: string;
+  subNav: MenuStructure;
+  pathName?: string;
+}) {
   const item = subNav;
   let isActive = false;
   // if a link within subNav.links equals the current pathName, set isActive to true ( this will open the collapsible )
@@ -156,13 +189,17 @@ function Menu({ subNav, pathName }: { menuHeading?: string; subNav: MenuStructur
   }
   return (
     <Collapsible defaultOpen className="group/collapsible">
-    <SidebarGroup className="py-0">
-      <SidebarMenu>
+      <SidebarGroup className="py-0">
+        <SidebarMenu>
           <Collapsible key={item.label} asChild defaultOpen={item.isActive}>
             <SidebarMenuItem>
-              <SidebarMenuButton asChild tooltip={item.label} className={clsx(isActive && 'font-bold text-accent' )}>
+              <SidebarMenuButton
+                asChild
+                tooltip={item.label}
+                className={clsx(isActive && 'font-bold text-accent')}
+              >
                 <a href={item.url}>
-                  {item.icon && <item.icon/>}
+                  {item.icon && <item.icon />}
                   <span>{item.label}</span>
                 </a>
               </SidebarMenuButton>
@@ -175,10 +212,16 @@ function Menu({ subNav, pathName }: { menuHeading?: string; subNav: MenuStructur
                     </SidebarMenuAction>
                   </CollapsibleTrigger>
                   <CollapsibleContent>
-                    <SidebarMenuSub >
+                    <SidebarMenuSub>
                       {item.links?.map((subItem) => (
                         <SidebarMenuSubItem key={subItem.label}>
-                          <SidebarMenuSubButton asChild className={clsx(subItem.url === pathName && 'font-bold text-accent',)}>
+                          <SidebarMenuSubButton
+                            asChild
+                            className={clsx(
+                              subItem.url === pathName &&
+                                'font-bold text-accent',
+                            )}
+                          >
                             <a href={subItem.url}>
                               <span>{subItem.label}</span>
                             </a>
@@ -191,8 +234,8 @@ function Menu({ subNav, pathName }: { menuHeading?: string; subNav: MenuStructur
               ) : null}
             </SidebarMenuItem>
           </Collapsible>
-      </SidebarMenu>
-    </SidebarGroup>
-</Collapsible>
+        </SidebarMenu>
+      </SidebarGroup>
+    </Collapsible>
   );
 }

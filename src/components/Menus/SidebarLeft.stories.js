@@ -125,7 +125,16 @@ Default.args = {
   onSidebarMenu: fn(),
 };
 
-
+export const Loading = Template.bind({});
+Loading.args = {
+  title: 'Playground',
+  loading: true,
+  subTitle: 'Airview',
+  menuHeading: 'Main Menu',
+  mainNav: undefined,
+  secondaryNav: undefined,
+  onSidebarMenu: fn(),
+};
 const GithubIcon = () => (
   <DynamicIcon
       iconName="github"

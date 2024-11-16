@@ -11,7 +11,16 @@ export default {
 const Template = (args) => <SidebarProvider><SidebarRight {...args} /></SidebarProvider>;
 import GithubControl from '@/components/Editor/GithubControl';
 
+const dummyContext = {
 
+  source: 'github',
+  repo: 'airwalk_patterns',
+  owner: 'airwalk-digital',
+  branch: 'main',
+  path: 'providers',
+  reference: 'provider',
+  collections: ['services'],
+};
 const branches = [
   {
     name: 'main',
@@ -25,7 +34,7 @@ const branches = [
 
 export const Default = Template.bind({});
 Default.args = {
-  editorComponent: <GithubControl onPublishDraft={fn()} handleNewBranch={fn()} handlePR={fn()} branches={branches} />,
+  editorComponent: <GithubControl onPublishDraft={fn()} handleNewBranch={fn()} handlePR={fn()} branches={branches} context={dummyContext} defaultContext={dummyContext}/>,
   onNavClick: fn(),
   tableOfContents: [
     {
@@ -221,7 +230,19 @@ Default.args = {
       }
     ]
   },  
-  isEditMode: true,
+  onAddDocument: fn(),
+  onEditDocument: fn(),
+  onPrintDocument: fn(),
+  onGithubClick: fn(),
+};
+
+export const Loading = Template.bind({});
+Loading.args = {
+  editorComponent: <GithubControl onPublishDraft={fn()} handleNewBranch={fn()} handlePR={fn()} branches={branches} context={dummyContext} defaultContext={dummyContext}/>,
+  onNavClick: fn(),
+  tableOfContents: undefined,
+  relatedContent: undefined,
+  loading: true,
   onAddDocument: fn(),
   onEditDocument: fn(),
   onPrintDocument: fn(),
@@ -238,7 +259,7 @@ NoTableOfContents.args = {
 
 export const NoGithubLink = Template.bind({});
 NoGithubLink.args = {
-  editorComponent: <GithubControl onPublishDraft={fn()} handleNewBranch={fn()} handlePR={fn()} />,
+  editorComponent: <GithubControl onPublishDraft={fn()} handleNewBranch={fn()} handlePR={fn()} branches={branches} context={dummyContext} defaultContext={dummyContext}/>,
   onAddDocument: fn(),
   onEditDocument: fn(),
   onPrintDocument: fn(),
