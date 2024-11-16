@@ -296,7 +296,7 @@ export default function SidebarRight({
                     {tableOfContents.map((item) => (
                       <SidebarMenuItem key={item.title}>
                         <SidebarMenuButton asChild>
-                          <a href={item.url} className="text-xs">
+                          <a href={`#${item.url}`} className="text-xs">
                             {item.title}
                           </a>
                         </SidebarMenuButton>
@@ -310,17 +310,10 @@ export default function SidebarRight({
                                   size="sm"
                                 >
                                   <a
-                                    href={item.url}
+                                    href={`#${item.url}`}
                                     className="flex justify-between items-center w-full text-xs"
                                   >
                                     <span>{item.title}</span>
-                                    {item.isDraft && (
-                                      <PencilLine
-                                        className="ml-2 text-gray-400 !important"
-                                        size={16}
-                                      />
-                                    )}{' '}
-                                    {/* Conditionally render the draft icon */}
                                   </a>
                                 </SidebarMenuSubButton>
                               </SidebarMenuSubItem>
