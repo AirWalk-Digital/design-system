@@ -76,6 +76,7 @@ interface SidebarRightProps extends React.ComponentProps<typeof Sidebar> {
   relatedContent?: RelatedContent;
   editorComponent?: React.ReactNode;
   loading: boolean;
+  editMode: boolean;
   onAddDocument: () => void;
   onEditDocument: () => void;
   onPrintDocument: () => void;
@@ -97,6 +98,7 @@ export default function SidebarRight({
   tableOfContents,
   editorComponent,
   loading = false,
+  editMode = false,
   onAddDocument,
   onEditDocument,
   onPrintDocument,
@@ -147,7 +149,7 @@ export default function SidebarRight({
         </SidebarMenu>
         <SidebarMenu className="flex-row space-x-1">
           <SidebarMenuItem className="w-5/12">
-            <SidebarMenuButton onClick={() => onEditDocument()} disabled={!editorComponent} variant={editorComponent ? 'outline' : 'default'} className={clsx(editorComponent && 'bg-accent text-accent-foreground' )}>
+            <SidebarMenuButton onClick={() => onEditDocument()} variant={editMode ? 'outline' : 'default'} className={clsx(editMode && 'text-accent' )}>
               <Edit /> <span>Edit</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
