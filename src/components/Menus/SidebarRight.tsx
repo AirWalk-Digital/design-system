@@ -56,6 +56,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/components/ui/collapsible';
+import { Skeleton } from "@/components/ui/skeleton";
 import { faCodePullRequestDraft } from '@awesome.me/kit-ff3b5aaa16/icons/classic/light';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import clsx from 'clsx'
@@ -74,7 +75,7 @@ interface SidebarRightProps extends React.ComponentProps<typeof Sidebar> {
   tableOfContents?: TableOfContentsItem[];
   relatedContent?: RelatedContent;
   editorComponent?: React.ReactNode;
-  isEditMode: boolean;
+  loading: boolean;
   onAddDocument: () => void;
   onEditDocument: () => void;
   onPrintDocument: () => void;
@@ -95,7 +96,7 @@ export default function SidebarRight({
   relatedContent,
   tableOfContents,
   editorComponent,
-  isEditMode = false,
+  loading = false,
   onAddDocument,
   onEditDocument,
   onPrintDocument,
@@ -146,7 +147,7 @@ export default function SidebarRight({
         </SidebarMenu>
         <SidebarMenu className="flex-row space-x-1">
           <SidebarMenuItem className="w-5/12">
-            <SidebarMenuButton onClick={() => onEditDocument()} disabled={!editorComponent} variant={isEditMode ? 'outline' : 'default'} className={clsx(isEditMode && 'bg-accent text-accent-foreground' )}>
+            <SidebarMenuButton onClick={() => onEditDocument()} disabled={!editorComponent} variant={editorComponent ? 'outline' : 'default'} className={clsx(editorComponent && 'bg-accent text-accent-foreground' )}>
               <Edit /> <span>Edit</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -158,7 +159,7 @@ export default function SidebarRight({
         </SidebarMenu>
       </SidebarHeader>
 
-      {isEditMode && editorComponent && (
+      {editorComponent && (
         <>
           <Collapsible defaultOpen className="group/collapsible">
             <SidebarGroup>
@@ -180,7 +181,45 @@ export default function SidebarRight({
         <SidebarSeparator className="mx-0" />
       </SidebarContent> */}
       <SidebarContent className="overflow-auto">
-      {relatedContent && Object.keys(relatedContent).length > 0 && (
+
+        { loading && (
+          <>
+          <SidebarGroup>
+            <SidebarGroupLabel>
+                Related Content
+            </SidebarGroupLabel>
+            <SidebarGroupContent>
+          
+                <SidebarMenu>
+                  {Array.from({ length: 3 }).map((_, index) => (
+                    <SidebarMenuItem key={index}>
+                      <Skeleton className="bg-gray-200 w-full h-10" />
+                    </SidebarMenuItem>
+                  ))}
+                </SidebarMenu>
+        
+            </SidebarGroupContent>
+          </SidebarGroup>
+          <SidebarGroup>
+          <SidebarGroupLabel>
+              Table of Contents
+          </SidebarGroupLabel>
+          <SidebarGroupContent>
+        
+              <SidebarMenu>
+                {Array.from({ length: 3 }).map((_, index) => (
+                  <SidebarMenuItem key={index}>
+                    <Skeleton className="bg-gray-200 w-full h-10" />
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+      
+          </SidebarGroupContent>
+        </SidebarGroup>
+        </>
+          
+        )}
+      {relatedContent && !loading && Object.keys(relatedContent).length > 0 && (
           <Collapsible defaultOpen className="group/collapsible">
             <SidebarGroup>
               <SidebarGroupLabel asChild>
@@ -240,7 +279,7 @@ export default function SidebarRight({
             </SidebarGroup>
           </Collapsible>
         )}
-        {tableOfContents && (
+        {tableOfContents && !loading && (
           <Collapsible defaultOpen className="group/collapsible">
             <SidebarGroup>
               <SidebarGroupLabel asChild>
