@@ -82,6 +82,7 @@ interface SidebarRightProps extends React.ComponentProps<typeof Sidebar> {
   onPrintDocument: () => void;
   onGithubClick?: () => void;
   onNavClick?: (callback: any) => void;
+  LinkComponent? : React.ComponentType<React.ComponentProps<'a'>>;
 }
 
 
@@ -104,11 +105,12 @@ export default function SidebarRight({
   onPrintDocument,
   onGithubClick,
   onNavClick,
+  LinkComponent,
   ...props
 }: SidebarRightProps) {
   const isActive = false; // Todo: work out how to determine if a link is active
   interface ButtonProps {
-    href: string;
+    href?: string;
     children: React.ReactNode;
   }
   const Button: React.FC<ButtonProps> = ({ href, children, ...props }) => {
@@ -123,7 +125,7 @@ export default function SidebarRight({
     );
   };
   // if onNavClick is provided, pass the callback to the buttons. else, render an anchor tag
-  const LinkComponent = onNavClick ? Button : 'a';
+  const Link: React.FC<ButtonProps & React.ComponentProps<'a'>> = LinkComponent ? (props) => <LinkComponent {...props} /> : onNavClick ? Button : (props) => <a {...props} />;
   return (
     <Sidebar
       side="right"
@@ -249,7 +251,7 @@ export default function SidebarRight({
                                     isActive={isActive}
                                     size="sm"
                                   >
-                                    <LinkComponent
+                                    <Link
                                       href={item.url}
                                       className="flex justify-between items-center w-full text-xs"
                                     >
@@ -267,7 +269,7 @@ export default function SidebarRight({
                                         />
                                       )}
                                       {/* Conditionally render the draft icon */}
-                                    </LinkComponent>
+                                    </Link>
                                   </SidebarMenuSubButton>
                                 </SidebarMenuSubItem>
                               ))}
