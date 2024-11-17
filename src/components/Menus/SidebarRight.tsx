@@ -111,12 +111,13 @@ export default function SidebarRight({
   const isActive = false; // Todo: work out how to determine if a link is active
   interface ButtonProps {
     href?: string;
+    item?: any;
     children: React.ReactNode;
   }
-  const Button: React.FC<ButtonProps> = ({ href, children, ...props }) => {
+  const Button: React.FC<ButtonProps> = ({ item, children, ...props }) => {
     return (
       <button
-        onClick={() => onNavClick && onNavClick(href)}
+        onClick={() => onNavClick && onNavClick(item)}
         className="flex items-center justify-start w-full text-sm text-left px-4 py-2"
         {...props}
       >
@@ -125,7 +126,7 @@ export default function SidebarRight({
     );
   };
   // if onNavClick is provided, pass the callback to the buttons. else, render an anchor tag
-  const Link: React.FC<ButtonProps & React.ComponentProps<'a'>> = LinkComponent ? (props) => <LinkComponent {...props} /> : onNavClick ? Button : (props) => <a {...props} />;
+  const Link: React.FC<ButtonProps & React.ComponentProps<'a'>> = LinkComponent ? (props) => <LinkComponent {...props} /> : onNavClick ? Button : (props) => <a href={props.href} {...props} />;
   return (
     <Sidebar
       side="right"
@@ -253,6 +254,7 @@ export default function SidebarRight({
                                   >
                                     <Link
                                       href={item.url}
+                                      item={item}
                                       className="flex justify-between items-center w-full text-xs"
                                     >
                                       <span>{item.label}</span>
