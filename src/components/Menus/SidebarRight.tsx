@@ -76,11 +76,13 @@ interface SidebarRightProps extends React.ComponentProps<typeof Sidebar> {
   relatedContent?: RelatedContent;
   editorComponent?: React.ReactNode;
   loading: boolean;
+  editMode: boolean;
   onAddDocument: () => void;
   onEditDocument: () => void;
   onPrintDocument: () => void;
   onGithubClick?: () => void;
   onNavClick?: (callback: any) => void;
+  LinkComponent? : React.ComponentType<React.ComponentProps<'a'>>;
 }
 
 
@@ -97,16 +99,18 @@ export default function SidebarRight({
   tableOfContents,
   editorComponent,
   loading = false,
+  editMode = false,
   onAddDocument,
   onEditDocument,
   onPrintDocument,
   onGithubClick,
   onNavClick,
+  LinkComponent,
   ...props
 }: SidebarRightProps) {
   const isActive = false; // Todo: work out how to determine if a link is active
   interface ButtonProps {
-    href: string;
+    href?: string;
     children: React.ReactNode;
   }
   const Button: React.FC<ButtonProps> = ({ href, children, ...props }) => {
@@ -121,7 +125,7 @@ export default function SidebarRight({
     );
   };
   // if onNavClick is provided, pass the callback to the buttons. else, render an anchor tag
-  const LinkComponent = onNavClick ? Button : 'a';
+  const Link: React.FC<ButtonProps & React.ComponentProps<'a'>> = LinkComponent ? (props) => <LinkComponent {...props} /> : onNavClick ? Button : (props) => <a {...props} />;
   return (
     <Sidebar
       side="right"
@@ -147,7 +151,7 @@ export default function SidebarRight({
         </SidebarMenu>
         <SidebarMenu className="flex-row space-x-1">
           <SidebarMenuItem className="w-5/12">
-            <SidebarMenuButton onClick={() => onEditDocument()} disabled={!editorComponent} variant={editorComponent ? 'outline' : 'default'} className={clsx(editorComponent && 'bg-accent text-accent-foreground' )}>
+            <SidebarMenuButton onClick={() => onEditDocument()} variant={editMode ? 'outline' : 'default'} className={clsx(editMode && 'text-accent' )}>
               <Edit /> <span>Edit</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -247,7 +251,7 @@ export default function SidebarRight({
                                     isActive={isActive}
                                     size="sm"
                                   >
-                                    <LinkComponent
+                                    <Link
                                       href={item.url}
                                       className="flex justify-between items-center w-full text-xs"
                                     >
@@ -265,7 +269,7 @@ export default function SidebarRight({
                                         />
                                       )}
                                       {/* Conditionally render the draft icon */}
-                                    </LinkComponent>
+                                    </Link>
                                   </SidebarMenuSubButton>
                                 </SidebarMenuSubItem>
                               ))}
@@ -294,7 +298,7 @@ export default function SidebarRight({
                     {tableOfContents.map((item) => (
                       <SidebarMenuItem key={item.title}>
                         <SidebarMenuButton asChild>
-                          <a href={item.url} className="text-xs">
+                          <a href={`#${item.url}`} className="text-xs">
                             {item.title}
                           </a>
                         </SidebarMenuButton>
@@ -308,17 +312,10 @@ export default function SidebarRight({
                                   size="sm"
                                 >
                                   <a
-                                    href={item.url}
+                                    href={`#${item.url}`}
                                     className="flex justify-between items-center w-full text-xs"
                                   >
                                     <span>{item.title}</span>
-                                    {item.isDraft && (
-                                      <PencilLine
-                                        className="ml-2 text-gray-400 !important"
-                                        size={16}
-                                      />
-                                    )}{' '}
-                                    {/* Conditionally render the draft icon */}
                                   </a>
                                 </SidebarMenuSubButton>
                               </SidebarMenuSubItem>

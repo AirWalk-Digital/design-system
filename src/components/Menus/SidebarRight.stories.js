@@ -36,6 +36,7 @@ export const Default = Template.bind({});
 Default.args = {
   editorComponent: <GithubControl onPublishDraft={fn()} handleNewBranch={fn()} handlePR={fn()} branches={branches} context={dummyContext} defaultContext={dummyContext}/>,
   onNavClick: fn(),
+  editMode: true,
   tableOfContents: [
     {
       title: "Getting Started",

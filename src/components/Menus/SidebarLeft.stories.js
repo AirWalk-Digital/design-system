@@ -122,8 +122,73 @@ Default.args = {
       icon: Send,
     },
   ],
-  onSidebarMenu: fn(),
+  onNavClick: fn(),
 };
+
+export const NoClickFunction = Template.bind({});
+NoClickFunction.args = {
+  title: 'Playground',
+  subTitle: 'Airview',
+  menuHeading: 'Main Menu',
+  mainNav: [
+        {
+          label: 'Playground',
+          url: '#',
+          icon: SquareTerminal,
+          isActive: true,
+          links: [
+            { label: 'History', url: '#' },
+            { label: 'Starred', url: '#' },
+            { label: 'Settings', url: '#' },
+          ],
+        },
+        {
+          label: 'Models',
+          url: '#',
+          icon: Bot,
+          links: [
+            { label: 'Genesis', url: '#' },
+            { label: 'Explorer', url: '#' },
+            { label: 'Quantum', url: '#' },
+          ],
+        },
+        {
+          label: 'Documentation',
+          url: '#',
+          icon: BookOpen,
+          links: [
+            { label: 'Introduction', url: '#' },
+            { label: 'Get Started', url: '#' },
+            { label: 'Tutorials', url: '#' },
+            { label: 'Changelog', url: '#' },
+          ],
+        },
+        {
+          label: 'Settings',
+          url: '#',
+          icon: Settings2,
+          links: [
+            { label: 'General', url: '#' },
+            { label: 'Team', url: '#' },
+            { label: 'Billing', url: '#' },
+            { label: 'Limits', url: '#' },
+          ],
+        },
+  ],
+  secondaryNav: [
+    {
+      label: 'Support',
+      url: '#',
+      icon: LifeBuoy,
+    },
+    {
+      label: 'Feedback',
+      url: '#',
+      icon: Send,
+    },
+  ],
+};
+
 
 export const Loading = Template.bind({});
 Loading.args = {
@@ -133,7 +198,7 @@ Loading.args = {
   menuHeading: 'Main Menu',
   mainNav: undefined,
   secondaryNav: undefined,
-  onSidebarMenu: fn(),
+  onNavClick: fn(),
 };
 const GithubIcon = () => (
   <DynamicIcon
@@ -280,7 +345,7 @@ MultipleMenus.args = {
     },
   ],
   pathName: '//#',
-  onSidebarMenu: fn(),
+  onNavClick: fn(),
 };
 
 

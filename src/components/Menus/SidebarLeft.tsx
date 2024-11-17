@@ -84,8 +84,9 @@ interface SidebarLeftProps extends React.ComponentProps<typeof Sidebar> {
   subTitle?: string;
   pathName?: string;
   menuHeading?: string;
-  onSidebarMenu?: () => void;
+  onNavClick?: (callback: any) => void;
   loading?: boolean;
+  LinkComponent? : React.ComponentType<React.ComponentProps<'a'>>
 }
 
 export default function SidebarLeft({
@@ -95,10 +96,29 @@ export default function SidebarLeft({
   subTitle,
   pathName,
   menuHeading,
-  onSidebarMenu,
+  onNavClick,
   loading = false,
+  LinkComponent,
   ...props
 }: SidebarLeftProps) {
+  interface ButtonProps {
+    href?: string;
+    children: React.ReactNode;
+  }
+  const Button: React.FC<ButtonProps> = ({ href, children, ...props }) => {
+    return (
+      <button
+        onClick={() => onNavClick && onNavClick(href)}
+        className="flex items-center justify-start w-full text-sm text-left px-4 py-2"
+        {...props}
+      >
+        {children}
+      </button>
+    );
+  };
+  // if onNavClick is provided, pass the callback to the buttons. else, render an anchor tag
+  const Link: React.FC<ButtonProps & React.ComponentProps<'a'>> = LinkComponent ? (props) => <LinkComponent {...props} /> : onNavClick ? Button : (props) => <a {...props} />;
+
   return (
     <Sidebar {...props} variant="inset">
       <SidebarHeader>
@@ -143,7 +163,7 @@ export default function SidebarLeft({
         {mainNav &&
           !loading &&
           mainNav.map((item, index) => (
-            <Menu key={index} subNav={item} pathName={pathName} />
+            <Menu key={index} subNav={item} pathName={pathName} Link={Link} />
           ))}
         <SidebarGroup className="mt-auto">
           <SidebarGroupContent>
@@ -153,10 +173,10 @@ export default function SidebarLeft({
                 secondaryNav.map((item) => (
                   <SidebarMenuItem key={item.label}>
                     <SidebarMenuButton asChild size="sm">
-                      <a href={item.url}>
+                      <Link href={item.url || ''}>
                         {item.icon && <item.icon />}
                         <span>{item.label}</span>
-                      </a>
+                      </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}
@@ -172,11 +192,17 @@ export default function SidebarLeft({
 function Menu({
   subNav,
   pathName,
+  Link,
 }: {
   menuHeading?: string;
   subNav: MenuStructure;
   pathName?: string;
+  Link: React.FC<{
+    href?: string;
+    children: React.ReactNode;
+  } & React.ComponentProps<'a'>>;
 }) {
+  
   const item = subNav;
   let isActive = false;
   // if a link within subNav.links equals the current pathName, set isActive to true ( this will open the collapsible )
@@ -198,10 +224,10 @@ function Menu({
                 tooltip={item.label}
                 className={clsx(isActive && 'font-bold text-accent')}
               >
-                <a href={item.url}>
+                <Link href={item.url}>
                   {item.icon && <item.icon />}
                   <span>{item.label}</span>
-                </a>
+                </Link>
               </SidebarMenuButton>
               {item.links?.length ? (
                 <>
@@ -222,9 +248,9 @@ function Menu({
                                 'font-bold text-accent',
                             )}
                           >
-                            <a href={subItem.url}>
+                            <Link href={subItem.url}>
                               <span>{subItem.label}</span>
-                            </a>
+                            </Link>
                           </SidebarMenuSubButton>
                         </SidebarMenuSubItem>
                       ))}
