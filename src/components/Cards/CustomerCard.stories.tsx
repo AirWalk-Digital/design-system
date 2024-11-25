@@ -21,6 +21,6 @@ export default {
 type Story = StoryObj<typeof CustomerCard>;
 
 export const Default: Story = {
-  args:   { name: "Acme Corp", logo: "/logos/acme.png", href: "/customers/acme", gradientStart: "#3B82F6", gradientEnd: "#2563EB" },
+  args:   { name: "Acme Corp", logo: "/logos/acme.png", href: "/customers/acme"},
   
 };
