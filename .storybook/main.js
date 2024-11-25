@@ -41,7 +41,7 @@ const config = {
     },
   ],
   framework: {
-    name: "@storybook/react-webpack5",
+    name: "@storybook/nextjs",
     options: {},
   },
   staticDirs: ["../public"],

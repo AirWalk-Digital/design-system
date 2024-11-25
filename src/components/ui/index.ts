@@ -131,3 +131,5 @@ export {
 
 export { Button, buttonVariants } from './button';
 export { Alert, AlertTitle, AlertDescription } from './alert';
+export { Avatar, AvatarImage, AvatarFallback } from './avatar';
+export { Badge, badgeVariants } from './badge';
