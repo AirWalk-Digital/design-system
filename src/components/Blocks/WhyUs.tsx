@@ -3,7 +3,7 @@ import { BarChart3, CogIcon as LightbulbCog, Building2, BadgeCheck } from 'lucid
 
 export default function WhyUs() {
   return (
-    <div className="w-full bg-[#0B3B4E] text-white p-8 rounded-lg border border-dashed border-white/30">
+    <div className="w-full bg-primary text-white p-8 rounded-lg border border-dashed border-white/30">
       <div className="grid md:grid-cols-4 gap-8 relative">
         {/* Connecting lines with dots */}
         {/* <div className="hidden md:flex absolute top-5 left-[25%] w-[50%] items-center">
@@ -23,7 +23,7 @@ export default function WhyUs() {
         </div> */}
 
         {/* Section 1 */}
-        <div className="space-y-4">
+        <div className="space-y-4 bg-primary p-3 rounded-lg">
           <div className="flex items-center gap-2 relative z-10">
             <div className="w-10 h-10 rounded-full border-2 flex items-center justify-center bg-white">
               <span className="text-[#0B3B4E]">1</span>
@@ -31,14 +31,14 @@ export default function WhyUs() {
             <BarChart3 className="w-8 h-8" />
           </div>
           <h2 className="text-xl font-semibold">Agile Delivery and Leadership in Complex Environments</h2>
-          <p className="text-sky-200 text-sm">
+          <p className="text-secondary text-sm">
             We excel in delivering technology solutions in complex environments with evolving customer needs, regulatory
             constraints, and resource limitations.
           </p>
-          <ul className="text-sm space-y-2">
-            <li>• Strategy definition</li>
-            <li>• Programme leadership</li>
-            <li>• Detailed planning</li>
+          <ul className="text-sm">
+            <li>Strategy definition</li>
+            <li>Programme leadership</li>
+            <li>Detailed planning</li>
             <li>• Financial control</li>
             <li>• Rigorous governance</li>
           </ul>

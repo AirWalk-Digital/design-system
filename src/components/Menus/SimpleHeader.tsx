@@ -47,7 +47,7 @@ export default function SimpleHeader({ title, logo, menuItems }: SimpleHeaderPro
         <div className="flex lg:flex-1">
           <a href="#" className="-m-1.5 p-1.5 outline-none">
             <span className="sr-only">{title}</span>
-            <img alt={title} src={logo} className="h-8 w-auto" />
+            <img alt={title} src={logo} className="h-9 w-auto" />
           </a>
         </div>
         <div className="flex lg:hidden">

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import NewsGrid from './NewsGrid';
+import { NewsGrid }from './NewsGrid';
 import type { StoryObj, Meta } from '@storybook/react';
 
 const meta: Meta<typeof NewsGrid> = {

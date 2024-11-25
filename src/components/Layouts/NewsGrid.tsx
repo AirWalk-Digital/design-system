@@ -4,33 +4,33 @@ import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
-export default function NewsGrid() {
-  const tabs = ["All News", "Announcements", "Events", "People", "Milestones"]
+export function NewsGrid() {
+  const tabs = ["All News", "Announcements", "Blogs", "Articles", "Case Studies"]
   const posts = [
     {
       id: 1,
       title: "Building Relationships with Partners and Communities",
       author: "Sabina Saetgareyva",
       date: "July 30, 2024",
-      image: "/placeholder.svg?height=400&width=600",
+      image: "/pictures/1.jpg",
       comments: 0,
       likes: 0,
     },
     {
       id: 2,
       title: "Employee Success Stories: Share Your Journey",
-      author: "Andrew Calston (Admin)",
+      author: "Andrew Calston",
       date: "January 4, 2024",
-      image: "/placeholder.svg?height=400&width=600",
+      image: "/pictures/2.jpg",
       comments: 0,
       likes: 0,
     },
     {
       id: 3,
       title: "Expanding Our Reach with New Office",
-      author: "Andrew Calston (Admin)",
+      author: "Andrew Calston",
       date: "January 4, 2024",
-      image: "/placeholder.svg?height=400&width=600",
+      image: "/pictures/3.jpg",
       comments: 0,
       likes: 0,
     },
@@ -71,13 +71,13 @@ export default function NewsGrid() {
               <div className="text-sm text-muted-foreground mb-2">
                 {post.author} · {post.date}
               </div>
-              <h2 className="text-xl font-bold mb-4 group-hover:text-primary transition-colors">
+              <h2 className="text-xl font-bold mb-4 text-primary group-hover:text-accent transition-colors">
                 {post.title}
               </h2>
-              <div className="flex items-center gap-4 text-sm text-muted-foreground">
+              {/* <div className="flex items-center gap-4 text-sm text-muted-foreground">
                 <span>Comments ({post.comments})</span>
                 <span>{post.likes}</span>
-              </div>
+              </div> */}
             </div>
           </Link>
         ))}

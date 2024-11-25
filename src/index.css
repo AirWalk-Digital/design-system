@@ -10,14 +10,13 @@
     --card-foreground: 240 10% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
-    --primary: 190, 100%, 17%;
+    --primary: 203, 100%, 33%; /* Azul */
     --primary-foreground: 355.7 100% 97.3%;
-    --secondary: 182, 48%, 51%;
+    --secondary: 179, 78%, 42%;
     --secondary-foreground: 240 5.9% 10%;
     --muted: 240 4.8% 95.9%;
     --muted-foreground: 240 3.8% 46.1%;
-    --accent:  142.1 76.2% 36.3%;
-    --accent-foreground: 0 0% 100%;
+    --accent:  179, 78%, 42%; /* indigo */
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
     --border: 240 5.9% 90%;
