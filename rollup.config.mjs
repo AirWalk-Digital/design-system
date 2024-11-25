@@ -3,6 +3,7 @@ import babel from '@rollup/plugin-babel';
 import postcss from 'rollup-plugin-postcss';
 import commonjs from '@rollup/plugin-commonjs';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
+import preserveDirectives from 'rollup-plugin-preserve-directives';
 import alias from '@rollup/plugin-alias';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -41,6 +42,7 @@ export default {
       ],
     }),
     peerDepsExternal(),
+    preserveDirectives(),
     commonjs({
       include: 'node_modules/**', // Ensure that commonjs modules in node_modules are handled
     }),
