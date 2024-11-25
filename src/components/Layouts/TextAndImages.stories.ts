@@ -1,6 +1,6 @@
 // ExampleComponent.stories.tsx
 import React from 'react';
-import TextAndImages from './TextAndImages';
+import { TextAndImages }  from './TextAndImages';
 import type { StoryObj, Meta } from '@storybook/react';
 
 export default {

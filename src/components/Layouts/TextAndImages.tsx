@@ -15,7 +15,7 @@ interface TextAndImagesProps {
     leadsGenerated: string;
   }
   
-  export default function TextAndImages({
+  export function TextAndImages({
     title,
     subtitle,
     description,

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import WhyUs from './WhyUs';
+import { WhyUs}  from './WhyUs';
 import type { StoryObj, Meta } from '@storybook/react';
 
 const meta: Meta<typeof WhyUs> = {

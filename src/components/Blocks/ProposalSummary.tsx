@@ -23,7 +23,7 @@ interface TeamStructureProps {
   fee?: string
 }
 
-export default function ProposalSummary({
+export function ProposalSummary({
   teamMembers = {
     leadership: [
       { role: "CTO oversight" },

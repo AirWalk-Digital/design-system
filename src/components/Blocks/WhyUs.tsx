@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BarChart3, CogIcon as LightbulbCog, Building2, BadgeCheck } from 'lucide-react'
 
-export default function WhyUs() {
+export function WhyUs() {
   return (
     <div className="w-full bg-primary text-white p-8 rounded-lg border border-dashed border-white/30">
       <div className="grid md:grid-cols-4 gap-8 relative">

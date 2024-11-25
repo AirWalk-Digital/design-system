@@ -92,7 +92,7 @@ const OrgChartElement: React.FC<{ person: Person, level: number, searchTerm: str
   )
 }
 
-export default function OrgChart() {
+export function OrgChart() {
   const [searchTerm, setSearchTerm] = useState('')
 
   const companyStructure: Person[] = [

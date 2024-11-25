@@ -1,5 +1,5 @@
 import * as React from 'react';
-import OrgChart from './OrgChart';
+import { OrgChart } from './OrgChart';
 import type { StoryObj, Meta } from '@storybook/react';
 
 const meta: Meta<typeof OrgChart> = {
