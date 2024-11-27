@@ -11,6 +11,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "storybook dev -p 6006 --no-open",
     "build-storybook": "storybook build",
+    "type-check": "tsc --noEmit",
     "build": "rimraf dist && tsc && rollup -c --silent",
     "ci": "npm run build && npm run check-format",
     "format": "prettier --write .",

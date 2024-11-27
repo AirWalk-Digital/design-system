@@ -15,16 +15,17 @@ const __dirname = path.dirname(__filename);
 export default {
   input: './src/index.ts',
   output: [
-    { preserveModules: true },
+    {
+      dir: 'dist', // Output directory
+      format: 'esm',
+      sourcemap: true,
+      preserveModules: true, // Preserve the directory structure of your source
+      entryFileNames: '[name].js', // Each module will have its own file
+    },
     {
       file: 'dist/index.cjs.js',
       format: 'cjs',
-      sourcemap: false,
-    },
-    {
-      file: 'dist/index.es.js',
-      format: 'es',
-      sourcemap: false,
+      sourcemap: true,
     },
   ],
   plugins: [
