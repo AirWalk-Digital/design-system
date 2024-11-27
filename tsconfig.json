@@ -38,7 +38,8 @@
     "./node_modules/**/*",
     "./jest.config.ts",
     "./.next/**/*",
-    "./dist/**/*"
+    "./dist/**/*",
+    "**/*.stories.tsx"
   ],
   "include": [
     "next-env.d.ts",
