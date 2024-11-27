@@ -30,7 +30,9 @@
     },
     "jsx": "react-jsx", // or "react" if using React 16 or below
     "declaration": true, // Ensure declaration files are generated
-    "declarationDir": "dist" // Optional: specify a directory for declaration files
+    "declarationDir": "dist", // Optional: specify a directory for declaration files
+    "declarationMap": true,
+    "emitDeclarationOnly": false
   },
   "exclude": [
     "./out/**/*",
