@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { DynamicIcon } from '../Images';
+// import { DynamicIcon } from '../Images';
 
 export type FeatureCardProps = {
   title: string;
@@ -30,11 +30,11 @@ export const FeatureCard = ({
       className={`rounded-3xl ${colorClasses[color]} p-6 flex flex-col items-center text-center`}
     >
       <div className="w-12 h-12 ">
-        <DynamicIcon
+        {/* <DynamicIcon
           type={iconStyle}
           iconName={iconName}
           className="w-12 h-12 text-white"
-        />
+        /> */}
       </div>
       <h2 className="text-2xl font-bold text-white mb-2">{title}</h2>
       <p className="text-white text-sm">{description}</p>
