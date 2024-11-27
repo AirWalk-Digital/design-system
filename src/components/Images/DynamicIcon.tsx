@@ -128,14 +128,12 @@ const DynamicIcon: React.FC<DynamicIconProps> = ({
   const faIcon = getIcon(iconPrefix as IconPrefix, iconName as IconName);
 
   return faIcon ? (
-    // <div className={className} style={{ display:'flex', 'flexGrow': 1}}>
     <FontAwesomeIcon
       icon={faIcon}
       size={size as SizeProp}
       className={className}
     />
   ) : (
-    // </div>
     <FontAwesomeIcon
       icon={['fas', 'spinner']}
       spin
