@@ -8,21 +8,23 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import svgr from '@svgr/rollup';
 import typescript from 'rollup-plugin-typescript2';
+import preserveDirectives from 'rollup-plugin-preserve-directives';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 export default {
   input: './src/index.ts',
   output: [
+    { preserveModules: true },
     {
       file: 'dist/index.cjs.js',
       format: 'cjs',
-      sourcemap: true,
+      sourcemap: false,
     },
     {
       file: 'dist/index.es.js',
       format: 'es',
-      sourcemap: true,
+      sourcemap: false,
     },
   ],
   plugins: [
@@ -43,6 +45,7 @@ export default {
     peerDepsExternal(),
     commonjs({
       include: 'node_modules/**', // Ensure that commonjs modules in node_modules are handled
+      ignoreGlobal: true,
     }),
     resolve({
       extensions: ['.js', '.jsx', '.ts', '.tsx'],
@@ -62,13 +65,19 @@ export default {
       // Process CSS with PostCSS
       extensions: ['.css'],
     }),
-    typescript(),
+    typescript({ verbosity: 1, clean: true }),
     svgr(), // load .svg files as React components
+    preserveDirectives(),
   ],
   external: ['react', 'react-dom'],
-  onwarn: (warning, warn) => {
-    // Suppress specific warning
+  onwarn(warning, warn) {
+    // Ignore specific warnings
+    if (warning.code === 'UNRESOLVED_IMPORT') return;
+    if (warning.code === 'THIS_IS_UNDEFINED') return;
     if (warning.code === 'MODULE_LEVEL_DIRECTIVE') return;
+    if (warning.code === 'UNUSED_EXTERNAL_IMPORT') return;
+
+    // Log all other warnings
     warn(warning);
   },
 };
