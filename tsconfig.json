@@ -5,11 +5,12 @@
     "skipLibCheck": true,
     "target": "es5",
     "allowJs": true,
-    // "resolveJsonModule": true,
     "moduleDetection": "force",
     "isolatedModules": true,
     "verbatimModuleSyntax": true,
-    "moduleResolution": "bundler" ,
+    "moduleResolution": "bundler",
+    "noEmit": false,
+    "noEmitOnError": false,
 
     /* Strictness */
     "strict": true,
@@ -25,7 +26,7 @@
     "paths": {
       "@/components/*": ["src/components/*"],
       "@/lib/*": ["src/lib/*"],
-      "@/styles/*": ["src/styles/*"],
+      "@/styles/*": ["src/styles/*"]
     },
     "jsx": "react-jsx", // or "react" if using React 16 or below
     "declaration": true, // Ensure declaration files are generated
@@ -37,6 +38,7 @@
     "./jest.config.ts",
     "./.next/**/*",
     "./dist/**/*",
+    "**/*.stories.tsx"
   ],
   "include": [
     "next-env.d.ts",
