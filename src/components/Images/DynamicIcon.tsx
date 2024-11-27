@@ -80,7 +80,7 @@ const sizePx = (size: SizeProp): string => {
     default:
       return '24px';
   }
-}
+};
 
 const DynamicIcon: React.FC<DynamicIconProps> = ({
   type = 'solid',
@@ -133,13 +133,9 @@ const DynamicIcon: React.FC<DynamicIconProps> = ({
       icon={faIcon}
       size={size as SizeProp}
       className={className}
-      // fixedWidth
-      
-      // style={{ width: sizePx(size) }}
-      // style={{ height: '100%', width: '100%', padding: '0.5rem' }}
     />
-    // </div>
   ) : (
+    // </div>
     <FontAwesomeIcon
       icon={['fas', 'spinner']}
       spin
