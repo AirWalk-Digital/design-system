@@ -1,6 +1,6 @@
-"use client";
-import React, { useState, useRef, useEffect } from "react";
-import DynamicIcon, { type IconType } from "@/components/Images/DynamicIcon";
+'use client';
+import React, { useRef } from 'react';
+import { DynamicIcon, type IconType } from '../Images/DynamicIcon';
 
 type Apps = {
   name: string;
@@ -37,7 +37,7 @@ const AppLauncher: React.FC<AppLauncherProps> = ({
                   key={index}
                   className="flex flex-col items-center text-center"
                 >
-                  { app.icon.url ? (  
+                  {app.icon.url ? (
                     <div className="w-12 h-12 mb-2">
                       <img src={app.icon.url} className="h-full w-full" />
                     </div>
