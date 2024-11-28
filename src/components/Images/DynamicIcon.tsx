@@ -82,7 +82,7 @@ const sizePx = (size: SizeProp): string => {
   }
 };
 
-const DynamicIcon: React.FC<DynamicIconProps> = ({
+export const DynamicIcon: React.FC<DynamicIconProps> = ({
   type = 'solid',
   iconName = 'cloud',
   size = 'lg',
@@ -143,5 +143,3 @@ const DynamicIcon: React.FC<DynamicIconProps> = ({
     />
   );
 };
-
-export default DynamicIcon;

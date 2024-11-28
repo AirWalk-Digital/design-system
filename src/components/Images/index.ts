@@ -1,2 +1,1 @@
-import DynamicIcon from '@/components/Images/DynamicIcon';
-export { DynamicIcon };
+export { DynamicIcon } from './DynamicIcon';
